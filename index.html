@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ONRENT — Rent What You Need in Chhatrapati Sambhajinagar</title>
+  <meta name="description"
+    content="ONRENT is the trusted local tech and creator gear rental marketplace in Chhatrapati Sambhajinagar. Rent DSLR cameras, DSLR lenses, MacBooks, laptops, iPhones, speakers, and PS5 gaming consoles with verified photo handovers." />
+  <meta name="keywords"
+    content="ONRENT, rental marketplace, Sambhajinagar, rent DSLR camera, rent DSLR lens, rent MacBook, rent laptop, rent iPhone, rent speaker, rent PS5" />
+
+  <!-- Favicon SVG -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%236f4bf6'/><text y='70' x='22' font-size='65' fill='%23ddf75b'>⚡</text></svg>"
+    type="image/svg+xml" />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Core Design System Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ======================================================================
+       HEADER & NAVIGATION (Sticky Top Header with City Selector)
+       ====================================================================== -->
+  <header class="site-header" id="siteHeader">
+    <!-- Populated dynamically by NavigationComponent -->
+  </header>
+
+  <!-- ======================================================================
+       MAIN DYNAMIC VIEW CONTAINER
+       All screens (Home, Browse, Product, Checkout, Tracker, Handover, Return,
+       Rentals, List Item, Profile) render smoothly inside this container.
+       ====================================================================== -->
+  <main id="viewContainer" class="app-viewport">
+    <!-- Screen components mount here -->
+  </main>
+
+  <!-- ======================================================================
+       FOOTER
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+
+        <!-- Brand Summary -->
+        <div class="footer-brand">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <span
+              style="background: linear-gradient(135deg, var(--violet) 0%, var(--violet-dark) 100%); color: var(--lime); width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900;">⚡</span>
+            <span style="font-size: 24px; font-weight: 900; letter-spacing: -0.04em;">ONRENT</span>
+          </div>
+          <p>
+            Rent what you need. A trusted peer-to-peer equipment rental marketplace designed around verified local
+            trust, mutual photo handovers, and clear 100% refundable deposits.
+          </p>
+          <div style="font-size: 12px; color: var(--lime); font-weight: 600;">
+            📍 Exclusively serving <strong>Chhatrapati Sambhajinagar, Maharashtra, India</strong>
+          </div>
+        </div>
+
+        <!-- Quick Navigation Links -->
+        <div class="footer-col">
+          <h5>Catalogue & Rental</h5>
+          <ul class="footer-links-list">
+            <li><button onclick="window.AppState.navigateTo('home')">Home Overview</button></li>
+            <li><button onclick="window.AppState.navigateTo('browse')">Browse All Gear (28 Items)</button></li>
+            <li><button onclick="window.AppState.navigateTo('browse', { category: 'cameras' })">Cameras &
+                Lenses</button></li>
+            <li><button onclick="window.AppState.navigateTo('browse', { category: 'speakers' })">Speakers</button></li>
+            <li><button onclick="window.AppState.navigateTo('browse', { category: 'gaming' })">PS5 & Gaming</button>
+            </li>
+            <li><button onclick="window.AppState.navigateTo('browse', { category: 'computers' })">MacBooks &
+                Laptops</button></li>
+
+            <li><button onclick="window.AppState.navigateTo('browse', { category: 'phones' })">iPhones</button></li>
+            <li><button onclick="window.AppState.navigateTo('list-item')">List Your Item for Rent</button></li>
+            <li><button onclick="window.AppState.navigateTo('rentals')">My Rentals & Tracker</button></li>
+          </ul>
+        </div>
+
+        <!-- Safety & Policy -->
+        <div class="footer-col">
+          <h5>Trust & Policies</h5>
+          <ul class="footer-links-list">
+            <li><button onclick="NavigationComponent.openLocationModal()">Service Region Policy</button></li>
+            <li><button
+                onclick="NavigationComponent.showToast('All renters and owners undergo Aadhaar / Govt ID verification before booking.')">KYC
+                & Identity Standards</button></li>
+            <li><button
+                onclick="NavigationComponent.showToast('Security deposits are held in escrow and released immediately upon verified safe return.')">100%
+                Refundable Deposit Policy</button></li>
+            <li><button
+                onclick="NavigationComponent.showToast('Mutual photo handovers preserve timestamped baseline condition records.')">Photo
+                Handover Guarantee</button></li>
+            <li><button onclick="window.AppState.navigateTo('profile')">Account & Trust Standing</button></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom Copyright & Location -->
+      <div class="footer-bottom-row">
+        <div>
+          © 2026 <strong>ONRENT</strong> Inc. All rights reserved.
+        </div>
+        <div style="color: #a4b3d3;">
+          Chhatrapati Sambhajinagar, Maharashtra
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toastShelf" class="toast-shelf" aria-live="polite"></div>
+
+  <!-- Location Switcher Modal Placeholder -->
+  <div id="locationModalContainer"></div>
+
+  <!-- Core Data, State & Components Scripts -->
+  <script src="config.js"></script>
+  <script src="seed-data.js"></script>
+  <script src="app-state.js"></script>
+  <script src="components/navigation.js"></script>
+  <script src="components/product-image.js"></script>
+  <script src="components/home-view.js"></script>
+  <script src="components/browse-view.js"></script>
+  <script src="components/product-view.js"></script>
+  <script src="components/checkout-view.js"></script>
+  <script src="components/tracker-view.js"></script>
+  <script src="components/handover-return.js"></script>
+  <script src="components/rentals-view.js"></script>
+  <script src="components/list-item-view.js"></script>
+  <script src="components/profile-view.js"></script>
+
+  <!-- Application Router & Lifecycle Dispatcher -->
+  <script>
+    // Main View Router
+    function renderCurrentScreen() {
+      const screen = window.AppState.currentScreen;
+
+      switch (screen) {
+        case 'home':
+          window.HomeViewComponent.render();
+          break;
+        case 'browse':
+          window.BrowseViewComponent.render();
+          break;
+        case 'product':
+          window.ProductViewComponent.render();
+          break;
+        case 'checkout':
+          window.CheckoutViewComponent.render();
+          break;
+        case 'tracker':
+          window.TrackerViewComponent.render();
+          break;
+        case 'handover':
+          window.HandoverReturnComponent.renderHandover();
+          break;
+        case 'return':
+          window.HandoverReturnComponent.renderReturn();
+          break;
+        case 'rentals':
+          window.RentalsViewComponent.render();
+          break;
+        case 'list-item':
+          window.ListItemViewComponent.render();
+          break;
+        case 'profile':
+          window.ProfileViewComponent.render();
+          break;
+        default:
+          window.HomeViewComponent.render();
+          break;
+      }
+    }
+
+    function displayFatal(err) {
+      const el = document.createElement('div');
+      el.id = 'INITIALIZATION_FATAL';
+      el.style = 'color:red;background:white;padding:30px;font-size:18px;font-family:monospace;white-space:pre-wrap;z-index:999999;position:relative;';
+      el.innerText = 'INITIALIZATION ERROR:\n' + err.message + '\n' + err.stack;
+      document.body ? document.body.insertBefore(el, document.body.firstChild) : alert(err.message);
+      console.error('Fatal initialization error:', err);
+    }
+
+    // App Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        // Initialize Header & Mobile Bar
+        window.NavigationComponent.init();
+
+        // Listen to navigation events from AppState
+        window.AppState.subscribe((event) => {
+          if (event === 'navigate' || event === 'statechange' || event === 'booking_created' || event === 'listing_added' || event === 'handover_saved' || event === 'return_saved') {
+            try {
+              renderCurrentScreen();
+            } catch (err) {
+              displayFatal(err);
+            }
+          }
+        });
+
+        // Initial Mount
+        renderCurrentScreen();
+      } catch (err) {
+        displayFatal(err);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
