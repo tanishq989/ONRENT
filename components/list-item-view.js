@@ -1,15 +1,42 @@
 /**
  * ONRENT — OWNER LISTING & OWNER HUB COMPONENT
- * Implements the Owner Flow scoped to the 7 product types:
- * - "List Item" form: title, productType (7 options only), brand, photos, daily price,
- *   scaled deposit, availability dates, condition, and handover checklist preview.
- * - Owner Hub: incoming requests, handover inspection forms, and active listed gear.
+ * Implements the Owner Flow:
+ * - "List Item" form: title, productType (with "Other" custom type), brand (with "Other" custom brand),
+ *   photos, daily price, scaled deposit, availability dates, condition, and handover checklist preview.
+ * - Owner Hub: incoming requests, handover inspection forms, and active listed gear with approval badges.
  */
 
 window.ListItemViewComponent = {
   activeTab: 'form', // 'form' | 'hub'
   uploadedPhotos: [],
   selectedProductType: 'Laptops',
+  selectedBrand: 'Apple',
+  customProductType: '',
+  customBrand: '',
+  errors: {},
+  draft: {},
+
+  saveFormDraft() {
+    const titleEl = document.getElementById('listTitle');
+    const conditionEl = document.getElementById('listCondition');
+    const dailyRateEl = document.getElementById('listDailyRate');
+    const depositEl = document.getElementById('listDeposit');
+    const areaEl = document.getElementById('listArea');
+    const availableFromEl = document.getElementById('listAvailableFrom');
+    const descEl = document.getElementById('listDesc');
+    const customTypeEl = document.getElementById('listCustomProductType');
+    const customBrandEl = document.getElementById('listCustomBrand');
+
+    if (titleEl) this.draft.title = titleEl.value;
+    if (conditionEl) this.draft.condition = conditionEl.value;
+    if (dailyRateEl) this.draft.dailyRate = dailyRateEl.value;
+    if (depositEl) this.draft.deposit = depositEl.value;
+    if (areaEl) this.draft.area = areaEl.value;
+    if (availableFromEl) this.draft.availableFrom = availableFromEl.value;
+    if (descEl) this.draft.desc = descEl.value;
+    if (customTypeEl) this.customProductType = customTypeEl.value;
+    if (customBrandEl) this.customBrand = customBrandEl.value;
+  },
 
   render() {
     const container = document.getElementById('viewContainer');
@@ -21,14 +48,29 @@ window.ListItemViewComponent = {
     const ownerListings = window.AppState.ownerListings;
     const allRentals = window.AppState.rentals;
 
-    const checklist = (window.ONRENT_CONFIG.handoverChecklists && window.ONRENT_CONFIG.handoverChecklists[this.selectedProductType]) || [];
+    // Default brand if not set
+    if (!this.selectedBrand) {
+      this.selectedBrand = this.selectedProductType === 'Other' ? 'Other' : brands[0];
+    }
+
+    const isOtherType = this.selectedProductType === 'Other';
+    const isOtherBrand = isOtherType || this.selectedBrand === 'Other';
+
+    // Checklist for selected type (including 'Other')
+    const checklist = (window.ONRENT_CONFIG.handoverChecklists && window.ONRENT_CONFIG.handoverChecklists[this.selectedProductType]) || [
+      { id: 'chk_sn', label: 'Serial or model number recorded into digital handover record', critical: true },
+      { id: 'chk_accessories', label: 'All accessories, cables, chargers & cases listed and verified', critical: true },
+      { id: 'chk_test', label: 'Working operational test recorded on camera before handover & upon return', critical: true },
+      { id: 'chk_photos', label: 'Front, back, and all sides photographed in clear lighting', critical: true },
+      { id: 'chk_marks', label: 'Note and document any existing cosmetic marks, scratches, or wear', critical: false }
+    ];
 
     container.innerHTML = `
       <div id="listItemScreen" class="view-screen">
         <div class="container" style="padding-top: 24px; padding-bottom: 60px; max-width: 860px;">
           
           <!-- Top bar -->
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
             <button class="btn btn-secondary btn-sm" onclick="window.AppState.navigateTo('home')">
               ← Back to Home
             </button>
@@ -47,33 +89,35 @@ window.ListItemViewComponent = {
                 onclick="ListItemViewComponent.switchTab('hub')"
                 style="padding: 6px 14px; font-size: 12px;"
               >
-                💼 Owner Hub & Requests (${allRentals.length})
+                💼 Owner Hub & Listings (${ownerListings.length})
               </button>
             </div>
           </div>
 
           ${this.activeTab === 'form' ? `
             <!-- =========================================================
-                 TAB 1: LIST ITEM FORM (7 PRODUCT TYPES ONLY)
+                 TAB 1: LIST ITEM FORM
                  ========================================================= -->
             <div class="section-head" style="margin-bottom: 22px;">
               <div>
                 <span class="pill-badge pill-badge-lime" style="margin-bottom: 6px;">OWNER EARNINGS</span>
                 <h1 class="section-title">List an Item for Rent</h1>
                 <p class="section-subtitle">
-                  Make your creator, computing, phone, or audio gear earn for you in <strong>Chhatrapati Sambhajinagar</strong>
+                  Make your creator, computing, phone, audio, or custom gear earn for you in <strong>Chhatrapati Sambhajinagar</strong>
                 </p>
               </div>
             </div>
 
-            <div style="background-color: var(--white); border: 1px solid var(--line); border-radius: var(--radius-xl); padding: 26px; box-shadow: var(--shadow-sm);">
+            <div style="background-color: var(--white); border: 1px solid var(--line); border-radius: var(--radius-xl); padding: 26px; box-shadow: var(--shadow-sm); margin-bottom: 30px;">
               <form id="ownerListingForm" onsubmit="ListItemViewComponent.handleFormSubmit(event)" style="display: flex; flex-direction: column; gap: 18px;">
                 
-                <!-- 1. Product Type (Dropdown with ONLY 7 options) & Brand -->
+                <!-- 1. Product Type & Brand / Manufacturer -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                  
+                  <!-- Product Type Dropdown -->
                   <div>
-                    <label style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
-                      Product Type (7 Options Only)
+                    <label for="listProductType" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                      Product Type
                     </label>
                     <select 
                       id="listProductType" 
@@ -83,49 +127,96 @@ window.ListItemViewComponent = {
                       ${productTypes.map(pt => `
                         <option value="${pt}" ${this.selectedProductType === pt ? 'selected' : ''}>${pt}</option>
                       `).join('')}
+                      <option value="Other" ${this.selectedProductType === 'Other' ? 'selected' : ''}>Other</option>
                     </select>
+
+                    <!-- Specify Product Type (Visible only when Other is selected) -->
+                    <div id="customProductTypeWrap" style="margin-top: 10px; display: ${isOtherType ? 'block' : 'none'};">
+                      <label for="listCustomProductType" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">
+                        Specify product type <span style="color: #dc2626;">*</span>
+                      </label>
+                      <input 
+                        type="text" 
+                        id="listCustomProductType" 
+                        maxlength="40"
+                        placeholder="e.g. Drone, Projector, Tablet" 
+                        value="${this.customProductType || ''}"
+                        oninput="ListItemViewComponent.onCustomTypeInput(event)"
+                        style="width: 100%; padding: 11px 14px; border: 1.5px solid ${this.errors && this.errors.customType ? '#dc2626' : 'var(--violet)'}; border-radius: var(--radius-md); font-size: 14px; font-weight: 600;"
+                      />
+                      <div id="customProductTypeError" style="color: #dc2626; font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customType ? 'block' : 'none'};">
+                        ${this.errors && this.errors.customType ? this.errors.customType : ''}
+                      </div>
+                    </div>
                   </div>
 
+                  <!-- Brand / Manufacturer Dropdown -->
                   <div>
-                    <label style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                    <label for="listBrand" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
                       Brand / Manufacturer
                     </label>
                     <select 
                       id="listBrand" 
+                      onchange="ListItemViewComponent.onBrandChange(event)"
                       style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600; background: white;"
                     >
-                      ${brands.map(b => `<option value="${b}">${b}</option>`).join('')}
+                      ${isOtherType ? `
+                        <option value="Other" selected>Other</option>
+                      ` : `
+                        ${brands.map(b => `<option value="${b}" ${this.selectedBrand === b ? 'selected' : ''}>${b}</option>`).join('')}
+                        <option value="Other" ${this.selectedBrand === 'Other' ? 'selected' : ''}>Other</option>
+                      `}
                     </select>
+
+                    <!-- Specify Brand (Visible when Brand is Other or Product Type is Other) -->
+                    <div id="customBrandWrap" style="margin-top: 10px; display: ${isOtherBrand ? 'block' : 'none'};">
+                      <label for="listCustomBrand" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">
+                        Specify brand <span style="color: #dc2626;">*</span>
+                      </label>
+                      <input 
+                        type="text" 
+                        id="listCustomBrand" 
+                        maxlength="40"
+                        placeholder="e.g. Fujifilm, Marshall" 
+                        value="${this.customBrand || ''}"
+                        oninput="ListItemViewComponent.onCustomBrandInput(event)"
+                        style="width: 100%; padding: 11px 14px; border: 1.5px solid ${this.errors && this.errors.customBrand ? '#dc2626' : 'var(--violet)'}; border-radius: var(--radius-md); font-size: 14px; font-weight: 600;"
+                      />
+                      <div id="customBrandError" style="color: #dc2626; font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customBrand ? 'block' : 'none'};">
+                        ${this.errors && this.errors.customBrand ? this.errors.customBrand : ''}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <!-- 2. Title & Condition -->
                 <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px;">
                   <div>
-                    <label style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                    <label for="listTitle" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
                       Item Title & Exact Model Name
                     </label>
                     <input 
                       type="text" 
                       id="listTitle" 
-                      placeholder="e.g. Sony Alpha A7 IV Kit, MacBook Pro 14 M3, iPhone 15 Pro Max"
+                      placeholder="e.g. Sony Alpha A7 IV Kit, MacBook Pro 14 M3, DJI Mavic 3 Pro"
+                      value="${this.draft.title || ''}"
                       required 
                       style="width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600;" 
                     />
                   </div>
 
                   <div>
-                    <label style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                    <label for="listCondition" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
                       Item Condition
                     </label>
                     <select 
                       id="listCondition" 
                       style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600; background: white;"
                     >
-                      <option value="Flawless">Flawless (Mint / Pristine)</option>
-                      <option value="Like New" selected>Like New (No cosmetic marks)</option>
-                      <option value="Excellent">Excellent (Minor cosmetic wear)</option>
-                      <option value="Good">Good (Fully functional)</option>
+                      <option value="Flawless" ${this.draft.condition === 'Flawless' ? 'selected' : ''}>Flawless (Mint / Pristine)</option>
+                      <option value="Like New" ${!this.draft.condition || this.draft.condition === 'Like New' ? 'selected' : ''}>Like New (No cosmetic marks)</option>
+                      <option value="Excellent" ${this.draft.condition === 'Excellent' ? 'selected' : ''}>Excellent (Minor cosmetic wear)</option>
+                      <option value="Good" ${this.draft.condition === 'Good' ? 'selected' : ''}>Good (Fully functional)</option>
                     </select>
                   </div>
                 </div>
@@ -133,7 +224,7 @@ window.ListItemViewComponent = {
                 <!-- 3. Daily Price & Scaled Deposit -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
                   <div>
-                    <label style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                    <label for="listDailyRate" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
                       Daily Rental Rate (₹)
                     </label>
                     <input 
@@ -142,13 +233,14 @@ window.ListItemViewComponent = {
                       placeholder="e.g. 499" 
                       min="50" 
                       max="50000"
+                      value="${this.draft.dailyRate || ''}"
                       required 
                       style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 15px; font-weight: 800; color: var(--violet);" 
                     />
                   </div>
 
                   <div>
-                    <label style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                    <label for="listDeposit" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
                       Refundable Security Deposit (₹)
                     </label>
                     <input 
@@ -157,21 +249,25 @@ window.ListItemViewComponent = {
                       placeholder="e.g. 5000" 
                       min="100" 
                       max="100000"
+                      value="${this.draft.deposit || ''}"
                       required 
                       style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 15px; font-weight: 800; color: var(--ink);" 
                     />
-                    <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">
-                      Scaled with item value: higher for iPhones, MacBooks, laptops & lenses; lower for headphones & speakers.
+                    <div style="font-size: 11px; color: var(--muted); margin-top: 4px;" id="depositHint">
+                      ${isOtherType 
+                        ? 'Scaled with item value: higher for iPhones, MacBooks, laptops, PS5 & lenses; lower for speakers. Set the deposit at or above the item\'s resale value.' 
+                        : 'Scaled with item value: higher for iPhones, MacBooks, laptops, PS5 & lenses; lower for speakers.'
+                      }
                     </div>
                   </div>
                 </div>
 
-                <!-- 4. Mandatory Handover Checklist Preview for Selected Product Type -->
+                <!-- 4. Mandatory Handover Checklist Preview -->
                 <div style="background-color: var(--violet-light); border: 1.5px solid var(--violet-tint); border-radius: var(--radius-md); padding: 14px;">
                   <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                     <span style="font-size: 16px;">📋</span>
                     <strong style="font-size: 12px; font-weight: 800; color: var(--violet-dark); text-transform: uppercase;">
-                      Mandatory Handover & Return Protocol for ${this.selectedProductType}:
+                      Mandatory Handover & Return Protocol for ${isOtherType ? (this.customProductType && this.customProductType.trim() ? this.customProductType.trim() : 'Other Gear') : this.selectedProductType}:
                     </strong>
                   </div>
                   <ul style="list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--ink);">
@@ -187,25 +283,25 @@ window.ListItemViewComponent = {
                 <!-- 5. Location Area & Dates -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
                   <div>
-                    <label style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                    <label for="listArea" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
                       Sambhajinagar Area
                     </label>
                     <select 
                       id="listArea" 
                       style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600; background: white;"
                     >
-                      ${neighborhoods.map(n => `<option value="${n}">${n}</option>`).join('')}
+                      ${neighborhoods.map(n => `<option value="${n}" ${this.draft.area === n ? 'selected' : ''}>${n}</option>`).join('')}
                     </select>
                   </div>
 
                   <div>
-                    <label style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                    <label for="listAvailableFrom" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
                       Available From
                     </label>
                     <input 
                       type="date" 
                       id="listAvailableFrom" 
-                      value="${window.AppState.getTodayDateString()}" 
+                      value="${this.draft.availableFrom || window.AppState.getTodayDateString()}" 
                       style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600;" 
                     />
                   </div>
@@ -237,7 +333,7 @@ window.ListItemViewComponent = {
                   <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center; flex-wrap: wrap;">
                     <span style="font-size: 11px; color: var(--muted);">Or attach verified gear photos:</span>
                     <button type="button" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 3px 10px;" onclick="ListItemViewComponent.addSamplePhoto()">
-                      + Attach ${this.selectedProductType} Photo Angle
+                      + Attach ${isOtherType ? (this.customProductType && this.customProductType.trim() ? this.customProductType.trim() : 'Gear') : this.selectedProductType} Photo Angle
                     </button>
                   </div>
 
@@ -270,7 +366,7 @@ window.ListItemViewComponent = {
 
                 <!-- 7. Description & Inclusions -->
                 <div>
-                  <label style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                  <label for="listDesc" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
                     Description & Kit Inclusions
                   </label>
                   <textarea 
@@ -279,7 +375,7 @@ window.ListItemViewComponent = {
                     placeholder="Describe included charger, original case, memory cards, power brick, or special handling..."
                     required 
                     style="width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 13px;"
-                  ></textarea>
+                  >${this.draft.desc || ''}</textarea>
                 </div>
 
                 <!-- Trust Guarantee Notice -->
@@ -288,14 +384,14 @@ window.ListItemViewComponent = {
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="btn btn-lime btn-lg btn-full" style="margin-top: 6px;">
+                <button type="submit" id="submitListingBtn" class="btn btn-lime btn-lg btn-full" style="margin-top: 6px;">
                   Publish Listing to ONRENT Catalogue →
                 </button>
               </form>
             </div>
           ` : `
             <!-- =========================================================
-                 TAB 2: OWNER HUB (INCOMING REQUESTS & HANDOVER FORMS)
+                 TAB 2: OWNER HUB (INCOMING REQUESTS & LISTED GEAR)
                  ========================================================= -->
             <div class="section-head" style="margin-bottom: 22px;">
               <div>
@@ -311,7 +407,6 @@ window.ListItemViewComponent = {
             <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
               ${allRentals.map(rental => `
                 <div style="background-color: var(--white); border: 1px solid var(--line); border-radius: var(--radius-xl); padding: 20px; box-shadow: var(--shadow-xs);">
-                  
                   <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 12px;">
                     <div>
                       <span class="pill-badge pill-badge-lime" style="font-size: 11px;">Booking: ${rental.bookingId}</span>
@@ -341,33 +436,57 @@ window.ListItemViewComponent = {
                     <button class="btn btn-secondary btn-sm" onclick="window.AppState.navigateTo('tracker', { rentalId: '${rental.bookingId}' })">
                       Open Tracker
                     </button>
-
                     <button class="btn btn-violet btn-sm" onclick="window.AppState.navigateTo('handover', { rentalId: '${rental.bookingId}' })">
                       📷 Mutual Handover Form
                     </button>
-
                     <button class="btn btn-lime btn-sm" onclick="window.AppState.navigateTo('return', { rentalId: '${rental.bookingId}' })">
                       ↩️ Return & Release Deposit
                     </button>
                   </div>
-
                 </div>
               `).join('')}
             </div>
+          `}
 
-            <!-- OWNER'S LISTED ITEMS -->
-            <div style="background-color: var(--white); border: 1px solid var(--line); border-radius: var(--radius-xl); padding: 22px; box-shadow: var(--shadow-xs);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                <h3 style="font-size: 16px; font-weight: 800; color: var(--ink);">Your Active Equipment Listings</h3>
-                <button class="btn btn-secondary btn-sm" onclick="ListItemViewComponent.switchTab('form')">+ Add Another</button>
+          <!-- OWNER'S LISTED ITEMS (VISIBLE ON BOTH TABS FOR EASY ACCESS) -->
+          <div style="background-color: var(--white); border: 1px solid var(--line); border-radius: var(--radius-xl); padding: 22px; box-shadow: var(--shadow-xs);">
+            
+            <!-- Admin Demo Review Toggle Bar -->
+            <div style="background-color: var(--violet-light); border: 1.5px solid var(--violet-tint); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <strong style="font-size: 13px; font-weight: 800; color: var(--violet-dark); display: block;">
+                  🛡️ Admin Demo Review Toggle
+                </strong>
+                <span style="font-size: 11px; color: var(--muted);">
+                  Approve custom product types & brands to display them in public Browse & Home
+                </span>
               </div>
+              <button 
+                id="adminApprovalToggleBtn"
+                type="button" 
+                class="btn btn-sm ${window.AppState.isAdminAutoApproveEnabled() ? 'btn-lime' : 'btn-secondary'}" 
+                onclick="ListItemViewComponent.toggleAdminAutoApprove()"
+                style="font-size: 12px; font-weight: 800; padding: 6px 14px;"
+              >
+                ${window.AppState.isAdminAutoApproveEnabled() ? '✓ Demo Mode: All Approved (Live)' : 'Demo Mode: Require Approval'}
+              </button>
+            </div>
 
-              ${ownerListings.length > 0 ? `
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
-                  ${ownerListings.map(item => {
-                    const normItemImg = window.ProductImage ? window.ProductImage.normalize(item.images[0], item.title) : { url: (typeof item.images[0] === 'object' ? item.images[0].url : item.images[0]), alt: item.title };
-                    return `
-                      <div style="border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px; display: flex; gap: 12px; align-items: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+              <h3 style="font-size: 16px; font-weight: 800; color: var(--ink); margin: 0;">Your Equipment Listings</h3>
+              ${this.activeTab === 'hub' ? `
+                <button class="btn btn-secondary btn-sm" onclick="ListItemViewComponent.switchTab('form')">+ Add Another Item</button>
+              ` : ''}
+            </div>
+
+            ${ownerListings.length > 0 ? `
+              <div id="ownerListingsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+                ${ownerListings.map(item => {
+                  const normItemImg = window.ProductImage ? window.ProductImage.normalize(item.images[0], item.title) : { url: (typeof item.images[0] === 'object' ? item.images[0].url : item.images[0]), alt: item.title };
+                  const isPending = item.status === 'Pending review';
+                  return `
+                    <div style="border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px; display: flex; gap: 12px; align-items: center; justify-content: space-between; background: ${isPending ? '#fffdf7' : 'white'};">
+                      <div style="display: flex; gap: 12px; align-items: center; min-width: 0;">
                         <div style="width: 60px; height: 45px; border-radius: var(--radius-sm); overflow: hidden; flex-shrink: 0; position: relative;">
                           ${window.ProductImage ? window.ProductImage.render({
                             src: normItemImg.url,
@@ -376,20 +495,46 @@ window.ListItemViewComponent = {
                             aspectRatio: '4/3'
                           }) : `<img src="${normItemImg.url}" alt="${normItemImg.alt}" style="width: 100%; height: 100%; object-fit: cover;" />`}
                         </div>
-                        <div>
-                          <h4 style="font-size: 14px; font-weight: 800; color: var(--ink);">${item.title}</h4>
+                        <div style="min-width: 0;">
+                          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px; flex-wrap: wrap;">
+                            <h4 style="font-size: 13px; font-weight: 800; color: var(--ink); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px;">
+                              ${item.title}
+                            </h4>
+                            ${isPending ? `
+                              <span class="pill-badge" style="background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px;">
+                                ⏳ Pending review
+                              </span>
+                            ` : `
+                              <span class="pill-badge pill-badge-lime" style="font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px;">
+                                ✓ Live
+                              </span>
+                            `}
+                          </div>
                           <div style="font-size: 12px; color: var(--violet); font-weight: 700;">${window.AppState.formatCurrency(item.dailyPrice)}/day</div>
-                          <div style="font-size: 11px; color: var(--muted);">${item.productType} • ${item.area}</div>
+                          <div style="font-size: 11px; color: var(--muted);">${item.productType} • ${item.brand} • ${item.area}</div>
                         </div>
                       </div>
-                    `;
-                  }).join('')}
-                </div>
-              ` : `
-                <p style="font-size: 13px; color: var(--muted);">No custom items listed yet. Switch to "List New Item" to create your first listing.</p>
-              `}
-            </div>
-          `}
+
+                      ${(item.isCustomType || item.isCustomBrand || isPending) ? `
+                        <div style="flex-shrink: 0; margin-left: 8px;">
+                          <button 
+                            type="button" 
+                            class="btn btn-sm ${isPending ? 'btn-lime' : 'btn-secondary'}" 
+                            onclick="ListItemViewComponent.toggleItemApproval('${item.id}')"
+                            style="font-size: 11px; padding: 5px 10px; font-weight: 700;"
+                          >
+                            ${isPending ? '🛡️ Approve' : '↩️ Revoke'}
+                          </button>
+                        </div>
+                      ` : ''}
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            ` : `
+              <p style="font-size: 13px; color: var(--muted);">No items listed yet. Fill out the form above to list your first item.</p>
+            `}
+          </div>
 
         </div>
       </div>
@@ -397,11 +542,75 @@ window.ListItemViewComponent = {
   },
 
   onProductTypeChange(e) {
+    this.saveFormDraft();
+    const prevType = this.selectedProductType;
     this.selectedProductType = e.target.value;
+
+    if (this.selectedProductType === 'Other') {
+      this.selectedBrand = 'Other';
+    } else if (prevType === 'Other') {
+      const brands = window.ONRENT_CONFIG.brands.filter(b => b !== 'All Brands');
+      if (this.selectedBrand === 'Other' && !this.customBrand) {
+        this.selectedBrand = brands[0] || 'Apple';
+      }
+    }
+
+    if (this.errors) this.errors.customType = null;
+    this.render();
+  },
+
+  onBrandChange(e) {
+    this.saveFormDraft();
+    this.selectedBrand = e.target.value;
+    if (this.errors) this.errors.customBrand = null;
+    this.render();
+  },
+
+  onCustomTypeInput(e) {
+    this.customProductType = e.target.value;
+    if (this.errors && this.errors.customType && this.customProductType.trim()) {
+      this.errors.customType = null;
+      const errEl = document.getElementById('customProductTypeError');
+      if (errEl) errEl.style.display = 'none';
+      const inputEl = document.getElementById('listCustomProductType');
+      if (inputEl) inputEl.style.borderColor = 'var(--violet)';
+    }
+  },
+
+  onCustomBrandInput(e) {
+    this.customBrand = e.target.value;
+    if (this.errors && this.errors.customBrand && this.customBrand.trim()) {
+      this.errors.customBrand = null;
+      const errEl = document.getElementById('customBrandError');
+      if (errEl) errEl.style.display = 'none';
+      const inputEl = document.getElementById('listCustomBrand');
+      if (inputEl) inputEl.style.borderColor = 'var(--violet)';
+    }
+  },
+
+  toggleAdminAutoApprove() {
+    const current = window.AppState.isAdminAutoApproveEnabled();
+    window.AppState.setAdminAutoApprove(!current);
+    NavigationComponent.showToast(
+      !current ? 'Admin Demo: Approved all custom listings for public Browse!' : 'Admin Demo: Custom listings reverted to Pending review.',
+      !current ? 'success' : 'info'
+    );
+    this.render();
+  },
+
+  toggleItemApproval(id) {
+    window.AppState.toggleItemApproval(id);
+    const item = window.AppState.ownerListings.find(i => i.id === id);
+    const isNowApproved = window.AppState.isListingApproved(item);
+    NavigationComponent.showToast(
+      isNowApproved ? `Listing "${item.title}" approved! Now visible in public Browse.` : `Listing "${item.title}" set to Pending review.`,
+      isNowApproved ? 'success' : 'info'
+    );
     this.render();
   },
 
   switchTab(tab) {
+    this.saveFormDraft();
     this.activeTab = tab;
     this.render();
   },
@@ -433,10 +642,10 @@ window.ListItemViewComponent = {
 
   addSamplePhoto() {
     const typeDefaults = {
-      'Headphones': [
-        { url: 'public/images/products/headphones/sony-wh1000xm5-front.webp', alt: 'Headphones - Front' },
-        { url: 'public/images/products/headphones/sony-wh1000xm5-angle.webp', alt: 'Headphones - Angle' },
-        { url: 'public/images/products/headphones/sony-wh1000xm5-case.webp', alt: 'Headphones - Case' }
+      'PS5': [
+        { url: './images/products/ps5/ps5-standard-front.webp', alt: 'PS5 - Front' },
+        { url: './images/products/ps5/ps5-standard-angle.webp', alt: 'PS5 - Angle' },
+        { url: './images/products/ps5/ps5-standard-detail.webp', alt: 'PS5 - Controllers & Cables' }
       ],
       'Speakers': [
         { url: 'public/images/products/speakers/jbl-partybox-front.webp', alt: 'Speaker - Front' },
@@ -473,7 +682,7 @@ window.ListItemViewComponent = {
     const nextIdx = this.uploadedPhotos.length % list.length;
     this.uploadedPhotos.push(list[nextIdx]);
     this.render();
-    NavigationComponent.showToast(`Attached ${this.selectedProductType} photo angle`, 'success');
+    NavigationComponent.showToast(`Attached ${this.selectedProductType === 'Other' ? (this.customProductType || 'Gear') : this.selectedProductType} photo angle`, 'success');
   },
 
   removePhoto(index) {
@@ -481,13 +690,11 @@ window.ListItemViewComponent = {
     this.render();
   },
 
-  triggerPhotoAdd() {
-    this.triggerFilePicker();
-  },
-
   handleFormSubmit(e) {
     e.preventDefault();
-    const title = document.getElementById('listTitle').value;
+    this.saveFormDraft();
+
+    const title = document.getElementById('listTitle').value.trim();
     const productType = document.getElementById('listProductType').value;
     const brand = document.getElementById('listBrand').value;
     const condition = document.getElementById('listCondition').value;
@@ -497,11 +704,49 @@ window.ListItemViewComponent = {
     const availableFrom = document.getElementById('listAvailableFrom').value;
     const desc = document.getElementById('listDesc').value;
 
+    const isCustomType = productType === 'Other';
+    const isCustomBrand = (productType === 'Other') || (brand === 'Other');
+
+    const customTypeInput = document.getElementById('listCustomProductType');
+    const customBrandInput = document.getElementById('listCustomBrand');
+
+    const customTypeVal = customTypeInput ? customTypeInput.value.trim().slice(0, 40) : '';
+    const customBrandVal = customBrandInput ? customBrandInput.value.trim().slice(0, 40) : '';
+
+    this.errors = {};
+    let hasError = false;
+
+    // Validate visible Specify product type
+    if (isCustomType && !customTypeVal) {
+      this.errors.customType = 'Please specify the product type (up to 40 characters).';
+      hasError = true;
+    }
+
+    // Validate visible Specify brand
+    if (isCustomBrand && !customBrandVal) {
+      this.errors.customBrand = 'Please specify the brand (up to 40 characters).';
+      hasError = true;
+    }
+
+    if (hasError) {
+      this.render();
+      if (this.errors.customType) {
+        document.getElementById('listCustomProductType')?.focus();
+      } else if (this.errors.customBrand) {
+        document.getElementById('listCustomBrand')?.focus();
+      }
+      return;
+    }
+
+    // Determine final stored values (not the word "Other")
+    const finalProductType = isCustomType ? customTypeVal : productType;
+    const finalBrand = isCustomBrand ? customBrandVal : brand;
+
     const typeDefaults = {
-      'Headphones': [
-        { url: 'public/images/products/headphones/sony-wh1000xm5-front.webp', alt: `${title} - Front` },
-        { url: 'public/images/products/headphones/sony-wh1000xm5-angle.webp', alt: `${title} - Angle` },
-        { url: 'public/images/products/headphones/sony-wh1000xm5-case.webp', alt: `${title} - Case & Cables` }
+      'PS5': [
+        { url: './images/products/ps5/ps5-standard-front.webp', alt: `${title} - Front View` },
+        { url: './images/products/ps5/ps5-standard-angle.webp', alt: `${title} - Setup Angle` },
+        { url: './images/products/ps5/ps5-standard-detail.webp', alt: `${title} - Controllers & Cables` }
       ],
       'Speakers': [
         { url: 'public/images/products/speakers/jbl-partybox-front.webp', alt: `${title} - Front` },
@@ -535,7 +780,7 @@ window.ListItemViewComponent = {
       ]
     };
 
-    const fallbackList = typeDefaults[productType] || typeDefaults['Laptops'];
+    const fallbackList = typeDefaults[finalProductType] || typeDefaults['Laptops'];
     let photos = [];
     if (this.uploadedPhotos.length === 0) {
       photos = fallbackList;
@@ -548,8 +793,10 @@ window.ListItemViewComponent = {
 
     const newProduct = window.AppState.addNewListing({
       title,
-      productType,
-      brand,
+      productType: finalProductType,
+      brand: finalBrand,
+      isCustomType,
+      isCustomBrand,
       dailyPrice,
       deposit,
       condition,
@@ -559,8 +806,19 @@ window.ListItemViewComponent = {
       photos
     });
 
-    NavigationComponent.showToast(`Listing published: "${title}" is now active in catalogue!`, 'success');
+    // Reset draft and errors
     this.uploadedPhotos = [];
-    window.AppState.navigateTo('product', { productId: newProduct.id });
+    this.draft = {};
+    this.customProductType = '';
+    this.customBrand = '';
+    this.errors = {};
+
+    if (newProduct.status === 'Pending review') {
+      NavigationComponent.showToast(`Listing submitted for review: "${title}" (Status: Pending review)`, 'warning');
+      this.render();
+    } else {
+      NavigationComponent.showToast(`Listing published: "${title}" is now active in catalogue!`, 'success');
+      window.AppState.navigateTo('product', { productId: newProduct.id });
+    }
   }
 };

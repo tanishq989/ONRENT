@@ -8,7 +8,8 @@
 window.ProductImage = {
   // Product type icon mappings for neutral fallback tiles
   productIcons: {
-    'Headphones': '🎧',
+    'PS5': '🎮',
+    'Gaming': '🎮',
     'Speakers': '🔊',
     'Laptops': '💻',
     'iPhones': '📱',
@@ -16,7 +17,6 @@ window.ProductImage = {
     'DSLR cameras': '📷',
     'DSLR lenses': '🔭',
     'Cameras': '📷',
-    'Audio': '🎧',
     'Computers': '💻',
     'Phones': '📱'
   },

@@ -2,14 +2,13 @@
  * ONRENT — APPLICATION CONFIGURATION & BUSINESS CONSTANTS
  * Centralized configuration for pricing calculations, discounts, taxes, and system constants.
  * Scoped exclusively to 7 tech & creator product types:
- * 1. Headphones, 2. Speakers, 3. Laptops, 4. iPhones, 5. MacBooks, 6. DSLR cameras, 7. DSLR lenses.
+ * 1. Speakers, 2. Laptops, 3. iPhones, 4. MacBooks, 5. DSLR cameras, 6. DSLR lenses, 7. PS5.
  */
 
 const ONRENT_CONFIG = {
   // Brand details
   brandName: 'ONRENT',
   tagline: 'Rent what you need',
-  eyebrow: 'RENT SMARTER, LIVE LIGHTER',
   
   // Service Geographic Boundaries
   defaultCity: 'Chhatrapati Sambhajinagar',
@@ -31,13 +30,13 @@ const ONRENT_CONFIG = {
 
   // The 7 Approved Product Types
   productTypes: [
-    'Headphones',
     'Speakers',
     'Laptops',
     'iPhones',
     'MacBooks',
     'DSLR cameras',
-    'DSLR lenses'
+    'DSLR lenses',
+    'PS5'
   ],
 
   // Brands present across catalogue
@@ -54,17 +53,59 @@ const ONRENT_CONFIG = {
     'ASUS',
     'HP',
     'Marshall',
-    'Sennheiser',
     'Sigma'
   ],
 
-  // Category navigation chips
+  // Category navigation chips with clean inline SVGs in violet & lime palette
   categories: [
-    { id: 'for-you', name: 'For you', icon: '✦', slug: 'for-you', count: 28, productTypes: [] },
-    { id: 'cameras', name: 'Cameras', icon: '📷', slug: 'cameras', count: 8, productTypes: ['DSLR cameras', 'DSLR lenses'] },
-    { id: 'audio', name: 'Audio', icon: '🎧', slug: 'audio', count: 8, productTypes: ['Headphones', 'Speakers'] },
-    { id: 'computers', name: 'Computers', icon: '💻', slug: 'computers', count: 8, productTypes: ['Laptops', 'MacBooks'] },
-    { id: 'phones', name: 'Phones', icon: '📱', slug: 'phones', count: 4, productTypes: ['iPhones'] }
+    { 
+      id: 'for-you', 
+      name: 'For you', 
+      icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>', 
+      slug: 'for-you', 
+      count: 28, 
+      productTypes: [] 
+    },
+    { 
+      id: 'cameras', 
+      name: 'Cameras', 
+      icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>', 
+      slug: 'cameras', 
+      count: 8, 
+      productTypes: ['DSLR cameras', 'DSLR lenses'] 
+    },
+    { 
+      id: 'speakers', 
+      name: 'Speakers', 
+      icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>', 
+      slug: 'speakers', 
+      count: 4, 
+      productTypes: ['Speakers'] 
+    },
+    { 
+      id: 'computers', 
+      name: 'Computers', 
+      icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>', 
+      slug: 'computers', 
+      count: 8, 
+      productTypes: ['Laptops', 'MacBooks'] 
+    },
+    { 
+      id: 'phones', 
+      name: 'Phones', 
+      icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>', 
+      slug: 'phones', 
+      count: 4, 
+      productTypes: ['iPhones'] 
+    },
+    { 
+      id: 'gaming', 
+      name: 'Gaming', 
+      icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4m-2-2v4"/><circle cx="17" cy="10" r=".8" fill="currentColor"/><circle cx="15" cy="13" r=".8" fill="currentColor"/></svg>', 
+      slug: 'gaming', 
+      count: 4, 
+      productTypes: ['PS5'] 
+    }
   ],
 
   // Specific Handover & Return Checklists per Product Type
@@ -104,33 +145,37 @@ const ONRENT_CONFIG = {
       { id: 'chk_ports', label: 'Dual SD/CFexpress card slot pins and HDMI/USB port covers intact', critical: false },
       { id: 'chk_batt', label: 'Original OEM battery, charger and neck strap present', critical: true }
     ],
-    'Headphones': [
-      { id: 'chk_drivers', label: 'Left/Right acoustic driver balance and Active Noise Cancellation (ANC) tested', critical: true },
-      { id: 'chk_cushions', label: 'Ear cushions sanitized with zero tears or synthetic leather flaking', critical: false },
-      { id: 'chk_headband', label: 'Headband flex and slider adjustment smooth & firm', critical: false },
-      { id: 'chk_bluetooth', label: 'Bluetooth pairing and multipoint connection verified', critical: false },
-      { id: 'chk_case', label: 'Original hard travel protective case and audio cable included', critical: false }
-    ],
     'Speakers': [
       { id: 'chk_sound', label: 'Subwoofer and tweeters tested at 80% volume for clean bass without rattle', critical: true },
       { id: 'chk_mic', label: 'Rechargeable wireless microphone paired and volume echo tested', critical: true },
       { id: 'chk_grill', label: 'Speaker metal mesh grill inspected for zero dents or liquid ingress', critical: false },
       { id: 'chk_batt', label: 'Internal battery charge level verified and AC power cable included', critical: true }
+    ],
+    'PS5': [
+      { id: 'chk_sn', label: 'Console serial number verified against rental reservation record', critical: true },
+      { id: 'chk_controllers', label: 'Both DualSense wireless controllers tested: stick drift, buttons, vibration & USB-C charging', critical: true },
+      { id: 'chk_edition', label: 'Console edition verified (Disc drive eject/read or Digital Edition intact)', critical: true },
+      { id: 'chk_cables', label: 'Ultra-high-speed HDMI 2.1 cable and AC power cord included and verified', critical: true },
+      { id: 'chk_storage_condition', label: 'Internal SSD storage initialized and exterior console faceplates inspected for zero damage', critical: false }
+    ],
+    'Other': [
+      { id: 'chk_sn', label: 'Serial or model number recorded into digital handover record', critical: true },
+      { id: 'chk_accessories', label: 'All included accessories, cables, chargers & cases listed and verified', critical: true },
+      { id: 'chk_test', label: 'Working operational test recorded on camera before handover & upon return', critical: true },
+      { id: 'chk_photos', label: 'Front, back, and all sides photographed in clear lighting', critical: true },
+      { id: 'chk_marks', label: 'Note and document any existing cosmetic marks, scratches, or wear', critical: false }
     ]
   },
 
   // Pricing & Taxation Constants
   pricing: {
-    // GST Tax Rate (18% for consumer services / rental leasing)
     taxRate: 0.18,
     taxLabel: 'GST (18%)',
 
-    // Damage Protection Fee
     defaultProtectionFee: 149,
     minProtectionFee: 49,
     maxProtectionFee: 299,
 
-    // Rental Duration Discounts
     durationPlans: [
       { id: 'daily', label: 'Daily (Custom)', minDays: 1, discountPercent: 0, tag: 'Standard' },
       { id: 'week_1', label: '1 Week', days: 7, discountPercent: 10, tag: 'Save 10%' },
@@ -138,18 +183,15 @@ const ONRENT_CONFIG = {
       { id: 'month_6', label: '6 Months', days: 180, discountPercent: 40, tag: 'Best Value • Save 40%' }
     ],
 
-    // Security Deposit calculation defaults
     defaultDepositMultiplierDays: 6,
     depositRefundGuaranteeDays: 2,
 
-    // Delivery options
     fulfillment: {
       pickup: { id: 'pickup', label: 'Self Pickup from Owner', fee: 0, timeEst: 'Ready in 2 hours' },
       delivery: { id: 'delivery', label: 'Safe Doorstep Delivery', fee: 149, timeEst: 'Delivered in 4 hours' }
     }
   },
 
-  // Verification Thresholds & Statuses
   verification: {
     statuses: {
       PENDING: 'pending',
@@ -160,7 +202,6 @@ const ONRENT_CONFIG = {
     paymentHistoryThreshold: 'Good Standing'
   },
 
-  // Order Lifecycle Timeline Milestones
   orderMilestones: [
     { key: 'confirmed', label: 'Confirmed', icon: '✓', desc: 'Booking confirmed by owner' },
     { key: 'out_for_delivery', label: 'Out for Delivery', icon: '🚚', desc: 'Item en route or ready for pickup' },
@@ -171,7 +212,6 @@ const ONRENT_CONFIG = {
     { key: 'deposit_refunded', label: 'Deposit Refunded', icon: '💰', desc: 'Security deposit released' }
   ],
 
-  // Rental Support / In-Rental Request Types
   rentalRequestTypes: [
     { id: 'repair', label: 'Request Repair', icon: '🔧', desc: 'Report malfunction or scheduled maintenance' },
     { id: 'extension', label: 'Extend Rental', icon: '📅', desc: 'Keep the item for more days at discounted rate' },
@@ -179,17 +219,16 @@ const ONRENT_CONFIG = {
     { id: 'support', label: 'Contact Support', icon: '💬', desc: 'Instant support from ONRENT team' }
   ],
 
-  // Storage Keys for Offline Persistence (V3 reflects real WebP product photography)
+  // Storage Keys for Offline Persistence (V4 reflects PS5 addition)
   storageKeys: {
-    catalog: 'ONRENT_CATALOG_V3',
-    rentals: 'ONRENT_RENTALS_V3',
-    userProfile: 'ONRENT_USER_PROFILE_V3',
-    ownerListings: 'ONRENT_OWNER_LISTINGS_V3',
-    activeCity: 'ONRENT_ACTIVE_CITY_V3'
+    catalog: 'ONRENT_CATALOG_V4',
+    rentals: 'ONRENT_RENTALS_V4',
+    userProfile: 'ONRENT_USER_PROFILE_V4',
+    ownerListings: 'ONRENT_OWNER_LISTINGS_V4',
+    activeCity: 'ONRENT_ACTIVE_CITY_V4'
   }
 };
 
-// Export for ES modules and browser global window
 if (typeof window !== 'undefined') {
   window.ONRENT_CONFIG = ONRENT_CONFIG;
 }

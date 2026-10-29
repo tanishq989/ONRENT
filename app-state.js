@@ -18,7 +18,7 @@ class OnRentState {
 
     // Search & Filter State
     this.searchQuery = '';
-    this.selectedCategory = 'for-you'; // 'for-you' | 'cameras' | 'audio' | 'computers' | 'phones'
+    this.selectedCategory = 'for-you'; // 'for-you' | 'cameras' | 'speakers' | 'computers' | 'phones' | 'gaming'
     this.selectedProductType = 'all'; // 'all' or one of the 7 product types
     this.selectedBrand = 'All Brands'; // 'All Brands' or specific brand
     this.selectedMoment = null;
@@ -44,24 +44,31 @@ class OnRentState {
       joinedDate: 'Jan 2025'
     });
 
+    // Admin review demo state
+    this.adminAutoApprove = this.loadItem('ONRENT_ADMIN_AUTO_APPROVE', false);
+    this.approvedCustomIds = this.loadItem('ONRENT_APPROVED_CUSTOM_IDS', []);
+
+    // Owner Listed Items
+    this.ownerListings = this.loadItem(this.config.storageKeys.ownerListings, []);
+
     // Catalogue from storage or seed (with migration safeguard for 7 product types & real photos)
     let loadedProducts = this.loadItem(this.config.storageKeys.catalog, null);
-    if (!loadedProducts || !Array.isArray(loadedProducts) || loadedProducts.some(p => !this.config.productTypes.includes(p.productType) || (typeof p.images[0] === 'string' && (p.images[0].startsWith('data:') || p.images[0].startsWith('public/'))) || (typeof p.images[0] === 'object' && p.images[0].url && p.images[0].url.startsWith('public/')))) {
+    if (!loadedProducts || !Array.isArray(loadedProducts) || loadedProducts.some(p => (!p.isCustomType && !this.config.productTypes.includes(p.productType)) || (typeof p.images[0] === 'string' && (p.images[0].startsWith('data:') || p.images[0].startsWith('public/'))) || (typeof p.images[0] === 'object' && p.images[0].url && p.images[0].url.startsWith('public/')))) {
       loadedProducts = this.seeds.products;
       this.saveItem(this.config.storageKeys.catalog, loadedProducts);
     }
     this.products = loadedProducts;
 
+    // Filter out unapproved custom listings from this.products if any remained from earlier sessions
+    this.products = this.products.filter(p => !p.status || p.status === 'Live' || p.status === 'Approved' || this.isListingApproved(p));
+
     // Rentals & Bookings
     let loadedRentals = this.loadItem(this.config.storageKeys.rentals, null);
-    if (!loadedRentals || !Array.isArray(loadedRentals) || loadedRentals.some(r => (r.productCategory && !['Cameras', 'Audio', 'Computers', 'Phones'].includes(r.productCategory)) || (typeof r.productImage === 'string' && (r.productImage.startsWith('data:') || r.productImage.startsWith('public/'))))) {
+    if (!loadedRentals || !Array.isArray(loadedRentals) || loadedRentals.some(r => (r.productCategory && !['Cameras', 'Audio', 'Speakers', 'Computers', 'Phones', 'Gaming'].includes(r.productCategory)) || (typeof r.productImage === 'string' && (r.productImage.startsWith('data:') || r.productImage.startsWith('public/'))))) {
       loadedRentals = this.seeds.initialRentals;
       this.saveItem(this.config.storageKeys.rentals, loadedRentals);
     }
     this.rentals = loadedRentals;
-
-    // Owner Listed Items
-    this.ownerListings = this.loadItem(this.config.storageKeys.ownerListings, []);
 
     // Active Calculator & Checkout Draft
     const firstProduct = this.products[0] || this.seeds.products[0];
@@ -268,11 +275,14 @@ class OnRentState {
 
   // --- CATALOGUE METHODS ---
   getProductById(id) {
-    return this.products.find(p => p.id === id) || this.seeds.products[0];
+    return this.products.find(p => p.id === id) || this.ownerListings.find(p => p.id === id) || this.seeds.products[0];
   }
 
   getFilteredProducts() {
     let result = [...this.products];
+
+    // Filter out unapproved / pending review listings from public Browse view
+    result = result.filter(p => !p.status || p.status === 'Live' || p.status === 'Approved' || this.isListingApproved(p));
 
     // City constraint
     result = result.filter(p => p.location.toLowerCase().includes(this.activeCity.toLowerCase()));
@@ -295,12 +305,22 @@ class OnRentState {
       });
     }
 
-    // Category filter (For you, Cameras, Audio, Computers, Phones)
+    // Category filter (For you, Cameras, Speakers, Computers, Phones, Gaming)
     if (this.selectedCategory && this.selectedCategory !== 'for-you' && this.selectedCategory !== 'all') {
-      result = result.filter(p => p.categorySlug === this.selectedCategory);
+      const catConfig = this.config.categories.find(c => c.slug === this.selectedCategory);
+      if (catConfig && catConfig.productTypes && catConfig.productTypes.length > 0) {
+        result = result.filter(p => catConfig.productTypes.includes(p.productType) || p.categorySlug === this.selectedCategory);
+      } else {
+        result = result.filter(p => p.categorySlug === this.selectedCategory);
+      }
     }
 
-    // Product Type filter (Headphones, Speakers, Laptops, iPhones, MacBooks, DSLR cameras, DSLR lenses)
+    // Moment filter
+    if (this.selectedMoment) {
+      result = result.filter(p => p.momentSlug === this.selectedMoment);
+    }
+
+    // Product Type filter (Speakers, Laptops, iPhones, MacBooks, DSLR cameras, DSLR lenses, PS5)
     if (this.selectedProductType && this.selectedProductType !== 'all') {
       result = result.filter(p => p.productType === this.selectedProductType);
     }
@@ -431,35 +451,113 @@ class OnRentState {
   }
 
   // --- OWNER METHODS ---
+  isAdminAutoApproveEnabled() {
+    return Boolean(this.adminAutoApprove);
+  }
+
+  setAdminAutoApprove(enabled) {
+    this.adminAutoApprove = Boolean(enabled);
+    this.saveItem('ONRENT_ADMIN_AUTO_APPROVE', this.adminAutoApprove);
+    this.syncCustomListingApprovals();
+  }
+
+  isListingApproved(product) {
+    if (!product) return false;
+    if (!product.isCustomType && !product.isCustomBrand && product.status !== 'Pending review') {
+      return true;
+    }
+    if (this.adminAutoApprove) return true;
+    if (this.approvedCustomIds && this.approvedCustomIds.includes(product.id)) return true;
+    return false;
+  }
+
+  approveCustomListing(id) {
+    if (!this.approvedCustomIds.includes(id)) {
+      this.approvedCustomIds.push(id);
+      this.saveItem('ONRENT_APPROVED_CUSTOM_IDS', this.approvedCustomIds);
+    }
+    this.syncCustomListingApprovals();
+  }
+
+  revokeCustomListing(id) {
+    this.approvedCustomIds = this.approvedCustomIds.filter(x => x !== id);
+    this.saveItem('ONRENT_APPROVED_CUSTOM_IDS', this.approvedCustomIds);
+    this.syncCustomListingApprovals();
+  }
+
+  toggleItemApproval(id) {
+    const item = this.ownerListings.find(i => i.id === id);
+    if (!item) return;
+    if (this.isListingApproved(item)) {
+      this.revokeCustomListing(id);
+    } else {
+      this.approveCustomListing(id);
+    }
+  }
+
+  syncCustomListingApprovals() {
+    this.ownerListings.forEach(item => {
+      if (item.isCustomType || item.isCustomBrand) {
+        if (this.isListingApproved(item)) {
+          item.status = 'Approved';
+        } else {
+          item.status = 'Pending review';
+        }
+      }
+    });
+
+    // Remove any custom owner items from this.products
+    const ownerCustomIds = new Set(this.ownerListings.filter(i => i.isCustomType || i.isCustomBrand).map(i => i.id));
+    this.products = this.products.filter(p => !ownerCustomIds.has(p.id));
+
+    // Re-insert approved custom items at the top of this.products
+    const approvedCustomItems = this.ownerListings.filter(item => 
+      (item.isCustomType || item.isCustomBrand) && this.isListingApproved(item)
+    );
+    this.products.unshift(...approvedCustomItems);
+
+    this.saveAll();
+    this.notify('catalogue_updated', { products: this.products });
+  }
+
   addNewListing(listingData) {
     const newId = 'onr-custom-' + Math.floor(1000 + Math.random() * 9000);
     const productType = listingData.productType || 'Laptops';
     const brand = listingData.brand || 'Apple';
+    const isCustomType = Boolean(listingData.isCustomType);
+    const isCustomBrand = Boolean(listingData.isCustomBrand);
+    const isCustom = isCustomType || isCustomBrand;
 
     // Map productType to parent category
     let categoryName = 'Computers';
     let categorySlug = 'computers';
-    if (productType === 'DSLR cameras' || productType === 'DSLR lenses') {
+    if (isCustomType) {
+      categoryName = 'Gear';
+      categorySlug = 'for-you';
+    } else if (productType === 'DSLR cameras' || productType === 'DSLR lenses') {
       categoryName = 'Cameras';
       categorySlug = 'cameras';
-    } else if (productType === 'Headphones' || productType === 'Speakers') {
-      categoryName = 'Audio';
-      categorySlug = 'audio';
+    } else if (productType === 'Speakers') {
+      categoryName = 'Speakers';
+      categorySlug = 'speakers';
+    } else if (productType === 'PS5') {
+      categoryName = 'Gaming';
+      categorySlug = 'gaming';
     } else if (productType === 'iPhones') {
       categoryName = 'Phones';
       categorySlug = 'phones';
     }
 
     const typeDefaults = {
-      'Headphones': [
-        { url: 'public/images/products/headphones/sony-wh1000xm5-front.webp', alt: `${listingData.title} - Front` },
-        { url: 'public/images/products/headphones/sony-wh1000xm5-angle.webp', alt: `${listingData.title} - Angle` },
-        { url: 'public/images/products/headphones/sony-wh1000xm5-case.webp', alt: `${listingData.title} - Case & Cables` }
+      'PS5': [
+        { url: './images/products/ps5/ps5-standard-front.webp', alt: `${listingData.title} - Front` },
+        { url: './images/products/ps5/ps5-standard-angle.webp', alt: `${listingData.title} - Angle` },
+        { url: './images/products/ps5/ps5-standard-detail.webp', alt: `${listingData.title} - Controllers & Cables` }
       ],
       'Speakers': [
-        { url: 'public/images/products/speakers/jbl-partybox-front.webp', alt: `${listingData.title} - Front` },
-        { url: 'public/images/products/speakers/jbl-partybox-angle.webp', alt: `${listingData.title} - Angle` },
-        { url: 'public/images/products/speakers/jbl-partybox-controls.webp', alt: `${listingData.title} - Controls` }
+        { url: './images/products/speakers/partybox-speaker-front.webp', alt: `${listingData.title} - Front` },
+        { url: './images/products/speakers/partybox-speaker-angle.webp', alt: `${listingData.title} - Angle` },
+        { url: './images/products/speakers/partybox-speaker-detail.webp', alt: `${listingData.title} - Controls` }
       ],
       'Laptops': [
         { url: 'public/images/products/laptops/dell-xps-15-front.webp', alt: `${listingData.title} - Front` },
@@ -489,12 +587,19 @@ class OnRentState {
     };
     const fallbackImgs = typeDefaults[productType] || typeDefaults['Laptops'];
 
+    const initialStatus = isCustom 
+      ? (this.isAdminAutoApproveEnabled() || this.approvedCustomIds.includes(newId) ? 'Approved' : 'Pending review') 
+      : 'Live';
+
     const product = {
       id: newId,
       name: listingData.title,
       title: listingData.title,
       productType,
       brand,
+      isCustomType,
+      isCustomBrand,
+      status: initialStatus,
       category: categoryName,
       categorySlug,
       dailyPrice: Number(listingData.dailyPrice),
@@ -528,8 +633,11 @@ class OnRentState {
       featured: true
     };
 
-    this.products.unshift(product);
     this.ownerListings.unshift(product);
+    if (initialStatus === 'Live' || initialStatus === 'Approved') {
+      this.products.unshift(product);
+    }
+    this.saveAll();
     this.notify('listing_added', { product });
     return product;
   }

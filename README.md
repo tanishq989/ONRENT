@@ -1,19 +1,18 @@
 # ONRENT — Rent What You Need
 
 > **Tagline**: *"Rent what you need"*  
-> **Hero Eyebrow**: *"RENT SMARTER, LIVE LIGHTER"*  
 > **Default Service City**: Chhatrapati Sambhajinagar, Maharashtra, India  
 
 ONRENT is a complete, responsive peer-to-peer equipment rental marketplace designed with a mobile-first philosophy (430px app feel) that dynamically scales to a fluid multi-column desktop layout.
 
 The marketplace is strictly scoped to **7 tech & creator product types**:
-1. **Headphones**
-2. **Speakers**
-3. **Laptops**
-4. **iPhones**
-5. **MacBooks**
-6. **DSLR cameras**
-7. **DSLR lenses**
+1. **Speakers**
+2. **Laptops**
+3. **iPhones**
+4. **MacBooks**
+5. **DSLR cameras**
+6. **DSLR lenses**
+7. **PS5**
 
 ---
 
@@ -34,16 +33,17 @@ The marketplace is strictly scoped to **7 tech & creator product types**:
 ## 🧭 Navigation & Moment Tiles
 
 ### Category Chips:
-1. **For you** (`for-you`) — Curated catalogue across all 7 gear types
-2. **Cameras** (`cameras`) — DSLR bodies and professional lenses
-3. **Audio** (`audio`) — Studio headphones and party speakers
-4. **Computers** (`computers`) — Apple MacBooks and Windows laptops
-5. **Phones** (`phones`) — Flagship Apple iPhones
+1. **For you** (`for-you`) — Curated catalogue across all 7 gear types (28 Items)
+2. **Cameras** (`cameras`) — DSLR bodies and professional lenses (8 Items)
+3. **Speakers** (`speakers`) — High-power party speakers and portable Bluetooth speakers (4 Items)
+4. **Computers** (`computers`) — Apple MacBooks and Windows laptops (8 Items)
+5. **Phones** (`phones`) — Flagship Apple iPhones (4 Items)
+6. **Gaming** (`gaming`) — Sony PlayStation 5 consoles & controllers (4 Items)
 
 ### "Rent by Moment" Tiles:
 1. **Create something** — DSLR cameras & lenses (`create-something`)
 2. **Work and study** — Laptops & MacBooks (`work-and-study`)
-3. **Music and parties** — Speakers & headphones (`music-and-parties`)
+3. **Party and play** — Speakers and PS5 with controllers for game nights and parties (`party-and-play`)
 4. **Phone upgrade** — iPhones with 4K ProRes & telephoto zoom (`phone-upgrade`)
 
 ---
@@ -56,8 +56,8 @@ Each product type has specialized pre-release and return inspection points:
 - **Laptops**: Display screen inspection (dead pixels, uniform backlighting, hinge tension), battery health diagnostics in BIOS/OS, keyboard & trackpad responsiveness, and OEM power brick verification.
 - **DSLR lenses**: Optical front/rear glass element check under light (scratches, haze, fungus), metal bayonet mount and contacts, smooth zoom/focus ring operation, and lens caps/hood.
 - **DSLR cameras**: Shutter actuation count logged in digital record, image sensor test frame at f/22, EVF & touchscreen display, and OEM batteries/chargers.
-- **Headphones**: Acoustic driver balance & Active Noise Cancellation (ANC), ear cushion hygiene & tear inspection, headband flex, Bluetooth multipoint, and travel case.
 - **Speakers**: Subwoofer & bass clarity test at 80% volume, rechargeable wireless microphone pairing & echo check, metal grill condition, and battery/AC power cord.
+- **PS5**: Console serial number verified, both DualSense wireless controllers tested for stick drift and USB-C charging, disc drive or digital edition verified, ultra-high-speed HDMI 2.1 cable and AC power cord checked, and storage initialization & console faceplate condition inspected.
 
 ---
 
@@ -68,9 +68,9 @@ Deposits are calibrated directly to item replacement value:
   - iPhones: ₹5,000 – ₹7,500
   - MacBooks: ₹4,500 – ₹8,500
   - Laptops: ₹5,000 – ₹6,500
+  - PS5: ₹6,000 – ₹7,000
   - Pro DSLR cameras & lenses: ₹4,000 – ₹7,500
-- **Audio Gear (₹1,200 – ₹2,500 deposit)**:
-  - Headphones: ₹1,200 – ₹2,200
+- **Audio Gear (₹1,400 – ₹2,500 deposit)**:
   - Speakers: ₹1,400 – ₹2,500
 
 ---
@@ -97,12 +97,12 @@ This serves the application at `http://localhost:3000` automatically.
 c:\Users\Tanishq\Desktop\ONRENT\
 ├── index.html               # Main application shell with SEO tags, semantic layout & containers
 ├── styles.css               # Design system, CSS custom properties, responsive desktop & mobile rules
-├── config.js                # Product types (7), brands (13), checklists, tax rates, duration discounts
+├── config.js                # Product types (7), brands (12), checklists, tax rates, duration discounts
 ├── seed-data.js             # 28 verified listings (4 per product type), moment tiles, demo rentals
-├── app-state.js             # State management, localStorage persistence (V2), pricing engine, scaled deposit logic
+├── app-state.js             # State management, localStorage persistence (V4), pricing engine, scaled deposit logic
 ├── components/              # Modular UI components & screen view renderers
 │   ├── navigation.js        # Header (desktop), mobile bottom bar, location switcher modal
-│   ├── home-view.js         # Hero, search bar, 5 category chips, 4 moment tiles, "Ready near you"
+│   ├── home-view.js         # Hero, search bar, category chips, 4 moment tiles, "Ready near you"
 │   ├── browse-view.js       # Search, 7 product type pills, brand dropdown, radius slider, sort
 │   ├── product-view.js      # Product detail, image gallery, checklist preview, scaled deposit display
 │   ├── checkout-view.js     # Checkout review, verification step (ID + payment check: pending/verified/review)
@@ -119,11 +119,11 @@ c:\Users\Tanishq\Desktop\ONRENT\
 
 ## 🛒 Complete Catalogue (28 Items — Exactly 4 per Product Type)
 
-### 1. Headphones (Lower Deposits: ₹1,200 – ₹2,200)
-- Sony WH-1000XM5 Wireless Noise-Cancelling Headphones — **₹290/day** (Deposit: ₹1,800)
-- Bose QuietComfort 45 Bluetooth Headphones — **₹270/day** (Deposit: ₹1,600)
-- Apple AirPods Max (Space Grey) — **₹450/day** (Deposit: ₹2,200)
-- Sennheiser Momentum 4 Wireless Headphones — **₹240/day** (Deposit: ₹1,200)
+### 1. PS5 & Gaming Consoles (High Deposits: ₹6,000 – ₹7,000)
+- Sony PlayStation 5 Standard Edition (Disc) + 2 Controllers — **₹699/day** (Deposit: ₹6,500)
+- Sony PlayStation 5 Digital Edition + 2 Controllers — **₹649/day** (Deposit: ₹6,000)
+- Sony PlayStation 5 Slim Standard Edition (1TB SSD) + 2 Controllers — **₹749/day** (Deposit: ₹7,000)
+- Sony PlayStation 5 Digital Edition (Cosmic Red DualSense Bundle) — **₹679/day** (Deposit: ₹6,000)
 
 ### 2. Speakers (Lower Deposits: ₹1,400 – ₹2,500)
 - Party Speaker with Wireless Mic (JBL PartyBox 100W) — **₹349/day** (Deposit: ₹1,800)

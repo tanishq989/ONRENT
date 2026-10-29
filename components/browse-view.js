@@ -50,7 +50,7 @@ window.BrowseViewComponent = {
                 <input 
                   type="text" 
                   id="browseSearchInput" 
-                  placeholder="Search by product name, e.g. iPhone 15 Pro, MacBook, Canon Creator Kit, Headphones..."
+                  placeholder="Search by product name, e.g. iPhone 15 Pro, MacBook, PS5, Canon Creator Kit..."
                   value="${window.AppState.searchQuery}"
                   oninput="BrowseViewComponent.onSearchChange(event)"
                   style="border: none; background: transparent; width: 100%; font-size: 14px; font-weight: 600; outline: none;"
@@ -65,14 +65,14 @@ window.BrowseViewComponent = {
               ` : ''}
             </div>
 
-            <!-- 1. Category Filter Chips (For you, Cameras, Audio, Computers, Phones) -->
+            <!-- 1. Category Filter Chips (For you, Cameras, Speakers, Computers, Phones, Gaming) -->
             <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
               ${categories.map(cat => `
                 <button 
                   class="category-chip ${window.AppState.selectedCategory === cat.slug ? 'active' : ''}" 
                   onclick="BrowseViewComponent.selectCategory('${cat.slug}')"
                 >
-                  <span>${cat.icon}</span>
+                  <span class="chip-icon">${cat.icon}</span>
                   <span>${cat.name}</span>
                 </button>
               `).join('')}

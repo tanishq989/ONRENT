@@ -26,20 +26,15 @@ window.HomeViewComponent = {
           </div>
 
           <div class="container hero-content">
-            <div class="hero-pill-badge">
-              <span>●</span>
-              <span>RENT SMARTER, LIVE LIGHTER</span>
-            </div>
-
             <h1 class="hero-title">
               Why Buy It When You Can <span class="highlight-lime">Rent It</span>?
             </h1>
 
             <p class="hero-subtitle">
-              Rent verified DSLR cameras, pro lenses, MacBooks, laptops, iPhones, headphones, and party speakers in Chhatrapati Sambhajinagar. Save money, avoid clutter, and live lighter.
+              Rent verified DSLR cameras, pro lenses, MacBooks, laptops, iPhones, speakers, and PS5 gaming consoles in Chhatrapati Sambhajinagar. Save money, avoid clutter.
             </p>
 
-            <!-- Multi-Attribute Search Bar -->
+            <!-- Multi-Attribute Search Bar (Wide ~1100px) -->
             <div class="hero-search-box">
               <form id="heroSearchForm" onsubmit="HomeViewComponent.handleSearch(event)" class="search-form-grid">
                 <div class="search-field-unit">
@@ -47,7 +42,7 @@ window.HomeViewComponent = {
                   <input 
                     type="text" 
                     id="heroProductQuery" 
-                    placeholder="Search iPhone, MacBook, Canon Creator Kit, Headphones, Speakers..." 
+                    placeholder="Search iPhone, MacBook, PS5, Canon Creator Kit, Speakers, Lenses..." 
                     value="${window.AppState.searchQuery}"
                     autocomplete="off"
                     aria-label="What gear do you need to rent?"
@@ -205,7 +200,7 @@ window.HomeViewComponent = {
         <section class="container" style="margin-bottom: 40px;">
           <div style="background: linear-gradient(135deg, var(--violet) 0%, var(--violet-dark) 100%); border-radius: var(--radius-xl); padding: 36px 28px; color: var(--white); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
             <span class="pill-badge pill-badge-lime">EARN PASSIVE INCOME</span>
-            <h3 style="font-size: 26px; font-weight: 900; max-width: 560px;">Have Cameras, Laptops, MacBooks, or Audio Sitting Idle?</h3>
+            <h3 style="font-size: 26px; font-weight: 900; max-width: 560px;">Have Cameras, Laptops, MacBooks, PS5, or Speakers Sitting Idle?</h3>
             <p style="font-size: 14px; color: #ded5fd; max-width: 500px;">
               Rent them out to verified neighbours in Sambhajinagar. You set the daily price, retain 100% deposit protection, and approve handovers.
             </p>
