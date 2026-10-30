@@ -51,20 +51,20 @@ window.ProductViewComponent = {
         <div class="container" style="padding-top: 24px; padding-bottom: 60px;">
           
           <!-- Back button & Breadcrumb -->
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
             <button class="btn btn-secondary btn-sm" onclick="window.AppState.goBack()">
               ← Back
             </button>
-            <div style="font-size: 12px; color: var(--muted); font-weight: 600;">
+            <div style="font-size: 12px; color: var(--muted); font-weight: 600; word-break: break-word;">
               ${product.category} &nbsp;>&nbsp; <span style="color: var(--violet);">${product.productType}</span> &nbsp;>&nbsp; <span style="color: var(--ink);">${product.name}</span>
             </div>
           </div>
 
           <!-- Product Details Multi-Column Grid (Responsive for mobile & desktop) -->
-          <div style="display: grid; grid-template-columns: 1fr; gap: 32px;" class="product-layout-grid">
+          <div style="display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px;" class="product-layout-grid">
             
             <!-- LEFT COLUMN: Swipeable Gallery & Product Info -->
-            <div>
+            <div style="min-width: 0;">
               <!-- Main Swipeable Gallery Preview with Tap-to-Zoom -->
               <div 
                 id="productGalleryContainer"
@@ -73,12 +73,12 @@ window.ProductViewComponent = {
                 style="position: relative; border-radius: var(--radius-xl); overflow: hidden; background-color: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow-sm); margin-bottom: 14px; user-select: none;"
               >
                 ${window.ProductImage ? window.ProductImage.render({
-                  src: normActive.url,
-                  alt: normActive.alt,
-                  productType: product.productType,
-                  aspectRatio: '4/3',
-                  zoomable: true,
-                  overlayHtml: `
+      src: normActive.url,
+      alt: normActive.alt,
+      productType: product.productType,
+      aspectRatio: '4/3',
+      zoomable: true,
+      overlayHtml: `
                     <span class="product-condition-badge" style="position: absolute; top: 16px; left: 16px; z-index: 3;">
                       Condition: ${product.condition}
                     </span>
@@ -100,7 +100,7 @@ window.ProductViewComponent = {
                       </button>
                     </div>
                   `
-                }) : `
+    }) : `
                   <img src="${normActive.url}" alt="${normActive.alt}" style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" />
                 `}
 
@@ -128,9 +128,9 @@ window.ProductViewComponent = {
               <!-- Thumbnail Gallery Row (Fixed 4:3 thumbnails) -->
               <div style="display: flex; gap: 10px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 4px;">
                 ${images.map((img, idx) => {
-                  const thumbNorm = window.ProductImage ? window.ProductImage.normalize(img, `Angle ${idx + 1}`) : { url: img, alt: `Angle ${idx + 1}` };
-                  const isActive = idx === this.activeImageIndex;
-                  return `
+      const thumbNorm = window.ProductImage ? window.ProductImage.normalize(img, `Angle ${idx + 1}`) : { url: img, alt: `Angle ${idx + 1}` };
+      const isActive = idx === this.activeImageIndex;
+      return `
                     <button 
                       type="button"
                       onclick="ProductViewComponent.switchImage(${idx})" 
@@ -140,7 +140,7 @@ window.ProductViewComponent = {
                       <img src="${thumbNorm.url}" alt="${thumbNorm.alt}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
                     </button>
                   `;
-                }).join('')}
+    }).join('')}
               </div>
 
               <!-- Product Headline & Badges -->
@@ -167,7 +167,7 @@ window.ProductViewComponent = {
               <!-- Owner Profile Card -->
               <div style="background-color: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; box-shadow: var(--shadow-xs);">
                 <div style="display: flex; align-items: center; gap: 14px;">
-                  <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--violet) 0%, var(--violet-dark) 100%); color: var(--lime); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px;">
+                  <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--brand-900) 0%, var(--brand-700) 100%); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: var(--font-display); font-size: 16px;">
                     ${product.owner.avatar}
                   </div>
                   <div>
@@ -227,7 +227,7 @@ window.ProductViewComponent = {
             </div>
 
             <!-- RIGHT COLUMN: Interactive Live Price Calculator Card -->
-            <div>
+            <div style="min-width: 0;">
               <div style="position: sticky; top: 90px; background-color: var(--white); border: 1.5px solid var(--violet-tint); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-lg);">
                 
                 <!-- Calculator Header -->
@@ -389,13 +389,13 @@ window.ProductViewComponent = {
                 </div>
 
                 <!-- Refund Guarantee Notice -->
-                <div style="background-color: var(--lime-light); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--ink); margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
+                <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
                   <span>💰</span>
                   <span><strong>100% Refundable Deposit:</strong> Released immediately upon return inspection.</span>
                 </div>
 
                 <!-- PROCEED TO BOOK BUTTON -->
-                <button class="btn btn-lime btn-lg btn-full" onclick="ProductViewComponent.proceedToCheckout()">
+                <button class="btn btn-primary btn-lg btn-full" onclick="ProductViewComponent.proceedToCheckout()">
                   Proceed to Verification & Booking →
                 </button>
 

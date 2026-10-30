@@ -112,17 +112,17 @@ window.ListItemViewComponent = {
               <form id="ownerListingForm" onsubmit="ListItemViewComponent.handleFormSubmit(event)" style="display: flex; flex-direction: column; gap: 18px;">
                 
                 <!-- 1. Product Type & Brand / Manufacturer -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div class="form-grid-2col">
                   
                   <!-- Product Type Dropdown -->
-                  <div>
-                    <label for="listProductType" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                  <div class="form-field-unit">
+                    <label for="listProductType">
                       Product Type
                     </label>
                     <select 
                       id="listProductType" 
                       onchange="ListItemViewComponent.onProductTypeChange(event)"
-                      style="width: 100%; padding: 11px 14px; border: 1.5px solid var(--violet); border-radius: var(--radius-md); font-size: 14px; font-weight: 700; background: white; color: var(--violet-dark);"
+                      style="border-color: var(--brand-700); font-weight: 700; color: var(--brand-900);"
                     >
                       ${productTypes.map(pt => `
                         <option value="${pt}" ${this.selectedProductType === pt ? 'selected' : ''}>${pt}</option>
@@ -132,8 +132,8 @@ window.ListItemViewComponent = {
 
                     <!-- Specify Product Type (Visible only when Other is selected) -->
                     <div id="customProductTypeWrap" style="margin-top: 10px; display: ${isOtherType ? 'block' : 'none'};">
-                      <label for="listCustomProductType" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">
-                        Specify product type <span style="color: #dc2626;">*</span>
+                      <label for="listCustomProductType">
+                        Specify product type <span style="color: #b91c1c;">*</span>
                       </label>
                       <input 
                         type="text" 
@@ -142,23 +142,22 @@ window.ListItemViewComponent = {
                         placeholder="e.g. Drone, Projector, Tablet" 
                         value="${this.customProductType || ''}"
                         oninput="ListItemViewComponent.onCustomTypeInput(event)"
-                        style="width: 100%; padding: 11px 14px; border: 1.5px solid ${this.errors && this.errors.customType ? '#dc2626' : 'var(--violet)'}; border-radius: var(--radius-md); font-size: 14px; font-weight: 600;"
+                        style="border: 1.5px solid ${this.errors && this.errors.customType ? '#b91c1c' : 'var(--brand-700)'};"
                       />
-                      <div id="customProductTypeError" style="color: #dc2626; font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customType ? 'block' : 'none'};">
+                      <div id="customProductTypeError" style="color: #b91c1c; font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customType ? 'block' : 'none'};">
                         ${this.errors && this.errors.customType ? this.errors.customType : ''}
                       </div>
                     </div>
                   </div>
 
                   <!-- Brand / Manufacturer Dropdown -->
-                  <div>
-                    <label for="listBrand" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                  <div class="form-field-unit">
+                    <label for="listBrand">
                       Brand / Manufacturer
                     </label>
                     <select 
                       id="listBrand" 
                       onchange="ListItemViewComponent.onBrandChange(event)"
-                      style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600; background: white;"
                     >
                       ${isOtherType ? `
                         <option value="Other" selected>Other</option>
@@ -170,8 +169,8 @@ window.ListItemViewComponent = {
 
                     <!-- Specify Brand (Visible when Brand is Other or Product Type is Other) -->
                     <div id="customBrandWrap" style="margin-top: 10px; display: ${isOtherBrand ? 'block' : 'none'};">
-                      <label for="listCustomBrand" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">
-                        Specify brand <span style="color: #dc2626;">*</span>
+                      <label for="listCustomBrand">
+                        Specify brand <span style="color: #b91c1c;">*</span>
                       </label>
                       <input 
                         type="text" 
@@ -180,9 +179,9 @@ window.ListItemViewComponent = {
                         placeholder="e.g. Fujifilm, Marshall" 
                         value="${this.customBrand || ''}"
                         oninput="ListItemViewComponent.onCustomBrandInput(event)"
-                        style="width: 100%; padding: 11px 14px; border: 1.5px solid ${this.errors && this.errors.customBrand ? '#dc2626' : 'var(--violet)'}; border-radius: var(--radius-md); font-size: 14px; font-weight: 600;"
+                        style="border: 1.5px solid ${this.errors && this.errors.customBrand ? '#b91c1c' : 'var(--brand-700)'};"
                       />
-                      <div id="customBrandError" style="color: #dc2626; font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customBrand ? 'block' : 'none'};">
+                      <div id="customBrandError" style="color: #b91c1c; font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customBrand ? 'block' : 'none'};">
                         ${this.errors && this.errors.customBrand ? this.errors.customBrand : ''}
                       </div>
                     </div>
@@ -190,9 +189,9 @@ window.ListItemViewComponent = {
                 </div>
 
                 <!-- 2. Title & Condition -->
-                <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px;">
-                  <div>
-                    <label for="listTitle" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                <div class="form-grid-2col">
+                  <div class="form-field-unit">
+                    <label for="listTitle">
                       Item Title & Exact Model Name
                     </label>
                     <input 
@@ -201,18 +200,14 @@ window.ListItemViewComponent = {
                       placeholder="e.g. Sony Alpha A7 IV Kit, MacBook Pro 14 M3, DJI Mavic 3 Pro"
                       value="${this.draft.title || ''}"
                       required 
-                      style="width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600;" 
                     />
                   </div>
 
-                  <div>
-                    <label for="listCondition" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                  <div class="form-field-unit">
+                    <label for="listCondition">
                       Item Condition
                     </label>
-                    <select 
-                      id="listCondition" 
-                      style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600; background: white;"
-                    >
+                    <select id="listCondition">
                       <option value="Flawless" ${this.draft.condition === 'Flawless' ? 'selected' : ''}>Flawless (Mint / Pristine)</option>
                       <option value="Like New" ${!this.draft.condition || this.draft.condition === 'Like New' ? 'selected' : ''}>Like New (No cosmetic marks)</option>
                       <option value="Excellent" ${this.draft.condition === 'Excellent' ? 'selected' : ''}>Excellent (Minor cosmetic wear)</option>
@@ -222,9 +217,9 @@ window.ListItemViewComponent = {
                 </div>
 
                 <!-- 3. Daily Price & Scaled Deposit -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-                  <div>
-                    <label for="listDailyRate" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                <div class="form-grid-2col">
+                  <div class="form-field-unit">
+                    <label for="listDailyRate">
                       Daily Rental Rate (₹)
                     </label>
                     <input 
@@ -235,12 +230,12 @@ window.ListItemViewComponent = {
                       max="50000"
                       value="${this.draft.dailyRate || ''}"
                       required 
-                      style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 15px; font-weight: 800; color: var(--violet);" 
+                      style="font-family: var(--font-display); font-weight: 700; color: var(--brand-700);"
                     />
                   </div>
 
-                  <div>
-                    <label for="listDeposit" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                  <div class="form-field-unit">
+                    <label for="listDeposit">
                       Refundable Security Deposit (₹)
                     </label>
                     <input 
@@ -251,9 +246,9 @@ window.ListItemViewComponent = {
                       max="100000"
                       value="${this.draft.deposit || ''}"
                       required 
-                      style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 15px; font-weight: 800; color: var(--ink);" 
+                      style="font-family: var(--font-display); font-weight: 700; color: var(--brand-900);"
                     />
-                    <div style="font-size: 11px; color: var(--muted); margin-top: 4px;" id="depositHint">
+                    <div style="font-size: 11px; color: var(--brand-700); margin-top: 4px;" id="depositHint">
                       ${isOtherType 
                         ? 'Scaled with item value: higher for iPhones, MacBooks, laptops, PS5 & lenses; lower for speakers. Set the deposit at or above the item\'s resale value.' 
                         : 'Scaled with item value: higher for iPhones, MacBooks, laptops, PS5 & lenses; lower for speakers.'
@@ -263,17 +258,17 @@ window.ListItemViewComponent = {
                 </div>
 
                 <!-- 4. Mandatory Handover Checklist Preview -->
-                <div style="background-color: var(--violet-light); border: 1.5px solid var(--violet-tint); border-radius: var(--radius-md); padding: 14px;">
+                <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-card); padding: 16px; margin-bottom: 16px;">
                   <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                     <span style="font-size: 16px;">📋</span>
-                    <strong style="font-size: 12px; font-weight: 800; color: var(--violet-dark); text-transform: uppercase;">
+                    <strong style="font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--brand-900); text-transform: uppercase;">
                       Mandatory Handover & Return Protocol for ${isOtherType ? (this.customProductType && this.customProductType.trim() ? this.customProductType.trim() : 'Other Gear') : this.selectedProductType}:
                     </strong>
                   </div>
-                  <ul style="list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--ink);">
+                  <ul style="list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--brand-900);">
                     ${checklist.map(item => `
                       <li style="display: flex; align-items: flex-start; gap: 6px;">
-                        <span style="color: var(--violet); font-weight: 700;">✓</span>
+                        <span style="color: var(--brand-700); font-weight: 700;">✓</span>
                         <span>${item.label}</span>
                       </li>
                     `).join('')}
@@ -281,28 +276,24 @@ window.ListItemViewComponent = {
                 </div>
 
                 <!-- 5. Location Area & Dates -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-                  <div>
-                    <label for="listArea" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                <div class="form-grid-2col">
+                  <div class="form-field-unit">
+                    <label for="listArea">
                       Sambhajinagar Area
                     </label>
-                    <select 
-                      id="listArea" 
-                      style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600; background: white;"
-                    >
+                    <select id="listArea">
                       ${neighborhoods.map(n => `<option value="${n}" ${this.draft.area === n ? 'selected' : ''}>${n}</option>`).join('')}
                     </select>
                   </div>
 
-                  <div>
-                    <label for="listAvailableFrom" style="display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">
+                  <div class="form-field-unit">
+                    <label for="listAvailableFrom">
                       Available From
                     </label>
                     <input 
                       type="date" 
                       id="listAvailableFrom" 
                       value="${this.draft.availableFrom || window.AppState.getTodayDateString()}" 
-                      style="width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; font-weight: 600;" 
                     />
                   </div>
                 </div>
@@ -379,12 +370,12 @@ window.ListItemViewComponent = {
                 </div>
 
                 <!-- Trust Guarantee Notice -->
-                <div style="background-color: var(--lime-light); border: 1px solid rgba(139, 159, 30, 0.3); border-radius: var(--radius-md); padding: 12px 14px; font-size: 12px; color: var(--ink);">
+                <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-card); padding: 12px 14px; font-size: 12px; color: var(--brand-900);">
                   📍 <strong>Owner Protection:</strong> Every rental requires identity verification and digital handover condition photos before gear is released in Sambhajinagar.
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" id="submitListingBtn" class="btn btn-lime btn-lg btn-full" style="margin-top: 6px;">
+                <button type="submit" id="submitListingBtn" class="btn btn-primary btn-lg btn-full" style="margin-top: 6px;">
                   Publish Listing to ONRENT Catalogue →
                 </button>
               </form>

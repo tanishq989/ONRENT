@@ -77,7 +77,7 @@ window.TrackerViewComponent = {
               <strong style="font-size: 13px; color: var(--ink);">Demo Flow Controller:</strong>
               <div style="font-size: 11px; color: var(--muted);">Step through order lifecycle milestones in real-time</div>
             </div>
-            <div style="display: flex; gap: 8px;">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
               <button 
                 class="btn btn-secondary btn-sm" 
                 onclick="TrackerViewComponent.stepStatus(-1, '${rental.bookingId}')"

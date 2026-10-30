@@ -38,7 +38,12 @@ window.HomeViewComponent = {
             <div class="hero-search-box">
               <form id="heroSearchForm" onsubmit="HomeViewComponent.handleSearch(event)" class="search-form-grid">
                 <div class="search-field-unit">
-                  <span class="search-field-icon">🔍</span>
+                  <span class="search-field-icon" aria-hidden="true">
+                    <svg class="search-field-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-700)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                  </span>
                   <input 
                     type="text" 
                     id="heroProductQuery" 
@@ -50,7 +55,12 @@ window.HomeViewComponent = {
                 </div>
 
                 <div class="search-field-unit">
-                  <span class="search-field-icon">📍</span>
+                  <span class="search-field-icon" aria-hidden="true">
+                    <svg class="search-field-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-700)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </span>
                   <input 
                     type="text" 
                     id="heroLocationQuery" 
@@ -63,7 +73,14 @@ window.HomeViewComponent = {
                 </div>
 
                 <div class="search-field-unit duration-field">
-                  <span class="search-field-icon">📅</span>
+                  <span class="search-field-icon" aria-hidden="true">
+                    <svg class="search-field-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-700)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                  </span>
                   <select id="heroDurationSelect" aria-label="Rental duration filter">
                     <option value="all">Any Duration</option>
                     <option value="weekend">Weekend (2-3 Days)</option>
@@ -80,7 +97,7 @@ window.HomeViewComponent = {
             </div>
 
             <div style="margin-top: 18px; font-size: 13px; color: #b8c1d4;">
-              Own useful tech gear sitting idle? <button type="button" onclick="window.AppState.navigateTo('list-item')" style="color: var(--lime); font-weight: 700; text-decoration: underline;">List your item</button> in Sambhajinagar and earn.
+              Own useful tech gear sitting idle? <button type="button" onclick="window.AppState.navigateTo('list-item')" style="color: var(--brand-100); font-weight: 700; text-decoration: underline;">List your item</button> in Sambhajinagar and earn.
             </div>
           </div>
         </section>
@@ -114,12 +131,14 @@ window.HomeViewComponent = {
               <button class="btn btn-secondary btn-sm" onclick="window.AppState.navigateTo('browse')">View All →</button>
             </div>
 
-            <div class="moments-scroll-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+            <div class="moments-scroll-grid">
               ${moments.map(m => `
                 <div class="moment-card" onclick="HomeViewComponent.selectMoment('${m.slug}')" role="button" tabindex="0">
-                  <div class="moment-tag-pill">${m.tag}</div>
-                  <div class="moment-icon-badge">${m.icon}</div>
-                  <div>
+                  <div class="moment-card-header">
+                    <div class="moment-icon-badge">${m.icon}</div>
+                    <div class="moment-tag-pill">${m.tag}</div>
+                  </div>
+                  <div class="moment-card-body">
                     <h3 class="moment-card-title">${m.title}</h3>
                     <p class="moment-card-desc">${m.subtitle}</p>
                   </div>

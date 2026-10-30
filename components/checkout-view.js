@@ -52,11 +52,11 @@ window.CheckoutViewComponent = {
               <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line);">
                 <div style="width: 80px; height: 60px; flex-shrink: 0; border-radius: var(--radius-md); overflow: hidden; position: relative;">
                   ${window.ProductImage ? window.ProductImage.render({
-                    src: normImg.url,
-                    alt: normImg.alt,
-                    productType: product.productType,
-                    aspectRatio: '4/3'
-                  }) : `<img src="${normImg.url}" alt="${normImg.alt}" style="width: 100%; height: 100%; object-fit: cover;" />`}
+      src: normImg.url,
+      alt: normImg.alt,
+      productType: product.productType,
+      aspectRatio: '4/3'
+    }) : `<img src="${normImg.url}" alt="${normImg.alt}" style="width: 100%; height: 100%; object-fit: cover;" />`}
                 </div>
                 <div>
                   <span class="pill-badge pill-badge-lime" style="font-size: 10px; margin-bottom: 4px;">${product.category}</span>
@@ -68,7 +68,7 @@ window.CheckoutViewComponent = {
               </div>
 
               <!-- Dates and Plan breakdown summary -->
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
                 <div style="background-color: var(--ink-50); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--line);">
                   <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;">Duration & Plan</div>
                   <div style="font-size: 14px; font-weight: 800; color: var(--ink); margin-top: 2px;">
@@ -106,7 +106,7 @@ window.CheckoutViewComponent = {
             <!-- IDENTITY VERIFICATION & PAYMENT HISTORY CARD -->
             <div style="background-color: var(--white); border: 1.5px solid var(--line); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-sm);">
               
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 18px;">
                 <div>
                   <h3 style="font-size: 18px; font-weight: 900; color: var(--ink);">Renter Trust & Identity Verification</h3>
                   <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">
@@ -123,7 +123,7 @@ window.CheckoutViewComponent = {
               <!-- Verification State Simulator Selector (For Quality / Testing requirement) -->
               <div style="background-color: var(--ink-50); border: 1px dashed var(--line); border-radius: var(--radius-md); padding: 10px 14px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
                 <span style="font-size: 12px; font-weight: 700; color: var(--muted);">Simulate Verification State:</span>
-                <div style="display: flex; gap: 6px;">
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                   <button 
                     class="btn btn-sm ${this.verificationState === 'verified' ? 'btn-violet' : 'btn-secondary'}" 
                     onclick="CheckoutViewComponent.setVerificationState('verified')"
@@ -148,7 +148,7 @@ window.CheckoutViewComponent = {
               <!-- Renter Input Details -->
               <form id="checkoutVerificationForm" onsubmit="CheckoutViewComponent.handleSubmitBooking(event)" style="display: flex; flex-direction: column; gap: 14px;">
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
                   <div>
                     <label style="display: block; font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Full Legal Name</label>
                     <input 
@@ -172,7 +172,7 @@ window.CheckoutViewComponent = {
                   </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
                   <div>
                     <label style="display: block; font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Govt ID Type</label>
                     <select 

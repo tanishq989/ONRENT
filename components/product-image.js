@@ -172,7 +172,7 @@ window.ProductImage = {
           <div style="color: white; font-size: 13px; font-weight: 600; margin-top: 12px; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">
             ${altText}
           </div>
-          <div style="color: var(--lime); font-size: 11px; margin-top: 4px;">
+          <div style="color: var(--brand-100); font-size: 11px; margin-top: 4px;">
             Pinch to zoom on mobile • Click outside or ✕ to close
           </div>
         </div>

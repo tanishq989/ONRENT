@@ -30,7 +30,7 @@ window.ProfileViewComponent = {
           <!-- USER PROFILE CARD -->
           <div style="background-color: var(--white); border: 1px solid var(--line); border-radius: var(--radius-xl); padding: 26px; margin-bottom: 24px; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
             <div style="display: flex; align-items: center; gap: 16px;">
-              <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--violet) 0%, var(--violet-dark) 100%); color: var(--lime); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; box-shadow: var(--shadow-violet);">
+              <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--brand-900) 0%, var(--brand-700) 100%); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; font-family: var(--font-display); box-shadow: var(--shadow-sm);">
                 TS
               </div>
               <div>
