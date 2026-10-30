@@ -130,6 +130,28 @@ window.RentalsViewComponent = {
           <div>🚚 <strong>Fulfillment:</strong> ${rental.fulfillmentMethod === 'delivery' ? 'Doorstep Delivery' : 'Self Pickup'}</div>
         </div>
 
+        <!-- Booking Receipt Breakdown -->
+        <div style="margin-bottom: 16px; padding-top: 10px; border-top: 1px dashed var(--line);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">
+              Booking Receipt Breakdown:
+            </span>
+            <button 
+              type="button" 
+              class="btn btn-secondary btn-sm" 
+              style="padding: 2px 8px; font-size: 11px;"
+              onclick="RentalsViewComponent.openReceiptModal('${rental.bookingId}')"
+            >
+              🧾 Full Receipt Modal
+            </button>
+          </div>
+          ${window.AppState.renderPriceBreakdownHtml(rental, {
+            id: `rentalBreakdown_${rental.bookingId}`,
+            isOpen: false,
+            toggleFn: `window.AppState.toggleBreakdown(this, 'rentalBreakdown_${rental.bookingId}')`
+          })}
+        </div>
+
         <!-- Service Requests History if any -->
         ${rental.serviceRequests && rental.serviceRequests.length > 0 ? `
           <div style="background-color: var(--ink-50); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 12px; margin-bottom: 16px;">
@@ -152,6 +174,9 @@ window.RentalsViewComponent = {
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button class="btn btn-secondary btn-sm" onclick="window.AppState.navigateTo('tracker', { rentalId: '${rental.bookingId}' })">
               ⏱️ Open Status Tracker
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="RentalsViewComponent.openReceiptModal('${rental.bookingId}')">
+              🧾 Booking Receipt
             </button>
 
             ${!isPast ? `
@@ -278,5 +303,62 @@ window.RentalsViewComponent = {
     this.closeServiceRequestModal();
     NavigationComponent.showToast('Service request created with status: Pending', 'success');
     this.render();
+  },
+
+  openReceiptModal(bookingId) {
+    const rental = window.AppState.getRentalById(bookingId);
+    if (!rental) return;
+
+    let modal = document.getElementById('receiptModalContainer');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'receiptModalContainer';
+      document.body.appendChild(modal);
+    }
+
+    modal.innerHTML = `
+      <div class="modal-backdrop active" id="receiptBackdrop" onclick="if(event.target===this) RentalsViewComponent.closeReceiptModal()">
+        <div class="modal-box" style="max-width: 520px;">
+          <button class="modal-close-btn" onclick="RentalsViewComponent.closeReceiptModal()">✕</button>
+
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+            <span style="font-size: 22px;">🧾</span>
+            <span class="pill-badge pill-badge-violet" style="font-size: 11px;">OFFICIAL BOOKING RECEIPT</span>
+          </div>
+          <h3 style="font-size: 20px; font-weight: 900; color: var(--ink); margin-bottom: 2px;">
+            ${rental.productTitle}
+          </h3>
+          <div style="font-size: 12px; color: var(--muted); margin-bottom: 16px;">
+            Booking ID: <strong style="color: var(--violet);">${rental.bookingId}</strong> • ${rental.createdAt || 'Confirmed'}
+          </div>
+
+          <div style="background-color: var(--brand-25); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 16px; font-size: 12px; color: var(--ink); display: flex; flex-direction: column; gap: 4px;">
+            <div><strong>Rental Window:</strong> ${window.AppState.formatDate(rental.startDate)} → ${window.AppState.formatDate(rental.endDate)} (${rental.daysCount} days)</div>
+            <div><strong>Owner:</strong> ${rental.ownerName} (${rental.ownerArea})</div>
+            <div><strong>Fulfillment:</strong> ${rental.fulfillmentMethod === 'delivery' ? 'Doorstep Delivery' : 'Self Pickup'}</div>
+          </div>
+
+          ${window.AppState.renderPriceBreakdownHtml(rental, {
+            id: 'modalReceiptBreakdown_' + rental.bookingId,
+            isOpen: false,
+            toggleFn: "window.AppState.toggleBreakdown(this, 'modalReceiptBreakdown_" + rental.bookingId + "')"
+          })}
+
+          <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-top: 14px; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
+            <span>💰</span>
+            <span><strong>100% Refundable Deposit:</strong> Released immediately upon return inspection.</span>
+          </div>
+
+          <button class="btn btn-secondary btn-full" onclick="RentalsViewComponent.closeReceiptModal()">
+            Close Receipt
+          </button>
+        </div>
+      </div>
+    `;
+  },
+
+  closeReceiptModal() {
+    const modal = document.getElementById('receiptModalContainer');
+    if (modal) modal.remove();
   }
 };

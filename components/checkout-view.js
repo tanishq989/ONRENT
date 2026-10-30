@@ -8,6 +8,7 @@ window.CheckoutViewComponent = {
   verificationState: 'verified', // 'pending' | 'verified' | 'needs_review'
   isChecking: false,
   uploadedDocName: 'aadhaar_card_front_back.pdf',
+  isBreakdownOpen: false,
 
   render() {
     const container = document.getElementById('viewContainer');
@@ -91,15 +92,17 @@ window.CheckoutViewComponent = {
                 </div>
               </div>
 
-              <!-- Price Row Highlights -->
-              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 14px;">
-                <div>
-                  <span style="font-weight: 700; color: var(--ink);">Total Payable at Checkout:</span>
-                  <div style="font-size: 11px; color: var(--muted);">Includes ${window.AppState.formatCurrency(calc.deposit)} 100% refundable deposit</div>
-                </div>
-                <div style="font-size: 22px; font-weight: 900; color: var(--violet);">
-                  ${window.AppState.formatCurrency(calc.totalPayable)}
-                </div>
+              <!-- Price Breakdown with Collapsible Taxes & Fees -->
+              ${window.AppState.renderPriceBreakdownHtml(calc, {
+                id: 'checkoutBreakdownDetails',
+                isOpen: this.isBreakdownOpen,
+                toggleFn: 'CheckoutViewComponent.toggleBreakdown()'
+              })}
+
+              <!-- Refund Guarantee Notice -->
+              <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-top: 14px; display: flex; align-items: center; gap: 8px;">
+                <span>💰</span>
+                <span><strong>100% Refundable Deposit:</strong> Released immediately upon return inspection.</span>
               </div>
             </div>
 
@@ -392,6 +395,11 @@ window.CheckoutViewComponent = {
         </div>
       </div>
     `;
+  },
+
+  toggleBreakdown() {
+    const btn = document.querySelector('[aria-controls="checkoutBreakdownDetails"]');
+    this.isBreakdownOpen = window.AppState.toggleBreakdown(btn, 'checkoutBreakdownDetails');
   },
 
   goToTracker(bookingId) {

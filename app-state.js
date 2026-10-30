@@ -273,6 +273,110 @@ class OnRentState {
     };
   }
 
+  // --- COLLAPSIBLE PRICE BREAKDOWN UTILITIES ---
+  toggleBreakdown(btn, targetId) {
+    if (!btn && targetId) {
+      btn = document.querySelector(`[aria-controls="${targetId}"]`);
+    }
+    const details = document.getElementById(targetId);
+    if (!details) return false;
+
+    const isExpanded = btn ? btn.getAttribute('aria-expanded') === 'true' : details.classList.contains('is-open');
+    const newState = !isExpanded;
+
+    if (btn) {
+      btn.setAttribute('aria-expanded', newState ? 'true' : 'false');
+      btn.classList.toggle('is-open', newState);
+    }
+    details.classList.toggle('is-open', newState);
+    details.setAttribute('aria-hidden', newState ? 'false' : 'true');
+    return newState;
+  }
+
+  renderPriceBreakdownHtml(calc, options = {}) {
+    if (!calc) return '';
+    const detailsId = options.id || ('breakdownDetails_' + Math.random().toString(36).substr(2, 9));
+    const isOpen = !!options.isOpen;
+    const toggleCall = options.toggleFn || `window.AppState.toggleBreakdown(this, '${detailsId}')`;
+    const taxLabel = calc.taxLabel || 'GST (18%)';
+    const fulfillmentLabel = calc.fulfillmentLabel || (calc.fulfillmentMethod === 'delivery' ? 'Doorstep Delivery' : 'Self Pickup');
+    const hasProtection = calc.hasProtection || (calc.protectionFee !== undefined && calc.protectionFee > 0);
+    const protectionFee = calc.protectionFee || 0;
+    const deliveryFee = calc.deliveryFee || 0;
+
+    return `
+      <div class="calc-breakdown-list">
+        <!-- 1. Base Rent -->
+        <div class="calc-breakdown-row">
+          <span>Base Rent (${calc.daysCount} days × ${this.formatCurrency(calc.dailyRate)})</span>
+          <span>${this.formatCurrency(calc.baseRent)}</span>
+        </div>
+
+        <!-- 2. Plan Discount (if any) -->
+        ${calc.discountAmount > 0 ? `
+          <div class="calc-breakdown-row" style="color: var(--success); font-weight: 600;">
+            <span>Plan Discount ${calc.discountPercent ? `(${calc.discountPercent}%)` : ''}</span>
+            <span>-${this.formatCurrency(calc.discountAmount)}</span>
+          </div>
+        ` : ''}
+
+        <!-- 3. Net Rental Charge with Collapsible Group -->
+        <div class="breakdown-group">
+          <button 
+            type="button" 
+            class="calc-breakdown-row highlight-net breakdown-toggle-btn ${isOpen ? 'is-open' : ''}" 
+            aria-expanded="${isOpen ? 'true' : 'false'}" 
+            aria-controls="${detailsId}"
+            onclick="${toggleCall}"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}"
+          >
+            <span class="breakdown-toggle-label">
+              <svg class="breakdown-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#5b2a86" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6l4 4 4-4"/>
+              </svg>
+              <span>Net Rental Charge</span>
+            </span>
+            <span>${this.formatCurrency(calc.netRent)}</span>
+          </button>
+
+          <!-- Grouped 3 Hidden Rows Inside Chevron -->
+          <div id="${detailsId}" class="breakdown-collapsible ${isOpen ? 'is-open' : ''}" role="region" aria-label="Taxes and fees details" aria-hidden="${isOpen ? 'false' : 'true'}">
+            <div class="breakdown-collapsible-inner">
+              <div class="calc-breakdown-row breakdown-subrow">
+                <span>Taxes (${taxLabel})</span>
+                <span>+${this.formatCurrency(calc.taxAmount)}</span>
+              </div>
+
+              ${hasProtection ? `
+                <div class="calc-breakdown-row breakdown-subrow">
+                  <span>Damage Protection</span>
+                  <span>+${this.formatCurrency(protectionFee)}</span>
+                </div>
+              ` : ''}
+
+              <div class="calc-breakdown-row breakdown-subrow">
+                <span>Fulfillment (${fulfillmentLabel})</span>
+                <span>${deliveryFee > 0 ? '+' + this.formatCurrency(deliveryFee) : 'FREE'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Refundable Deposit -->
+        <div class="calc-breakdown-row" style="padding-top: 4px; color: var(--brand-900); font-weight: 700;">
+          <span>Refundable Deposit (Scaled)</span>
+          <span style="color: var(--brand-700);">${this.formatCurrency(calc.deposit)}</span>
+        </div>
+
+        <!-- 5. Total Amount Payable -->
+        <div class="calc-breakdown-row highlight-total">
+          <span>Total Amount Payable</span>
+          <span class="total-val">${this.formatCurrency(calc.totalPayable)}</span>
+        </div>
+      </div>
+    `;
+  }
+
   // --- CATALOGUE METHODS ---
   getProductById(id) {
     return this.products.find(p => p.id === id) || this.ownerListings.find(p => p.id === id) || this.seeds.products[0];

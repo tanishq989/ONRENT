@@ -9,6 +9,7 @@ window.ProductViewComponent = {
   activeImageIndex: 0,
   touchStartX: 0,
   touchStartY: 0,
+  isBreakdownOpen: false,
 
   render() {
     const container = document.getElementById('viewContainer');
@@ -342,51 +343,11 @@ window.ProductViewComponent = {
                 </label>
 
                 <!-- 5. ITEMIZED PRICING BREAKDOWN TABLE -->
-                <div class="calc-breakdown-list">
-                  <div class="calc-breakdown-row">
-                    <span>Base Rent (${calc.daysCount} days × ${window.AppState.formatCurrency(calc.dailyRate)})</span>
-                    <span>${window.AppState.formatCurrency(calc.baseRent)}</span>
-                  </div>
-
-                  ${calc.discountAmount > 0 ? `
-                    <div class="calc-breakdown-row" style="color: var(--success); font-weight: 600;">
-                      <span>Plan Discount (${calc.discountPercent}%)</span>
-                      <span>-${window.AppState.formatCurrency(calc.discountAmount)}</span>
-                    </div>
-                  ` : ''}
-
-                  <div class="calc-breakdown-row highlight-net">
-                    <span>Net Rental Charge</span>
-                    <span>${window.AppState.formatCurrency(calc.netRent)}</span>
-                  </div>
-
-                  <div class="calc-breakdown-row">
-                    <span>Taxes (${calc.taxLabel})</span>
-                    <span>+${window.AppState.formatCurrency(calc.taxAmount)}</span>
-                  </div>
-
-                  ${calc.hasProtection ? `
-                    <div class="calc-breakdown-row">
-                      <span>Damage Protection</span>
-                      <span>+${window.AppState.formatCurrency(calc.protectionFee)}</span>
-                    </div>
-                  ` : ''}
-
-                  <div class="calc-breakdown-row">
-                    <span>Fulfillment (${calc.fulfillmentLabel})</span>
-                    <span>${calc.deliveryFee > 0 ? '+' + window.AppState.formatCurrency(calc.deliveryFee) : 'FREE'}</span>
-                  </div>
-
-                  <div class="calc-breakdown-row" style="padding-top: 4px; color: var(--ink); font-weight: 700;">
-                    <span>Refundable Deposit (Scaled)</span>
-                    <span style="color: var(--violet);">${window.AppState.formatCurrency(calc.deposit)}</span>
-                  </div>
-
-                  <div class="calc-breakdown-row highlight-total">
-                    <span>Total Amount Payable</span>
-                    <span class="total-val">${window.AppState.formatCurrency(calc.totalPayable)}</span>
-                  </div>
-                </div>
+                ${window.AppState.renderPriceBreakdownHtml(calc, {
+                  id: 'productBreakdownDetails',
+                  isOpen: this.isBreakdownOpen,
+                  toggleFn: 'ProductViewComponent.toggleBreakdown()'
+                })}
 
                 <!-- Refund Guarantee Notice -->
                 <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
@@ -462,6 +423,7 @@ window.ProductViewComponent = {
   },
 
   selectPlan(planId, days) {
+    this.isBreakdownOpen = false;
     const draft = window.AppState.checkoutDraft;
     draft.planId = planId;
     draft.daysCount = days;
@@ -470,6 +432,7 @@ window.ProductViewComponent = {
   },
 
   onDateRangeChange() {
+    this.isBreakdownOpen = false;
     const startVal = document.getElementById('productStartDate').value;
     const endVal = document.getElementById('productEndDate').value;
     const draft = window.AppState.checkoutDraft;
@@ -478,6 +441,11 @@ window.ProductViewComponent = {
     draft.daysCount = window.AppState.diffDays(startVal, endVal);
     draft.planId = 'daily';
     this.render();
+  },
+
+  toggleBreakdown() {
+    const btn = document.querySelector('[aria-controls="productBreakdownDetails"]');
+    this.isBreakdownOpen = window.AppState.toggleBreakdown(btn, 'productBreakdownDetails');
   },
 
   setFulfillment(method) {

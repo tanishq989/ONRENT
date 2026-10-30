@@ -219,7 +219,7 @@ window.HomeViewComponent = {
         <section class="container" style="margin-bottom: 40px;">
           <div style="background: linear-gradient(135deg, var(--violet) 0%, var(--violet-dark) 100%); border-radius: var(--radius-xl); padding: 36px 28px; color: var(--white); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
             <span class="pill-badge pill-badge-lime">EARN PASSIVE INCOME</span>
-            <h3 style="font-size: 26px; font-weight: 900; max-width: 560px;">Have Cameras, Laptops, MacBooks, PS5, or Speakers Sitting Idle?</h3>
+            <h3 style="color: #fcf7f8; font-size: 26px; font-weight: 900; max-width: 560px;">Have Cameras, Laptops, MacBooks, PS5, or Speakers Sitting Idle?</h3>
             <p style="font-size: 14px; color: #ded5fd; max-width: 500px;">
               Rent them out to verified neighbours in Sambhajinagar. You set the daily price, retain 100% deposit protection, and approve handovers.
             </p>
