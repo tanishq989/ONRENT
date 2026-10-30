@@ -133,7 +133,7 @@ window.HandoverReturnComponent = {
                 <div style="display: flex; gap: 8px;">
                   <input type="file" id="handoverFileInput" accept="image/*" style="display: none;" onchange="HandoverReturnComponent.handlePhotoUpload(event, 'handover')" />
                   <button type="button" class="btn btn-secondary btn-sm" onclick="HandoverReturnComponent.triggerPhotoUpload('handover')">
-                    📷 + Upload Photo
+                    <svg class="icon icon-16" aria-hidden="true"><use href="#icon-camera"></use></svg> + Upload Photo
                   </button>
                   <button type="button" class="btn btn-secondary btn-sm" onclick="HandoverReturnComponent.addPresetPhoto('handover')">
                     + Add Angle
@@ -145,8 +145,8 @@ window.HandoverReturnComponent = {
                 ${defaultPhotos.map((photo, i) => `
                   <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; position: relative;">
                     <img src="${typeof photo === 'object' ? photo.url : photo}" alt="Angle ${i + 1}" style="width: 100%; height: 100%; object-fit: cover;" />
-                    <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px;">
-                      Angle ${i + 1} ✓
+                    <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">
+                      Angle ${i + 1} <svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg>
                     </span>
                   </div>
                 `).join('')}
@@ -222,8 +222,8 @@ window.HandoverReturnComponent = {
         div.style.cssText = 'border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--violet); aspect-ratio: 4 / 3; position: relative;';
         div.innerHTML = `
           <img src="${dataUrl}" alt="${type === 'handover' ? 'Inspection' : 'Return'} Angle ${count}" style="width: 100%; height: 100%; object-fit: cover;" />
-          <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(111, 75, 246, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-weight: 700;">
-            ${type === 'handover' ? 'Inspection Angle' : 'Return Angle'} ${count} ✓ (Uploaded)
+          <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(111, 75, 246, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+            ${type === 'handover' ? 'Inspection Angle' : 'Return Angle'} ${count} <svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> (Uploaded)
           </span>
         `;
         grid.appendChild(div);
@@ -242,8 +242,8 @@ window.HandoverReturnComponent = {
       const imgSrc = type === 'handover' ? 'public/images/handover/handover-accessories-cables.webp' : 'public/images/handover/return-ports-clean.webp';
       div.innerHTML = `
         <img src="${imgSrc}" alt="${type === 'handover' ? 'Inspection' : 'Return'} Angle ${count}" style="width: 100%; height: 100%; object-fit: cover;" />
-        <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(111, 75, 246, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-weight: 700;">
-          ${type === 'handover' ? 'Inspection Angle' : 'Return Angle'} ${count} ✓ (Timestamped)
+        <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(111, 75, 246, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+          ${type === 'handover' ? 'Inspection Angle' : 'Return Angle'} ${count} <svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> (Timestamped)
         </span>
       `;
       grid.appendChild(div);
@@ -357,10 +357,10 @@ window.HandoverReturnComponent = {
               <div style="display: flex; gap: 8px;">
                 <input type="file" id="returnFileInput" accept="image/*" style="display: none;" onchange="HandoverReturnComponent.handlePhotoUpload(event, 'return')" />
                 <button type="button" class="btn btn-secondary btn-sm" onclick="HandoverReturnComponent.triggerPhotoUpload('return')">
-                  📷 + Upload Return Photo
+                  <svg class="icon icon-16" aria-hidden="true"><use href="#icon-camera"></use></svg> + Upload Return Photo
                 </button>
                 <button class="btn btn-secondary btn-sm" onclick="HandoverReturnComponent.simulateReturnScan()">
-                  🤖 AI Condition Diagnostic
+                  <svg class="icon icon-16" aria-hidden="true"><use href="#icon-robot"></use></svg> AI Condition Diagnostic
                 </button>
               </div>
             </div>
@@ -368,16 +368,16 @@ window.HandoverReturnComponent = {
             <div id="returnPhotosGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 14px;">
               <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; position: relative;">
                 <img src="public/images/handover/return-front-condition.webp" alt="Return Front Condition" style="width: 100%; height: 100%; object-fit: cover;" />
-                <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px;">Return Front Condition ✓</span>
+                <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">Return Front Condition <svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg></span>
               </div>
               <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; position: relative;">
                 <img src="public/images/handover/return-ports-clean.webp" alt="Return Ports & Serial" style="width: 100%; height: 100%; object-fit: cover;" />
-                <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px;">Return Ports & Serial ✓</span>
+                <span style="position: absolute; bottom: 6px; left: 6px; font-size: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">Return Ports & Serial <svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg></span>
               </div>
             </div>
 
             <div style="background-color: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 12px 16px; font-size: 13px; color: #065f46; display: flex; align-items: center; gap: 10px;">
-              <span style="font-size: 18px;">✓</span>
+              <span style="display: inline-flex; align-items: center;"><svg class="icon icon-20" aria-hidden="true"><use href="#icon-check"></use></svg></span>
               <div>
                 <strong>AI Inspection Diagnostic: Clean & Functional</strong>
                 <div style="font-size: 11px; color: #047857;">Zero structural damage detected. Advisory note: Owner has final authority on deposit release.</div>
@@ -399,7 +399,7 @@ window.HandoverReturnComponent = {
               ${typeSpecificChecklist.map(item => `
                 <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background-color: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 13px;">
                   <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
-                    <span style="color: var(--success); font-weight: 800; font-size: 15px;">✓</span>
+                    <span style="color: var(--success); display: inline-flex; align-items: center;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg></span>
                     <span style="color: var(--ink); font-weight: 600;">${item.label}</span>
                   </div>
                   <span style="font-size: 10px; font-weight: 700; color: #047857; background: var(--success-light); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">Verified Clean</span>
@@ -418,14 +418,14 @@ window.HandoverReturnComponent = {
                 class="btn ${!this.damageReported ? 'btn-violet' : 'btn-secondary'}" 
                 onclick="HandoverReturnComponent.setDamageReported(false)"
               >
-                ✓ No Damage (Normal Wear)
+                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> No Damage (Normal Wear)
               </button>
               <button 
                 type="button" 
                 class="btn ${this.damageReported ? 'btn-violet' : 'btn-secondary'}" 
                 onclick="HandoverReturnComponent.setDamageReported(true)"
               >
-                ⚠️ Report Damage / Missing Gear
+                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-alert"></use></svg> Report Damage / Missing Gear
               </button>
             </div>
 
@@ -495,7 +495,7 @@ window.HandoverReturnComponent = {
               class="btn btn-lime btn-lg btn-full" 
               onclick="HandoverReturnComponent.finalizeReturn('${rental.bookingId}', ${heldDeposit}, ${damageFee})"
             >
-              ✓ Owner Approves & Releases ${window.AppState.formatCurrency(netRefund)} Deposit
+              <svg class="icon icon-20" aria-hidden="true"><use href="#icon-check"></use></svg> Owner Approves & Releases ${window.AppState.formatCurrency(netRefund)} Deposit
             </button>
           </div>
 

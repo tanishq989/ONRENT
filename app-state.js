@@ -392,20 +392,22 @@ class OnRentState {
     result = result.filter(p => p.location.toLowerCase().includes(this.activeCity.toLowerCase()));
 
     // Keyword search (name, title, productType, brand, description, specs, aliases)
-    if (this.searchQuery.trim()) {
-      const q = this.searchQuery.toLowerCase().trim();
+    const rawQ = (this.searchQuery || '').toLowerCase().trim();
+    if (rawQ) {
+      const terms = rawQ.split(/\s+/).filter(Boolean);
       result = result.filter(p => {
-        return (
-          p.name.toLowerCase().includes(q) ||
-          p.title.toLowerCase().includes(q) ||
-          (p.productType && p.productType.toLowerCase().includes(q)) ||
-          (p.brand && p.brand.toLowerCase().includes(q)) ||
-          p.category.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q) ||
-          p.area.toLowerCase().includes(q) ||
-          (p.aliases && p.aliases.some(a => a.toLowerCase().includes(q))) ||
-          (p.specs && p.specs.some(s => s.toLowerCase().includes(q)))
-        );
+        const searchable = [
+          p.name,
+          p.title,
+          p.productType,
+          p.brand,
+          p.category,
+          p.description,
+          p.area,
+          ...(p.aliases || []),
+          ...(p.specs || [])
+        ].filter(Boolean).join(' ').toLowerCase();
+        return terms.every(term => searchable.includes(term));
       });
     }
 

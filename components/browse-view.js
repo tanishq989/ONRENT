@@ -45,22 +45,37 @@ window.BrowseViewComponent = {
             
             <!-- Search Keyword Bar & Clear Action -->
             <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
-              <div style="flex: 1; min-width: 260px; display: flex; align-items: center; gap: 10px; background-color: var(--ink-50); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 8px 14px;">
-                <span style="font-size: 16px; color: var(--violet);">🔍</span>
+              <div class="browse-search-unit" onclick="document.getElementById('browseSearchInput')?.focus()">
+                <label for="browseSearchInput" class="visually-hidden">Search rental products</label>
+                <span class="search-field-icon" aria-hidden="true">
+                  <svg class="icon icon-22" style="color: var(--brand-700);" aria-hidden="true"><use href="#icon-search"></use></svg>
+                </span>
                 <input 
-                  type="text" 
+                  type="search" 
                   id="browseSearchInput" 
-                  placeholder="Search by product name, e.g. iPhone 15 Pro, MacBook, PS5, Canon Creator Kit..."
-                  value="${window.AppState.searchQuery}"
-                  oninput="BrowseViewComponent.onSearchChange(event)"
-                  style="border: none; background: transparent; width: 100%; font-size: 14px; font-weight: 600; outline: none;"
+                  placeholder="Search iPhone, MacBook, PS5, camera…"
+                  value="${window.AppState.searchQuery || ''}"
+                  autocomplete="off"
+                  enterkeyhint="search"
+                  oninput="BrowseViewComponent.onSearchInput(event)"
+                  onkeydown="BrowseViewComponent.onSearchKeydown(event)"
                   aria-label="Search rental products"
                 />
+                <button 
+                  type="button" 
+                  class="search-clear-btn" 
+                  id="browseSearchClearBtn" 
+                  aria-label="Clear search" 
+                  onclick="BrowseViewComponent.clearSearch(event)"
+                  style="display: ${window.AppState.searchQuery ? 'inline-flex' : 'none'};"
+                >
+                  <svg class="icon icon-16" aria-hidden="true"><use href="#icon-close"></use></svg>
+                </button>
               </div>
 
               ${window.AppState.searchQuery || window.AppState.selectedCategory !== 'for-you' || window.AppState.selectedProductType !== 'all' || window.AppState.selectedBrand !== 'All Brands' ? `
                 <button class="btn btn-secondary btn-sm" onclick="BrowseViewComponent.clearAllFilters()">
-                  ✕ Reset Filters
+                  <svg class="icon icon-16" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true"><use href="#icon-close"></use></svg> Reset Filters
                 </button>
               ` : ''}
             </div>
@@ -151,32 +166,115 @@ window.BrowseViewComponent = {
           </div>
 
           <!-- RESULTS GRID OR EMPTY STATE -->
-          ${filtered.length > 0 ? `
-            <div class="product-grid" id="browseProductsGrid">
-              ${filtered.map(p => HomeViewComponent.renderProductCard(p)).join('')}
-            </div>
-          ` : `
-            <!-- Empty State -->
-            <div style="text-align: center; padding: 60px 20px; background-color: var(--white); border-radius: var(--radius-xl); border: 1px solid var(--line); box-shadow: var(--shadow-xs);">
-              <div style="font-size: 48px; margin-bottom: 12px;">🔍</div>
-              <h3 style="font-size: 20px; font-weight: 800; color: var(--ink); margin-bottom: 8px;">No matching tech items found</h3>
-              <p style="font-size: 14px; color: var(--muted); max-width: 440px; margin: 0 auto 20px;">
-                We couldn't find items matching your active search and filters within ${window.AppState.maxDistanceKm}km in Sambhajinagar. Try searching for "iPhone 15", "MacBook Pro", "Canon Creator Kit", "Sony WH-1000XM5", or "Party Speaker".
-              </p>
-              <button class="btn btn-violet" onclick="BrowseViewComponent.clearAllFilters()">
-                Show All Catalogue Items
-              </button>
-            </div>
-          `}
+          <div id="browseResultsContainer">
+            ${filtered.length > 0 ? `
+              <div class="product-grid" id="browseProductsGrid">
+                ${filtered.map(p => HomeViewComponent.renderProductCard(p)).join('')}
+              </div>
+            ` : `
+              <!-- Empty State -->
+              <div style="text-align: center; padding: 60px 20px; background-color: var(--white); border-radius: var(--radius-xl); border: 1px solid var(--line); box-shadow: var(--shadow-xs);">
+                <div style="width: 56px; height: 56px; border-radius: 50%; background-color: var(--brand-50); color: var(--brand-700); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                  <svg class="icon icon-28" aria-hidden="true"><use href="#icon-search"></use></svg>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--ink); margin-bottom: 8px;">
+                  ${window.AppState.searchQuery ? `No items match '${window.AppState.searchQuery}'` : 'No matching tech items found'}
+                </h3>
+                <p style="font-size: 14px; color: var(--muted); max-width: 440px; margin: 0 auto 20px;">
+                  ${window.AppState.searchQuery ? 'Try another name or clear filters to view available gear.' : `We couldn't find items matching your active search and filters within ${window.AppState.maxDistanceKm}km in Sambhajinagar.`}
+                </p>
+                <button class="btn btn-violet" onclick="BrowseViewComponent.clearAllFilters()">
+                  Clear Filters & Show All
+                </button>
+              </div>
+            `}
+          </div>
 
         </div>
       </div>
     `;
   },
 
-  onSearchChange(e) {
-    window.AppState.searchQuery = e.target.value;
-    BrowseViewComponent.render();
+  debounceTimer: null,
+
+  onSearchInput(e) {
+    const raw = e.target.value;
+    const clearBtn = document.getElementById('browseSearchClearBtn');
+    if (clearBtn) {
+      clearBtn.style.display = raw.trim().length > 0 ? 'inline-flex' : 'none';
+    }
+
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+      window.AppState.searchQuery = raw;
+      this.updateResults();
+    }, 200);
+  },
+
+  clearSearch(e) {
+    if (e) e.stopPropagation();
+    clearTimeout(this.debounceTimer);
+    const input = document.getElementById('browseSearchInput');
+    if (input) {
+      input.value = '';
+      window.AppState.searchQuery = '';
+      const clearBtn = document.getElementById('browseSearchClearBtn');
+      if (clearBtn) clearBtn.style.display = 'none';
+      input.focus();
+    }
+    this.updateResults();
+  },
+
+  onSearchKeydown(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      this.clearSearch(e);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      clearTimeout(this.debounceTimer);
+      const input = document.getElementById('browseSearchInput');
+      if (input) {
+        window.AppState.searchQuery = input.value;
+      }
+      this.updateResults();
+    }
+  },
+
+  updateResults() {
+    const filtered = window.AppState.getFilteredProducts();
+    const summaryText = document.getElementById('browseResultSummaryText');
+    if (summaryText) {
+      summaryText.textContent = `Showing ${filtered.length} verified items available in Chhatrapati Sambhajinagar`;
+    }
+
+    const container = document.getElementById('browseResultsContainer');
+    if (!container) return;
+
+    if (filtered.length > 0) {
+      container.innerHTML = `
+        <div class="product-grid" id="browseProductsGrid">
+          ${filtered.map(p => HomeViewComponent.renderProductCard(p)).join('')}
+        </div>
+      `;
+    } else {
+      const q = (window.AppState.searchQuery || '').trim();
+      container.innerHTML = `
+        <div style="text-align: center; padding: 60px 20px; background-color: var(--white); border-radius: var(--radius-xl); border: 1px solid var(--line); box-shadow: var(--shadow-xs);">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background-color: var(--brand-50); color: var(--brand-700); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+            <svg class="icon icon-28" aria-hidden="true"><use href="#icon-search"></use></svg>
+          </div>
+          <h3 style="font-size: 20px; font-weight: 800; color: var(--ink); margin-bottom: 8px;">
+            ${q ? `No items match '${q}'. Try another name or clear filters.` : 'No items match your active filters.'}
+          </h3>
+          <p style="font-size: 14px; color: var(--muted); max-width: 440px; margin: 0 auto 20px;">
+            ${q ? 'Try searching for generic terms like camera, macbook, drone, or bike.' : `We couldn't find items matching your active search and filters within ${window.AppState.maxDistanceKm}km in Sambhajinagar.`}
+          </p>
+          <button class="btn btn-violet" onclick="BrowseViewComponent.clearSearch()">
+            Clear search
+          </button>
+        </div>
+      `;
+    }
   },
 
   selectCategory(slug) {
@@ -215,3 +313,31 @@ window.BrowseViewComponent = {
     BrowseViewComponent.render();
   }
 };
+
+// Global "/" keyboard shortcut to focus search without typing "/"
+if (typeof window !== 'undefined' && !window.__slashSearchListenerAdded) {
+  window.__slashSearchListenerAdded = true;
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement?.tagName) && !document.activeElement?.isContentEditable) {
+      e.preventDefault();
+      const browseInput = document.getElementById('browseSearchInput');
+      const heroInput = document.getElementById('heroProductQuery');
+      if (browseInput) {
+        browseInput.focus();
+        browseInput.select();
+      } else if (heroInput) {
+        heroInput.focus();
+        heroInput.select();
+      } else {
+        window.AppState.navigateTo('browse');
+        setTimeout(() => {
+          const bi = document.getElementById('browseSearchInput');
+          if (bi) {
+            bi.focus();
+            bi.select();
+          }
+        }, 50);
+      }
+    }
+  });
+}

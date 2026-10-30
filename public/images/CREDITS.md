@@ -6,7 +6,7 @@ Attribution is proudly provided below. No copyrighted manufacturer marketing wat
 
 ---
 
-## 🎮 PS5 & Gaming (`images/products/ps5/`)
+## PS5 & Gaming (`images/products/ps5/`)
 
 | File | Product | Author / Source | Platform | Licence |
 | :--- | :--- | :--- | :--- | :--- |
@@ -25,7 +25,7 @@ Attribution is proudly provided below. No copyrighted manufacturer marketing wat
 
 ---
 
-## 🔊 Speakers (`images/products/speakers/`)
+## Speakers (`images/products/speakers/`)
 
 | File | Product | Author / Photographer | Platform | Licence |
 | :--- | :--- | :--- | :--- | :--- |
@@ -44,7 +44,7 @@ Attribution is proudly provided below. No copyrighted manufacturer marketing wat
 
 ---
 
-## 💻 Laptops (`images/products/laptops/`)
+## Laptops (`images/products/laptops/`)
 
 | File | Product | Author / Photographer | Platform | Licence |
 | :--- | :--- | :--- | :--- | :--- |
@@ -63,7 +63,7 @@ Attribution is proudly provided below. No copyrighted manufacturer marketing wat
 
 ---
 
-## 📱 iPhones (`images/products/iphones/`)
+## iPhones (`images/products/iphones/`)
 
 | File | Product | Author / Photographer | Platform | Licence |
 | :--- | :--- | :--- | :--- | :--- |
@@ -82,7 +82,7 @@ Attribution is proudly provided below. No copyrighted manufacturer marketing wat
 
 ---
 
-## 💻 MacBooks (`images/products/macbooks/`)
+## MacBooks (`images/products/macbooks/`)
 
 | File | Product | Author / Photographer | Platform | Licence |
 | :--- | :--- | :--- | :--- | :--- |
@@ -101,7 +101,7 @@ Attribution is proudly provided below. No copyrighted manufacturer marketing wat
 
 ---
 
-## 📷 DSLR Cameras (`images/products/dslr/`)
+## DSLR Cameras (`images/products/dslr/`)
 
 | File | Product | Author / Photographer | Platform | Licence |
 | :--- | :--- | :--- | :--- | :--- |
@@ -120,7 +120,7 @@ Attribution is proudly provided below. No copyrighted manufacturer marketing wat
 
 ---
 
-## 🔭 DSLR Lenses (`images/products/lenses/`)
+## DSLR Lenses (`images/products/lenses/`)
 
 | File | Product | Author / Photographer | Platform | Licence |
 | :--- | :--- | :--- | :--- | :--- |
@@ -139,7 +139,7 @@ Attribution is proudly provided below. No copyrighted manufacturer marketing wat
 
 ---
 
-## 🔍 Handover & Return Inspection Photos (`images/handover/`)
+## Handover & Return Inspection Photos (`images/handover/`)
 
 | File | Purpose | Author | Platform | Licence |
 | :--- | :--- | :--- | :--- | :--- |

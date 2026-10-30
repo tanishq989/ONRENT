@@ -125,9 +125,9 @@ window.RentalsViewComponent = {
 
         <!-- Info specs row -->
         <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--ink); margin-bottom: 16px;">
-          <div>📅 <strong>Dates:</strong> ${window.AppState.formatDate(rental.startDate)} → ${window.AppState.formatDate(rental.endDate)} (${rental.daysCount} days)</div>
-          <div>💰 <strong>Net Total:</strong> ${window.AppState.formatCurrency(rental.totalPayable)}</div>
-          <div>🚚 <strong>Fulfillment:</strong> ${rental.fulfillmentMethod === 'delivery' ? 'Doorstep Delivery' : 'Self Pickup'}</div>
+          <div><svg class="icon icon-16" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true"><use href="#icon-calendar"></use></svg><strong>Dates:</strong> ${window.AppState.formatDate(rental.startDate)} → ${window.AppState.formatDate(rental.endDate)} (${rental.daysCount} days)</div>
+          <div><svg class="icon icon-16" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg><strong>Net Total:</strong> ${window.AppState.formatCurrency(rental.totalPayable)}</div>
+          <div><svg class="icon icon-16" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true"><use href="#icon-truck"></use></svg><strong>Fulfillment:</strong> ${rental.fulfillmentMethod === 'delivery' ? 'Doorstep Delivery' : 'Self Pickup'}</div>
         </div>
 
         <!-- Booking Receipt Breakdown -->
@@ -139,10 +139,10 @@ window.RentalsViewComponent = {
             <button 
               type="button" 
               class="btn btn-secondary btn-sm" 
-              style="padding: 2px 8px; font-size: 11px;"
+              style="padding: 2px 8px; font-size: 11px; display: inline-flex; align-items: center; gap: 4px;"
               onclick="RentalsViewComponent.openReceiptModal('${rental.bookingId}')"
             >
-              🧾 Full Receipt Modal
+              <svg class="icon icon-16" aria-hidden="true"><use href="#icon-receipt"></use></svg> Full Receipt Modal
             </button>
           </div>
           ${window.AppState.renderPriceBreakdownHtml(rental, {
@@ -172,30 +172,30 @@ window.RentalsViewComponent = {
         <!-- Card Actions -->
         <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; padding-top: 10px;">
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="btn btn-secondary btn-sm" onclick="window.AppState.navigateTo('tracker', { rentalId: '${rental.bookingId}' })">
-              ⏱️ Open Status Tracker
+            <button class="btn btn-secondary btn-sm" onclick="window.AppState.navigateTo('tracker', { rentalId: '${rental.bookingId}' })" style="display: inline-flex; align-items: center; gap: 4px;">
+              <svg class="icon icon-16" aria-hidden="true"><use href="#icon-clock"></use></svg> Open Status Tracker
             </button>
-            <button class="btn btn-secondary btn-sm" onclick="RentalsViewComponent.openReceiptModal('${rental.bookingId}')">
-              🧾 Booking Receipt
+            <button class="btn btn-secondary btn-sm" onclick="RentalsViewComponent.openReceiptModal('${rental.bookingId}')" style="display: inline-flex; align-items: center; gap: 4px;">
+              <svg class="icon icon-16" aria-hidden="true"><use href="#icon-receipt"></use></svg> Booking Receipt
             </button>
 
             ${!isPast ? `
-              <button class="btn btn-secondary btn-sm" onclick="RentalsViewComponent.openServiceRequestModal('${rental.bookingId}')">
-                🔧 Request Repair / Extension
+              <button class="btn btn-secondary btn-sm" onclick="RentalsViewComponent.openServiceRequestModal('${rental.bookingId}')" style="display: inline-flex; align-items: center; gap: 4px;">
+                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-wrench"></use></svg> Request Repair / Extension
               </button>
             ` : ''}
           </div>
 
           <div style="display: flex; gap: 8px;">
             ${!rental.handover.completed ? `
-              <button class="btn btn-violet btn-sm" onclick="window.AppState.navigateTo('handover', { rentalId: '${rental.bookingId}' })">
-                📷 Handover Form
+              <button class="btn btn-violet btn-sm" onclick="window.AppState.navigateTo('handover', { rentalId: '${rental.bookingId}' })" style="display: inline-flex; align-items: center; gap: 4px;">
+                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-camera"></use></svg> Handover Form
               </button>
             ` : ''}
 
             ${rental.orderStatus === 'in_rental' || rental.orderStatus === 'return_due' ? `
-              <button class="btn btn-lime btn-sm" onclick="window.AppState.navigateTo('return', { rentalId: '${rental.bookingId}' })">
-                ↩️ Return Item
+              <button class="btn btn-lime btn-sm" onclick="window.AppState.navigateTo('return', { rentalId: '${rental.bookingId}' })" style="display: inline-flex; align-items: center; gap: 4px;">
+                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-arrow-left"></use></svg> Return Item
               </button>
             ` : ''}
 
@@ -226,7 +226,7 @@ window.RentalsViewComponent = {
     modal.innerHTML = `
       <div class="modal-backdrop active" id="serviceReqBackdrop" onclick="if(event.target===this) RentalsViewComponent.closeServiceRequestModal()">
         <div class="modal-box" style="max-width: 540px;">
-          <button class="modal-close-btn" onclick="RentalsViewComponent.closeServiceRequestModal()">✕</button>
+          <button class="modal-close-btn" onclick="RentalsViewComponent.closeServiceRequestModal()" aria-label="Close modal"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-close"></use></svg></button>
 
           <span class="pill-badge pill-badge-violet" style="margin-bottom: 6px;">STEP 7: DURING RENTAL SUPPORT</span>
           <h3 style="font-size: 20px; font-weight: 900; color: var(--ink); margin-bottom: 6px;">
@@ -319,10 +319,10 @@ window.RentalsViewComponent = {
     modal.innerHTML = `
       <div class="modal-backdrop active" id="receiptBackdrop" onclick="if(event.target===this) RentalsViewComponent.closeReceiptModal()">
         <div class="modal-box" style="max-width: 520px;">
-          <button class="modal-close-btn" onclick="RentalsViewComponent.closeReceiptModal()">✕</button>
+          <button class="modal-close-btn" onclick="RentalsViewComponent.closeReceiptModal()" aria-label="Close receipt"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-close"></use></svg></button>
 
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-            <span style="font-size: 22px;">🧾</span>
+            <span style="display: inline-flex; align-items: center; color: var(--brand-700);"><svg class="icon icon-22" aria-hidden="true"><use href="#icon-receipt"></use></svg></span>
             <span class="pill-badge pill-badge-violet" style="font-size: 11px;">OFFICIAL BOOKING RECEIPT</span>
           </div>
           <h3 style="font-size: 20px; font-weight: 900; color: var(--ink); margin-bottom: 2px;">
@@ -345,7 +345,7 @@ window.RentalsViewComponent = {
           })}
 
           <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-top: 14px; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
-            <span>💰</span>
+            <span style="display: inline-flex; align-items: center; color: var(--brand-700);"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg></span>
             <span><strong>100% Refundable Deposit:</strong> Released immediately upon return inspection.</span>
           </div>
 

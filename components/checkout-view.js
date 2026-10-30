@@ -101,7 +101,7 @@ window.CheckoutViewComponent = {
 
               <!-- Refund Guarantee Notice -->
               <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-top: 14px; display: flex; align-items: center; gap: 8px;">
-                <span>💰</span>
+                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg>
                 <span><strong>100% Refundable Deposit:</strong> Released immediately upon return inspection.</span>
               </div>
             </div>
@@ -130,20 +130,23 @@ window.CheckoutViewComponent = {
                   <button 
                     class="btn btn-sm ${this.verificationState === 'verified' ? 'btn-violet' : 'btn-secondary'}" 
                     onclick="CheckoutViewComponent.setVerificationState('verified')"
+                    style="display: inline-flex; align-items: center; gap: 4px;"
                   >
-                    ✓ Verified
+                    <svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> <span>Verified</span>
                   </button>
                   <button 
                     class="btn btn-sm ${this.verificationState === 'pending' ? 'btn-violet' : 'btn-secondary'}" 
                     onclick="CheckoutViewComponent.setVerificationState('pending')"
+                    style="display: inline-flex; align-items: center; gap: 4px;"
                   >
-                    ⏱️ Pending
+                    <svg class="icon icon-16" aria-hidden="true"><use href="#icon-clock"></use></svg> <span>Pending</span>
                   </button>
                   <button 
                     class="btn btn-sm ${this.verificationState === 'needs_review' ? 'btn-violet' : 'btn-secondary'}" 
                     onclick="CheckoutViewComponent.setVerificationState('needs_review')"
+                    style="display: inline-flex; align-items: center; gap: 4px;"
                   >
-                    ⚠️ Needs Review
+                    <svg class="icon icon-16" aria-hidden="true"><use href="#icon-alert"></use></svg> <span>Needs Review</span>
                   </button>
                 </div>
               </div>
@@ -208,7 +211,7 @@ window.CheckoutViewComponent = {
                   </label>
                   <div style="border: 2px dashed var(--line); border-radius: var(--radius-md); padding: 16px; text-align: center; background-color: var(--ink-50); cursor: pointer;" onclick="document.getElementById('docFileInput').click()">
                     <input type="file" id="docFileInput" style="display: none;" onchange="CheckoutViewComponent.onDocUploaded(event)" accept="image/*,.pdf" />
-                    <span style="font-size: 24px; display: block; margin-bottom: 4px;">📄</span>
+                    <div style="margin-bottom: 4px;"><svg class="icon icon-28" style="color: var(--brand-700);" aria-hidden="true"><use href="#icon-receipt"></use></svg></div>
                     <strong style="font-size: 13px; color: var(--violet);" id="uploadFileNameLabel">
                       ${this.uploadedDocName}
                     </strong>
@@ -222,8 +225,8 @@ window.CheckoutViewComponent = {
                 <div style="background-color: var(--ink-50); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px; display: flex; align-items: center; justify-content: space-between;">
                   <div>
                     <div style="font-size: 12px; font-weight: 700; color: var(--ink);">Payment & Return History Standing:</div>
-                    <div style="font-size: 12px; color: var(--success); font-weight: 700; margin-top: 2px;">
-                      ✓ ${user.paymentHistoryScore}
+                    <div style="font-size: 12px; color: var(--success); font-weight: 700; margin-top: 2px; display: flex; align-items: center; gap: 4px;">
+                      <svg class="icon icon-16" style="color: var(--success);" aria-hidden="true"><use href="#icon-check"></use></svg> <span>${user.paymentHistoryScore}</span>
                     </div>
                   </div>
                   <span class="pill-badge pill-badge-success">0 Disputes</span>
@@ -256,32 +259,35 @@ window.CheckoutViewComponent = {
 
   renderStatusBadge(state) {
     if (state === 'verified') {
-      return `<span class="pill-badge pill-badge-success" style="font-size: 12px; padding: 6px 14px;">✓ ID Verified</span>`;
+      return `<span class="pill-badge pill-badge-success" style="font-size: 12px; padding: 6px 14px; display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> <span>ID Verified</span></span>`;
     }
     if (state === 'needs_review') {
-      return `<span class="pill-badge pill-badge-orange" style="font-size: 12px; padding: 6px 14px;">⚠️ Needs Manual Review</span>`;
+      return `<span class="pill-badge pill-badge-orange" style="font-size: 12px; padding: 6px 14px; display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-alert"></use></svg> <span>Needs Manual Review</span></span>`;
     }
-    return `<span class="pill-badge pill-badge-muted" style="font-size: 12px; padding: 6px 14px;">⏱️ Verification Pending</span>`;
+    return `<span class="pill-badge pill-badge-muted" style="font-size: 12px; padding: 6px 14px; display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-clock"></use></svg> <span>Verification Pending</span></span>`;
   },
 
   renderStateNotice(state) {
     if (state === 'verified') {
       return `
-        <div style="background-color: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: #065f46;">
-          <strong>✓ Instant Handover Approved:</strong> Your Aadhaar identity and rental history check passed. The owner can hand over the gear immediately upon condition confirmation.
+        <div style="background-color: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: #065f46; display: flex; align-items: flex-start; gap: 6px;">
+          <svg class="icon icon-16" style="color: #065f46; margin-top: 2px;" aria-hidden="true"><use href="#icon-check"></use></svg>
+          <div><strong>Instant Handover Approved:</strong> Your Aadhaar identity and rental history check passed. The owner can hand over the gear immediately upon condition confirmation.</div>
         </div>
       `;
     }
     if (state === 'needs_review') {
       return `
-        <div style="background-color: var(--warning-light); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: #92400e;">
-          <strong>⚠️ Owner Review Required:</strong> Because your document was uploaded recently, the owner in Sambhajinagar will review your profile during mutual handover inspection before releasing equipment.
+        <div style="background-color: var(--warning-light); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: #92400e; display: flex; align-items: flex-start; gap: 6px;">
+          <svg class="icon icon-16" style="color: #92400e; margin-top: 2px;" aria-hidden="true"><use href="#icon-alert"></use></svg>
+          <div><strong>Owner Review Required:</strong> Because your document was uploaded recently, the owner in Sambhajinagar will review your profile during mutual handover inspection before releasing equipment.</div>
         </div>
       `;
     }
     return `
-      <div style="background-color: var(--ink-100); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: var(--muted);">
-        <strong>⏱️ Verification Underway:</strong> Checking resident records. Please wait or simulate verified state above to continue.
+      <div style="background-color: var(--ink-100); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: var(--muted); display: flex; align-items: flex-start; gap: 6px;">
+        <svg class="icon icon-16" style="color: var(--muted); margin-top: 2px;" aria-hidden="true"><use href="#icon-clock"></use></svg>
+        <div><strong>Verification Underway:</strong> Checking resident records. Please wait or simulate verified state above to continue.</div>
       </div>
     `;
   },
@@ -360,7 +366,7 @@ window.CheckoutViewComponent = {
     modal.innerHTML = `
       <div class="modal-backdrop active" id="confirmedBackdrop">
         <div class="modal-box" style="text-align: center; max-width: 520px;">
-          <div style="font-size: 54px; margin-bottom: 12px; animation: bounce 0.6s ease;">🎉</div>
+          <div style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--brand-50); color: var(--brand-700); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; animation: bounce 0.6s ease;"><svg class="icon icon-28" aria-hidden="true"><use href="#icon-party"></use></svg></div>
           <span class="pill-badge pill-badge-lime" style="margin-bottom: 10px;">RESERVATION CONFIRMED</span>
           <h2 style="font-size: 24px; font-weight: 900; color: var(--ink); margin-bottom: 6px;">
             Booking Confirmed!

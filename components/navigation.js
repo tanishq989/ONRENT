@@ -88,7 +88,7 @@ window.NavigationComponent = {
       <div class="container header-container">
         <!-- Brand Logo & Eyebrow -->
         <div class="brand-block" onclick="window.AppState.navigateTo('home')" role="button" tabindex="0" aria-label="ONRENT Home">
-          <div class="brand-symbol">⚡</div>
+          <div class="brand-symbol"><svg class="icon icon-16" style="color: var(--white);" aria-hidden="true"><use href="#icon-bolt"></use></svg></div>
           <div class="brand-text-wrap">
             <span class="brand-name">ONRENT</span>
             <span class="brand-eyebrow-text">RENT SMARTER, LIVE LIGHTER</span>
@@ -97,9 +97,9 @@ window.NavigationComponent = {
 
         <!-- Location Indicator / Switcher -->
         <button class="location-selector-chip" id="locationSelectorBtn" onclick="NavigationComponent.openLocationModal()" aria-label="Current service city">
-          <span class="location-dot">📍</span>
+          <span class="location-dot"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-map-pin"></use></svg></span>
           <span id="activeCityHeaderLabel">${window.AppState.activeCity}</span>
-          <span style="font-size: 10px; color: var(--muted); margin-left: 2px;">▼</span>
+          <svg class="icon icon-16" style="width: 10px; height: 10px; color: var(--muted); margin-left: 2px;" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
         </button>
 
         <!-- Desktop Navigation Links -->
@@ -124,18 +124,19 @@ window.NavigationComponent = {
               aria-expanded="false" 
               aria-label="Account menu"
             >
-              <span>👤 Account</span>
+              <svg class="icon icon-16" aria-hidden="true"><use href="#icon-user"></use></svg>
+              <span>Account</span>
               <svg class="dropdown-chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
             </button>
             <div class="account-dropdown-menu" id="desktopAccountMenu" role="menu" aria-label="Account options">
               <button class="account-menu-item ${window.AppState.currentScreen === 'rentals' || window.AppState.currentScreen === 'tracker' ? 'active' : ''}" role="menuitem" data-screen="rentals" onclick="NavigationComponent.selectAccountOption('rentals')">
-                <span class="menu-item-icon">📦</span>
+                <span class="menu-item-icon"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-box"></use></svg></span>
                 <span>My Rentals</span>
               </button>
               <button class="account-menu-item ${window.AppState.currentScreen === 'profile' ? 'active' : ''}" role="menuitem" data-screen="profile" onclick="NavigationComponent.selectAccountOption('profile')">
-                <span class="menu-item-icon">👤</span>
+                <span class="menu-item-icon"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-user"></use></svg></span>
                 <span>Profile</span>
               </button>
             </div>
@@ -236,29 +237,29 @@ window.NavigationComponent = {
 
     bar.innerHTML = `
       <button class="mobile-nav-tab ${current === 'home' ? 'active' : ''}" onclick="window.AppState.navigateTo('home')" aria-label="Home">
-        <span class="tab-icon">🏠</span>
+        <span class="tab-icon"><svg class="icon icon-20" aria-hidden="true"><use href="#icon-home"></use></svg></span>
         <span>Home</span>
       </button>
 
       <button class="mobile-nav-tab ${current === 'browse' ? 'active' : ''}" onclick="window.AppState.navigateTo('browse')" aria-label="Browse">
-        <span class="tab-icon">🔍</span>
+        <span class="tab-icon"><svg class="icon icon-20" aria-hidden="true"><use href="#icon-search"></use></svg></span>
         <span>Browse</span>
       </button>
 
       <div class="mobile-account-wrapper" id="mobileAccountWrapper">
         <div class="mobile-account-menu" id="mobileAccountMenu" role="menu" aria-label="Account options">
           <button class="mobile-account-menu-item ${current === 'rentals' || current === 'tracker' ? 'active' : ''}" role="menuitem" onclick="NavigationComponent.selectAccountOption('rentals')">
-            <span class="tab-icon">📦</span>
+            <span class="tab-icon"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-box"></use></svg></span>
             <span>My Rentals</span>
           </button>
           <button class="mobile-account-menu-item ${current === 'profile' ? 'active' : ''}" role="menuitem" onclick="NavigationComponent.selectAccountOption('profile')">
-            <span class="tab-icon">👤</span>
+            <span class="tab-icon"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-user"></use></svg></span>
             <span>Profile</span>
           </button>
         </div>
 
         <button class="mobile-nav-tab ${isAccountActive ? 'active' : ''}" id="mobileAccountBtn" onclick="NavigationComponent.toggleMobileAccountMenu(event)" aria-haspopup="true" aria-expanded="false" aria-label="Account">
-          <span class="tab-icon">👤</span>
+          <span class="tab-icon"><svg class="icon icon-20" aria-hidden="true"><use href="#icon-user"></use></svg></span>
           <span>Account</span>
         </button>
       </div>
@@ -304,10 +305,10 @@ window.NavigationComponent = {
     modal.innerHTML = `
       <div class="modal-backdrop" id="locationModalBackdrop" onclick="if(event.target===this) NavigationComponent.closeLocationModal()">
         <div class="modal-box" style="max-width: 500px; text-align: center;">
-          <button class="modal-close-btn" onclick="NavigationComponent.closeLocationModal()" aria-label="Close modal">✕</button>
+          <button class="modal-close-btn" onclick="NavigationComponent.closeLocationModal()" aria-label="Close modal"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-close"></use></svg></button>
           
-          <div style="width: 56px; height: 56px; border-radius: 50%; background-color: var(--brand-50); color: var(--brand-700); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px; border: 1px solid var(--brand-card-border);">
-            📍
+          <div style="width: 56px; height: 56px; border-radius: 50%; background-color: var(--brand-50); color: var(--brand-700); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 1px solid var(--brand-card-border);">
+            <svg class="icon icon-28" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
           </div>
 
           <h3 style="font-size: 22px; font-weight: 700; color: var(--brand-900); margin-bottom: 8px;">Active Service City</h3>
@@ -315,20 +316,36 @@ window.NavigationComponent = {
             ONRENT provides verified peer-to-peer equipment rentals with mutual photo handovers exclusively in:
           </p>
 
-          <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-card); padding: 14px; margin-bottom: 20px;">
+          <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-card); padding: 14px; margin-bottom: 16px;">
             <div style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--brand-900);">Chhatrapati Sambhajinagar</div>
             <div style="font-size: 12px; color: var(--brand-700); margin-top: 4px;">Maharashtra, India</div>
           </div>
 
+          <div class="search-field-unit" style="margin-bottom: 16px; height: 52px; min-height: 52px; background: var(--white);" onclick="document.getElementById('locationHubSearch')?.focus()">
+            <label for="locationHubSearch" class="visually-hidden">Search Sambhajinagar hubs</label>
+            <span class="search-field-icon" aria-hidden="true">
+              <svg class="icon icon-20" aria-hidden="true"><use href="#icon-search"></use></svg>
+            </span>
+            <input 
+              type="search" 
+              id="locationHubSearch" 
+              placeholder="Search Sambhajinagar hubs & areas…"
+              autocomplete="off"
+              oninput="NavigationComponent.filterLocationHubs(event)"
+              aria-label="Search Sambhajinagar hubs"
+            />
+          </div>
+
           <div style="text-align: left; margin-bottom: 24px;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--brand-700); margin-bottom: 8px;">Supported Verified Hubs:</div>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <div id="locationHubsList" style="display: flex; flex-wrap: wrap; gap: 6px;">
               ${neighborhoods.map(n => `<span class="pill-badge pill-badge-muted">${n}</span>`).join('')}
             </div>
           </div>
 
-          <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-card); padding: 12px; font-size: 12px; color: var(--brand-900); margin-bottom: 20px;">
-            ✨ Handover condition inspections and deposit guarantees are active across all 12 Sambhajinagar sectors.
+          <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-card); padding: 12px; font-size: 12px; color: var(--brand-900); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <svg class="icon icon-16" style="color: var(--brand-700);" aria-hidden="true"><use href="#icon-sparkles"></use></svg>
+            <span>Handover condition inspections and deposit guarantees are active across all 12 Sambhajinagar sectors.</span>
           </div>
 
           <button class="btn btn-violet btn-full" onclick="NavigationComponent.closeLocationModal()">
@@ -337,6 +354,19 @@ window.NavigationComponent = {
         </div>
       </div>
     `;
+  },
+
+  filterLocationHubs(e) {
+    const term = (e.target.value || '').toLowerCase().trim();
+    const hubs = window.ONRENT_CONFIG.supportedNeighborhoods;
+    const container = document.getElementById('locationHubsList');
+    if (!container) return;
+    const filtered = hubs.filter(h => h.toLowerCase().includes(term));
+    if (filtered.length > 0) {
+      container.innerHTML = filtered.map(n => `<span class="pill-badge pill-badge-muted">${n}</span>`).join('');
+    } else {
+      container.innerHTML = `<span style="font-size: 12px; color: var(--brand-700);">No hubs match "${term}". All rentals are fulfilled across Chhatrapati Sambhajinagar.</span>`;
+    }
   },
 
   openLocationModal() {
@@ -361,11 +391,11 @@ window.NavigationComponent = {
 
     const toast = document.createElement('div');
     toast.className = `toast-pill ${type}`;
-    let icon = '⚡';
-    if (type === 'success') icon = '✓';
-    if (type === 'warning') icon = '⚠️';
+    let iconHtml = '<svg class="icon icon-16" aria-hidden="true"><use href="#icon-bolt"></use></svg>';
+    if (type === 'success') iconHtml = '<svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg>';
+    if (type === 'warning') iconHtml = '<svg class="icon icon-16" aria-hidden="true"><use href="#icon-alert"></use></svg>';
 
-    toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+    toast.innerHTML = `<span>${iconHtml}</span> <span>${message}</span>`;
     shelf.appendChild(toast);
 
     setTimeout(() => {

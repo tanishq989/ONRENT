@@ -203,20 +203,20 @@ const ONRENT_CONFIG = {
   },
 
   orderMilestones: [
-    { key: 'confirmed', label: 'Confirmed', icon: '✓', desc: 'Booking confirmed by owner' },
-    { key: 'out_for_delivery', label: 'Out for Delivery', icon: '🚚', desc: 'Item en route or ready for pickup' },
-    { key: 'delivered', label: 'Delivered', icon: '📦', desc: 'Item handed over to renter' },
-    { key: 'in_rental', label: 'In Rental', icon: '⏱️', desc: 'Rental duration active' },
-    { key: 'return_due', label: 'Return Due', icon: '🔔', desc: 'Return scheduled or due soon' },
-    { key: 'returned', label: 'Returned', icon: '↩️', desc: 'Item inspected by both parties' },
-    { key: 'deposit_refunded', label: 'Deposit Refunded', icon: '💰', desc: 'Security deposit released' }
+    { key: 'confirmed', label: 'Confirmed', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-check"></use></svg>', desc: 'Booking confirmed by owner' },
+    { key: 'out_for_delivery', label: 'Out for Delivery', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-truck"></use></svg>', desc: 'Item en route or ready for pickup' },
+    { key: 'delivered', label: 'Delivered', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-box"></use></svg>', desc: 'Item handed over to renter' },
+    { key: 'in_rental', label: 'In Rental', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-clock"></use></svg>', desc: 'Rental duration active' },
+    { key: 'return_due', label: 'Return Due', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-bell"></use></svg>', desc: 'Return scheduled or due soon' },
+    { key: 'returned', label: 'Returned', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-arrow-left"></use></svg>', desc: 'Item inspected by both parties' },
+    { key: 'deposit_refunded', label: 'Deposit Refunded', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg>', desc: 'Security deposit released' }
   ],
 
   rentalRequestTypes: [
-    { id: 'repair', label: 'Request Repair', icon: '🔧', desc: 'Report malfunction or scheduled maintenance' },
-    { id: 'extension', label: 'Extend Rental', icon: '📅', desc: 'Keep the item for more days at discounted rate' },
-    { id: 'exchange', label: 'Exchange Item', icon: '🔄', desc: 'Swap with another model or replacement' },
-    { id: 'support', label: 'Contact Support', icon: '💬', desc: 'Instant support from ONRENT team' }
+    { id: 'repair', label: 'Request Repair', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-wrench"></use></svg>', desc: 'Report malfunction or scheduled maintenance' },
+    { id: 'extension', label: 'Extend Rental', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-calendar"></use></svg>', desc: 'Keep the item for more days at discounted rate' },
+    { id: 'exchange', label: 'Exchange Item', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-refresh"></use></svg>', desc: 'Swap with another model or replacement' },
+    { id: 'support', label: 'Contact Support', icon: '<svg class="icon icon-20" aria-hidden="true"><use href="#icon-message"></use></svg>', desc: 'Instant support from ONRENT team' }
   ],
 
   // Storage Keys for Offline Persistence (V4 reflects PS5 addition)

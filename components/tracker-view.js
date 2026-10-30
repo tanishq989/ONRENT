@@ -113,7 +113,7 @@ window.TrackerViewComponent = {
                 return `
                   <div class="timeline-step ${statusClass}">
                     <div class="step-marker">
-                      ${idx < activeIndex ? '✓' : (idx === activeIndex ? '●' : idx + 1)}
+                      ${idx < activeIndex ? '<svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg>' : (idx === activeIndex ? '●' : idx + 1)}
                     </div>
                     <div class="step-title" style="display: flex; align-items: center; gap: 8px;">
                       <span>${m.icon} ${m.label}</span>
@@ -142,7 +142,7 @@ window.TrackerViewComponent = {
                   </p>
                 </div>
                 <button class="btn btn-violet btn-lg" onclick="window.AppState.navigateTo('handover', { rentalId: '${rental.bookingId}' })">
-                  📷 Open Handover Form →
+                  <svg class="icon icon-20" aria-hidden="true"><use href="#icon-camera"></use></svg> Open Handover Form →
                 </button>
               </div>
             ` : ''}
@@ -157,10 +157,10 @@ window.TrackerViewComponent = {
                 </div>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                   <button class="btn btn-secondary" onclick="window.AppState.navigateTo('rentals')">
-                    🔧 Request Support / Extension
+                    <svg class="icon icon-20" aria-hidden="true"><use href="#icon-wrench"></use></svg> Request Support / Extension
                   </button>
                   <button class="btn btn-lime btn-lg" onclick="window.AppState.navigateTo('return', { rentalId: '${rental.bookingId}' })">
-                    ↩️ Return Item & Claim Deposit →
+                    <svg class="icon icon-20" aria-hidden="true"><use href="#icon-arrow-left"></use></svg> Return Item & Claim Deposit →
                   </button>
                 </div>
               </div>

@@ -16,7 +16,7 @@ The marketplace is strictly scoped to **7 tech & creator product types**:
 
 ---
 
-## 🎨 Design System & Palette
+## Design System & Palette
 
 - **Ink**: `#14213d` (Deep text, high-contrast headings)
 - **Violet**: `#6f4bf6` (Primary brand accent, hero gradients)
@@ -30,7 +30,7 @@ The marketplace is strictly scoped to **7 tech & creator product types**:
 
 ---
 
-## 🧭 Navigation & Moment Tiles
+## Navigation & Moment Tiles
 
 ### Category Chips:
 1. **For you** (`for-you`) — Curated catalogue across all 7 gear types (28 Items)
@@ -48,7 +48,7 @@ The marketplace is strictly scoped to **7 tech & creator product types**:
 
 ---
 
-## 📋 Handover & Return Checklists (Tailored per Product Type)
+## Handover & Return Checklists (Tailored per Product Type)
 
 Each product type has specialized pre-release and return inspection points:
 - **iPhones**: Serial number & IMEI verified against digital reservation record, Apple ID & iCloud / Find My sign-out confirmation, Ceramic Shield glass condition, and battery health %.
@@ -61,7 +61,7 @@ Each product type has specialized pre-release and return inspection points:
 
 ---
 
-## 💰 Scaled Security Deposits
+## Scaled Security Deposits
 
 Deposits are calibrated directly to item replacement value:
 - **High-Value Gear (₹4,000 – ₹8,500 deposit)**:
@@ -75,7 +75,7 @@ Deposits are calibrated directly to item replacement value:
 
 ---
 
-## 🚀 Quick Run Instructions
+## Quick Run Instructions
 
 The application is completely self-contained with modular ES6/Vanilla architecture and offline SVG assets. It requires **zero external build steps** or package installations.
 
@@ -91,7 +91,7 @@ This serves the application at `http://localhost:3000` automatically.
 
 ---
 
-## 📦 File Architecture
+## File Architecture
 
 ```
 c:\Users\Tanishq\Desktop\ONRENT\
@@ -117,7 +117,7 @@ c:\Users\Tanishq\Desktop\ONRENT\
 
 ---
 
-## 🛒 Complete Catalogue (28 Items — Exactly 4 per Product Type)
+## Complete Catalogue (28 Items — Exactly 4 per Product Type)
 
 ### 1. PS5 & Gaming Consoles (High Deposits: ₹6,000 – ₹7,000)
 - Sony PlayStation 5 Standard Edition (Disc) + 2 Controllers — **₹699/day** (Deposit: ₹6,500)

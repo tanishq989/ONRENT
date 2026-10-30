@@ -87,9 +87,9 @@ window.ListItemViewComponent = {
               <button 
                 class="btn btn-sm ${this.activeTab === 'hub' ? 'btn-violet' : ''}" 
                 onclick="ListItemViewComponent.switchTab('hub')"
-                style="padding: 6px 14px; font-size: 12px;"
+                style="padding: 6px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;"
               >
-                💼 Owner Hub & Listings (${ownerListings.length})
+                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-briefcase"></use></svg> Owner Hub & Listings (${ownerListings.length})
               </button>
             </div>
           </div>
@@ -260,7 +260,7 @@ window.ListItemViewComponent = {
                 <!-- 4. Mandatory Handover Checklist Preview -->
                 <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-card); padding: 16px; margin-bottom: 16px;">
                   <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span style="font-size: 16px;">📋</span>
+                    <span style="display: inline-flex; align-items: center; color: var(--brand-700);"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-clipboard"></use></svg></span>
                     <strong style="font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--brand-900); text-transform: uppercase;">
                       Mandatory Handover & Return Protocol for ${isOtherType ? (this.customProductType && this.customProductType.trim() ? this.customProductType.trim() : 'Other Gear') : this.selectedProductType}:
                     </strong>
@@ -268,7 +268,7 @@ window.ListItemViewComponent = {
                   <ul style="list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--brand-900);">
                     ${checklist.map(item => `
                       <li style="display: flex; align-items: flex-start; gap: 6px;">
-                        <span style="color: var(--brand-700); font-weight: 700;">✓</span>
+                        <span style="color: var(--brand-700); display: inline-flex; align-items: center;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg></span>
                         <span>${item.label}</span>
                       </li>
                     `).join('')}
@@ -311,7 +311,7 @@ window.ListItemViewComponent = {
 
                   <input type="file" id="listItemFileInput" accept="image/*" multiple style="display: none;" onchange="ListItemViewComponent.handleFileUpload(event)" />
                   <div style="border: 2px dashed var(--line); border-radius: var(--radius-md); padding: 18px; text-align: center; background-color: var(--ink-50); cursor: pointer; transition: all 0.2s ease;" onclick="ListItemViewComponent.triggerFilePicker()">
-                    <span style="font-size: 26px; display: block; margin-bottom: 4px;">📷</span>
+                    <span style="display: block; margin-bottom: 4px; color: var(--brand-700);"><svg class="icon icon-28" aria-hidden="true"><use href="#icon-camera"></use></svg></span>
                     <strong style="font-size: 13px; color: var(--violet);" id="listPhotoStatusText">
                       + Click to Upload Gear Photographs from Device
                     </strong>
@@ -346,7 +346,7 @@ window.ListItemViewComponent = {
                               style="position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; background: rgba(220, 38, 38, 0.9); color: white; border: none; font-size: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;"
                               title="Remove photo"
                             >
-                              ✕
+                              <svg class="icon icon-16" aria-hidden="true"><use href="#icon-close"></use></svg>
                             </button>
                           </div>
                         `;
@@ -363,15 +363,15 @@ window.ListItemViewComponent = {
                   <textarea 
                     id="listDesc" 
                     rows="3" 
-                    placeholder="Describe included charger, original case, memory cards, power brick, or special handling..."
+                    placeholder="Describe included charger, original case, memory cards, power brick, or special handling..." 
                     required 
                     style="width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 13px;"
                   >${this.draft.desc || ''}</textarea>
                 </div>
 
                 <!-- Trust Guarantee Notice -->
-                <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-card); padding: 12px 14px; font-size: 12px; color: var(--brand-900);">
-                  📍 <strong>Owner Protection:</strong> Every rental requires identity verification and digital handover condition photos before gear is released in Sambhajinagar.
+                <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-card); padding: 12px 14px; font-size: 12px; color: var(--brand-900); display: flex; align-items: center; gap: 6px;">
+                  <svg class="icon icon-16" aria-hidden="true"><use href="#icon-map-pin"></use></svg> <strong>Owner Protection:</strong> Every rental requires identity verification and digital handover condition photos before gear is released in Sambhajinagar.
                 </div>
 
                 <!-- Submit Button -->
@@ -418,9 +418,9 @@ window.ListItemViewComponent = {
                   </div>
 
                   <div style="background-color: var(--ink-50); padding: 10px 14px; border-radius: var(--radius-md); font-size: 12px; color: var(--ink); margin-bottom: 14px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-                    <div>📅 Duration: ${rental.daysCount} days (${window.AppState.formatDate(rental.startDate)} → ${window.AppState.formatDate(rental.endDate)})</div>
-                    <div>💰 Deposit in Escrow: ${window.AppState.formatCurrency(rental.deposit)}</div>
-                    <div>📦 Status: <strong>${rental.orderStatus.replace('_', ' ').toUpperCase()}</strong></div>
+                    <div style="display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-calendar"></use></svg> Duration: ${rental.daysCount} days (${window.AppState.formatDate(rental.startDate)} → ${window.AppState.formatDate(rental.endDate)})</div>
+                    <div style="display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg> Deposit in Escrow: ${window.AppState.formatCurrency(rental.deposit)}</div>
+                    <div style="display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-box"></use></svg> Status: <strong>${rental.orderStatus.replace('_', ' ').toUpperCase()}</strong></div>
                   </div>
 
                   <div style="display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap;">
@@ -428,10 +428,10 @@ window.ListItemViewComponent = {
                       Open Tracker
                     </button>
                     <button class="btn btn-violet btn-sm" onclick="window.AppState.navigateTo('handover', { rentalId: '${rental.bookingId}' })">
-                      📷 Mutual Handover Form
+                      <svg class="icon icon-16" aria-hidden="true"><use href="#icon-camera"></use></svg> Mutual Handover Form
                     </button>
                     <button class="btn btn-lime btn-sm" onclick="window.AppState.navigateTo('return', { rentalId: '${rental.bookingId}' })">
-                      ↩️ Return & Release Deposit
+                      <svg class="icon icon-16" aria-hidden="true"><use href="#icon-arrow-left"></use></svg> Return & Release Deposit
                     </button>
                   </div>
                 </div>
@@ -445,10 +445,10 @@ window.ListItemViewComponent = {
             <!-- Admin Demo Review Toggle Bar -->
             <div style="background-color: var(--violet-light); border: 1.5px solid var(--violet-tint); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
               <div>
-                <strong style="font-size: 13px; font-weight: 800; color: var(--violet-dark); display: block;">
-                  🛡️ Admin Demo Review Toggle
+                <strong style="font-size: 13px; font-weight: 800; color: var(--violet-dark); display: inline-flex; align-items: center; gap: 6px;">
+                  <svg class="icon icon-16" aria-hidden="true"><use href="#icon-shield-check"></use></svg> Admin Demo Review Toggle
                 </strong>
-                <span style="font-size: 11px; color: var(--muted);">
+                <span style="font-size: 11px; color: var(--muted); display: block; margin-top: 2px;">
                   Approve custom product types & brands to display them in public Browse & Home
                 </span>
               </div>
@@ -457,9 +457,9 @@ window.ListItemViewComponent = {
                 type="button" 
                 class="btn btn-sm ${window.AppState.isAdminAutoApproveEnabled() ? 'btn-lime' : 'btn-secondary'}" 
                 onclick="ListItemViewComponent.toggleAdminAutoApprove()"
-                style="font-size: 12px; font-weight: 800; padding: 6px 14px;"
+                style="font-size: 12px; font-weight: 800; padding: 6px 14px; display: inline-flex; align-items: center; gap: 4px;"
               >
-                ${window.AppState.isAdminAutoApproveEnabled() ? '✓ Demo Mode: All Approved (Live)' : 'Demo Mode: Require Approval'}
+                ${window.AppState.isAdminAutoApproveEnabled() ? '<svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> Demo Mode: All Approved (Live)' : 'Demo Mode: Require Approval'}
               </button>
             </div>
 
@@ -492,12 +492,12 @@ window.ListItemViewComponent = {
                               ${item.title}
                             </h4>
                             ${isPending ? `
-                              <span class="pill-badge" style="background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px;">
-                                ⏳ Pending review
+                              <span class="pill-badge" style="background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; display: inline-flex; align-items: center; gap: 3px;">
+                                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-hourglass"></use></svg> Pending review
                               </span>
                             ` : `
-                              <span class="pill-badge pill-badge-lime" style="font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px;">
-                                ✓ Live
+                              <span class="pill-badge pill-badge-lime" style="font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; display: inline-flex; align-items: center; gap: 3px;">
+                                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> Live
                               </span>
                             `}
                           </div>
@@ -512,9 +512,9 @@ window.ListItemViewComponent = {
                             type="button" 
                             class="btn btn-sm ${isPending ? 'btn-lime' : 'btn-secondary'}" 
                             onclick="ListItemViewComponent.toggleItemApproval('${item.id}')"
-                            style="font-size: 11px; padding: 5px 10px; font-weight: 700;"
+                            style="font-size: 11px; padding: 5px 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"
                           >
-                            ${isPending ? '🛡️ Approve' : '↩️ Revoke'}
+                            ${isPending ? '<svg class="icon icon-16" aria-hidden="true"><use href="#icon-shield-check"></use></svg> Approve' : '<svg class="icon icon-16" aria-hidden="true"><use href="#icon-arrow-left"></use></svg> Revoke'}
                           </button>
                         </div>
                       ` : ''}

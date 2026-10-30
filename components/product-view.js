@@ -83,8 +83,8 @@ window.ProductViewComponent = {
                     <span class="product-condition-badge" style="position: absolute; top: 16px; left: 16px; z-index: 3;">
                       Condition: ${product.condition}
                     </span>
-                    <span class="pill-badge pill-badge-lime" style="position: absolute; top: 16px; right: 16px; z-index: 3;">
-                      ✓ ${product.availability}
+                    <span class="pill-badge pill-badge-lime" style="position: absolute; top: 16px; right: 16px; z-index: 3; display: inline-flex; align-items: center; gap: 4px;">
+                      <svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> <span>${product.availability}</span>
                     </span>
                     <div style="position: absolute; bottom: 14px; right: 14px; z-index: 3; display: flex; gap: 6px; align-items: center;">
                       <span class="pill-badge pill-badge-violet" style="font-size: 11px; padding: 4px 10px; background: rgba(20, 33, 61, 0.85); backdrop-filter: blur(8px); color: white; border: 1px solid rgba(255,255,255,0.2);">
@@ -94,10 +94,10 @@ window.ProductViewComponent = {
                         type="button" 
                         onclick="event.stopPropagation(); ProductImage.openZoom('${normActive.url}', '${normActive.alt.replace(/'/g, "\\'")}')" 
                         class="pill-badge" 
-                        style="font-size: 11px; padding: 4px 10px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); color: var(--ink); border: 1px solid var(--line); cursor: pointer;"
+                        style="font-size: 11px; padding: 4px 10px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); color: var(--ink); border: 1px solid var(--line); cursor: pointer; display: inline-flex; align-items: center; gap: 4px;"
                         title="Tap to zoom"
                       >
-                        🔍 Tap to zoom
+                        <svg class="icon icon-16" aria-hidden="true"><use href="#icon-search"></use></svg> <span>Tap to zoom</span>
                       </button>
                     </div>
                   `
@@ -149,19 +149,19 @@ window.ProductViewComponent = {
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
                   <span class="pill-badge pill-badge-violet">${product.productType || product.category}</span>
                   ${product.brand ? `<span class="pill-badge pill-badge-muted">${product.brand}</span>` : ''}
-                  <span style="font-size: 13px; color: var(--muted); font-weight: 600;">📍 ${product.area}, Sambhajinagar (${product.distanceKm} km away)</span>
+                  <span style="font-size: 13px; color: var(--muted); font-weight: 600; display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-map-pin"></use></svg>${product.area}, Sambhajinagar (${product.distanceKm} km away)</span>
                 </div>
                 <h1 style="font-size: 26px; font-weight: 900; color: var(--ink); line-height: 1.25; margin-bottom: 8px;">
                   ${product.title}
                 </h1>
                 <div style="display: flex; align-items: center; gap: 12px; font-size: 13px;">
                   <div style="display: flex; align-items: center; gap: 4px; font-weight: 700; color: var(--ink);">
-                    <span style="color: #f59e0b;">★</span>
+                    <svg class="icon icon-16" style="color: #f59e0b; fill: #f59e0b; vertical-align: -2px;" aria-hidden="true"><use href="#icon-star"></use></svg>
                     <span>${product.rating}</span>
                     <span style="color: var(--muted); font-weight: 500;">(${product.reviewsCount} verified reviews)</span>
                   </div>
                   <span>•</span>
-                  <span style="color: var(--success); font-weight: 700;">✓ Verified Local Owner</span>
+                  <span style="color: var(--success); font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" style="color: var(--success);" aria-hidden="true"><use href="#icon-check"></use></svg>Verified Local Owner</span>
                 </div>
               </div>
 
@@ -174,7 +174,7 @@ window.ProductViewComponent = {
                   <div>
                     <div style="display: flex; align-items: center; gap: 6px;">
                       <h4 style="font-size: 15px; font-weight: 800; color: var(--ink);">${product.owner.name}</h4>
-                      <span style="color: var(--violet); font-size: 12px;" title="Aadhaar Verified">✓</span>
+                      <svg class="icon icon-16" style="color: var(--violet);" aria-hidden="true" title="Aadhaar Verified"><use href="#icon-check"></use></svg>
                     </div>
                     <div style="font-size: 12px; color: var(--muted); margin-top: 2px;">
                       Member since ${product.owner.joinedDate} • ${product.owner.area}
@@ -183,7 +183,7 @@ window.ProductViewComponent = {
                 </div>
 
                 <div style="text-align: right;">
-                  <span class="pill-badge pill-badge-success">★ ${product.owner.rating} (${product.owner.reviewsCount})</span>
+                  <span class="pill-badge pill-badge-success" style="display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" style="color: #047857; fill: #047857;" aria-hidden="true"><use href="#icon-star"></use></svg>${product.owner.rating} (${product.owner.reviewsCount})</span>
                 </div>
               </div>
 
@@ -198,7 +198,7 @@ window.ProductViewComponent = {
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; margin-bottom: 20px;">
                   ${product.specs.map(spec => `
                     <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); background-color: var(--ink-50); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--line);">
-                      <span style="color: var(--violet);">✓</span>
+                      <svg class="icon icon-16" style="color: var(--violet);" aria-hidden="true"><use href="#icon-check"></use></svg>
                       <span>${spec}</span>
                     </div>
                   `).join('')}
@@ -208,7 +208,7 @@ window.ProductViewComponent = {
                 ${checklist.length > 0 ? `
                   <div style="background-color: var(--violet-light); border: 1.5px solid var(--violet-tint); border-radius: var(--radius-md); padding: 16px;">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                      <span style="font-size: 16px;">📋</span>
+                      <svg class="icon icon-20" aria-hidden="true"><use href="#icon-clipboard"></use></svg>
                       <h4 style="font-size: 13px; font-weight: 800; color: var(--violet-dark); text-transform: uppercase; letter-spacing: 0.05em;">
                         ${product.productType} Handover & Return Protocol:
                       </h4>
@@ -312,16 +312,18 @@ window.ProductViewComponent = {
                     <button 
                       class="btn btn-sm ${draft.fulfillmentMethod === 'delivery' ? 'btn-violet' : 'btn-secondary'}" 
                       onclick="ProductViewComponent.setFulfillment('delivery')"
-                      style="border-radius: var(--radius-md); font-size: 12px; padding: 10px 8px;"
+                      style="border-radius: var(--radius-md); font-size: 12px; padding: 10px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;"
                     >
-                      🚚 Delivery (+₹149)
+                      <svg class="icon icon-16" aria-hidden="true"><use href="#icon-truck"></use></svg>
+                      <span>Delivery (+₹149)</span>
                     </button>
                     <button 
                       class="btn btn-sm ${draft.fulfillmentMethod === 'pickup' ? 'btn-violet' : 'btn-secondary'}" 
                       onclick="ProductViewComponent.setFulfillment('pickup')"
-                      style="border-radius: var(--radius-md); font-size: 12px; padding: 10px 8px;"
+                      style="border-radius: var(--radius-md); font-size: 12px; padding: 10px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;"
                     >
-                      📍 Self Pickup (Free)
+                      <svg class="icon icon-16" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
+                      <span>Self Pickup (Free)</span>
                     </button>
                   </div>
                 </div>
@@ -351,7 +353,7 @@ window.ProductViewComponent = {
 
                 <!-- Refund Guarantee Notice -->
                 <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
-                  <span>💰</span>
+                  <svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg>
                   <span><strong>100% Refundable Deposit:</strong> Released immediately upon return inspection.</span>
                 </div>
 

@@ -36,13 +36,13 @@ window.ProfileViewComponent = {
               <div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <h1 style="font-size: 22px; font-weight: 900; color: var(--ink);">${user.name}</h1>
-                  <span class="pill-badge pill-badge-success" style="font-size: 11px;">✓ VERIFIED</span>
+                  <span class="pill-badge pill-badge-success" style="font-size: 11px;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> VERIFIED</span>
                 </div>
                 <div style="font-size: 13px; color: var(--muted); margin-top: 2px;">
                   ${user.email} • ${user.phone}
                 </div>
-                <div style="font-size: 12px; color: var(--violet); font-weight: 600; margin-top: 2px;">
-                  📍 ${user.address}
+                <div style="font-size: 12px; color: var(--violet); font-weight: 600; margin-top: 2px; display: flex; align-items: center; gap: 4px;">
+                  <svg class="icon icon-16" aria-hidden="true"><use href="#icon-map-pin"></use></svg> ${user.address}
                 </div>
               </div>
             </div>
@@ -92,7 +92,7 @@ window.ProfileViewComponent = {
           <div style="background-color: var(--white); border: 1px solid var(--line); border-radius: var(--radius-xl); padding: 22px; margin-bottom: 24px; box-shadow: var(--shadow-xs);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <h3 style="font-size: 16px; font-weight: 800; color: var(--ink);">Identity Verification Credentials</h3>
-              <span class="pill-badge pill-badge-success">✓ Government Verified</span>
+              <span class="pill-badge pill-badge-success"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg> Government Verified</span>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 13px;">
@@ -107,8 +107,8 @@ window.ProfileViewComponent = {
               </div>
             </div>
 
-            <div style="margin-top: 14px; font-size: 12px; color: var(--muted);">
-              🔒 Stored securely in compliance with peer-to-peer equipment rental guidelines. Only disclosed during mutual handover verification in Sambhajinagar.
+            <div style="margin-top: 14px; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px;">
+              <svg class="icon icon-16" aria-hidden="true"><use href="#icon-lock"></use></svg> Stored securely in compliance with peer-to-peer equipment rental guidelines. Only disclosed during mutual handover verification in Sambhajinagar.
             </div>
           </div>
 
@@ -129,7 +129,7 @@ window.ProfileViewComponent = {
               Need to test clean flow from scratch?
             </div>
             <button class="btn btn-secondary btn-sm" onclick="if(confirm('Reset all demo orders and reload original catalogue?')) window.AppState.resetAllData()">
-              🔄 Reset Demo Seed Data
+              <svg class="icon icon-16" aria-hidden="true"><use href="#icon-refresh"></use></svg> Reset Demo Seed Data
             </button>
           </div>
 

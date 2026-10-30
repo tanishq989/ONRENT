@@ -37,49 +37,53 @@ window.HomeViewComponent = {
             <!-- Multi-Attribute Search Bar (Wide ~1100px) -->
             <div class="hero-search-box">
               <form id="heroSearchForm" onsubmit="HomeViewComponent.handleSearch(event)" class="search-form-grid">
-                <div class="search-field-unit">
+                <div class="search-field-unit" onclick="document.getElementById('heroProductQuery')?.focus()">
+                  <label for="heroProductQuery" class="visually-hidden">What gear do you need to rent?</label>
                   <span class="search-field-icon" aria-hidden="true">
-                    <svg class="search-field-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-700)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="11" cy="11" r="8"></circle>
-                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
+                    <svg class="icon icon-22" aria-hidden="true"><use href="#icon-search"></use></svg>
                   </span>
                   <input 
-                    type="text" 
+                    type="search" 
                     id="heroProductQuery" 
-                    placeholder="Search iPhone, MacBook, PS5, Canon Creator Kit, Speakers, Lenses..." 
-                    value="${window.AppState.searchQuery}"
+                    placeholder="Search iPhone, MacBook, PS5, camera…" 
+                    value="${window.AppState.searchQuery || ''}"
                     autocomplete="off"
+                    enterkeyhint="search"
                     aria-label="What gear do you need to rent?"
+                    oninput="HomeViewComponent.onSearchInput(event)"
+                    onkeydown="HomeViewComponent.onSearchKeydown(event)"
                   />
+                  <button 
+                    type="button" 
+                    class="search-clear-btn" 
+                    id="heroProductClearBtn" 
+                    aria-label="Clear product search" 
+                    onclick="HomeViewComponent.clearSearch(event)"
+                    style="display: ${window.AppState.searchQuery ? 'inline-flex' : 'none'};"
+                  >
+                    <svg class="icon icon-16" aria-hidden="true"><use href="#icon-close"></use></svg>
+                  </button>
                 </div>
 
-                <div class="search-field-unit">
+                <div class="search-field-unit" onclick="NavigationComponent.openLocationModal()">
+                  <label for="heroLocationQuery" class="visually-hidden">Rental city</label>
                   <span class="search-field-icon" aria-hidden="true">
-                    <svg class="search-field-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-700)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
+                    <svg class="icon icon-22" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
                   </span>
                   <input 
                     type="text" 
                     id="heroLocationQuery" 
                     value="${window.AppState.activeCity}" 
                     readonly
-                    onclick="NavigationComponent.openLocationModal()"
                     aria-label="Rental city"
                     style="cursor: pointer;"
                   />
                 </div>
 
-                <div class="search-field-unit duration-field">
+                <div class="search-field-unit duration-field" onclick="document.getElementById('heroDurationSelect')?.focus()">
+                  <label for="heroDurationSelect" class="visually-hidden">Rental duration filter</label>
                   <span class="search-field-icon" aria-hidden="true">
-                    <svg class="search-field-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brand-700)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                      <line x1="16" y1="2" x2="16" y2="6"></line>
-                      <line x1="8" y1="2" x2="8" y2="6"></line>
-                      <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
+                    <svg class="icon icon-22" aria-hidden="true"><use href="#icon-calendar"></use></svg>
                   </span>
                   <select id="heroDurationSelect" aria-label="Rental duration filter">
                     <option value="all">Any Duration</option>
@@ -189,7 +193,12 @@ window.HomeViewComponent = {
 
             <div class="trust-banner-grid">
               <div class="trust-feature-item">
-                <div class="trust-feature-icon">🛡️</div>
+                <div class="trust-feature-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand-700)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block; margin-bottom: 8px;">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                  </svg>
+                </div>
                 <div class="trust-feature-content">
                   <h4>Verified Resident Profiles</h4>
                   <p>Every renter and owner in Sambhajinagar completes Aadhaar/Govt ID verification and payment standing checks before booking.</p>
@@ -197,7 +206,12 @@ window.HomeViewComponent = {
               </div>
 
               <div class="trust-feature-item">
-                <div class="trust-feature-icon">📷</div>
+                <div class="trust-feature-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand-700)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block; margin-bottom: 8px;">
+                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+                    <circle cx="12" cy="13" r="3"></circle>
+                  </svg>
+                </div>
                 <div class="trust-feature-content">
                   <h4>Product-Specific Handover Checklists</h4>
                   <p>Serial numbers recorded for iPhones and MacBooks, lens glass and mount checks, camera shutter count tests, and laptop battery reports protect everyone.</p>
@@ -205,7 +219,18 @@ window.HomeViewComponent = {
               </div>
 
               <div class="trust-feature-item">
-                <div class="trust-feature-icon">💰</div>
+                <div class="trust-feature-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand-700)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: block; margin-bottom: 8px;">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <line x1="2" y1="12" x2="4.5" y2="12"></line>
+                    <line x1="19.5" y1="12" x2="22" y2="12"></line>
+                    <path d="M8.5 8h7"></path>
+                    <path d="M8.5 11h5"></path>
+                    <path d="M10.5 13.5c4 0 4-5.5 0-5.5"></path>
+                    <path d="M8.5 13.5h2"></path>
+                    <path d="M10.5 13.5l4 4.5"></path>
+                  </svg>
+                </div>
                 <div class="trust-feature-content">
                   <h4>Value-Scaled Refundable Deposits</h4>
                   <p>Deposits are scaled proportionally with item replacement value, held in escrow, and released immediately upon verified safe return.</p>
@@ -241,7 +266,7 @@ window.HomeViewComponent = {
 
     const overlays = `
       <span class="product-condition-badge">${product.condition}</span>
-      <span class="product-distance-badge">📍 ${product.area} (${product.distanceKm} km away)</span>
+      <span class="product-distance-badge"><svg class="icon icon-16" style="vertical-align: -2px; margin-right: 3px;" aria-hidden="true"><use href="#icon-map-pin"></use></svg>${product.area} (${product.distanceKm} km away)</span>
     `;
 
     const imgHtml = window.ProductImage 
@@ -268,7 +293,7 @@ window.HomeViewComponent = {
           <div class="product-category-row">
             <span class="product-category-name">${product.productType || product.category}</span>
             <div class="product-rating-box">
-              <span class="star">★</span>
+              <span class="star"><svg class="icon icon-16" style="color: #f59e0b; fill: #f59e0b; vertical-align: -2px;" aria-hidden="true"><use href="#icon-star"></use></svg></span>
               <span>${product.rating}</span>
               <span style="color: var(--muted); font-size: 11px;">(${product.reviewsCount})</span>
             </div>
@@ -279,7 +304,7 @@ window.HomeViewComponent = {
           <div class="product-owner-row">
             <div class="product-owner-avatar">${product.owner.avatar}</div>
             <span>Owner: ${product.owner.name}</span>
-            <span style="color: var(--success); font-weight: 700;">✓</span>
+            <span style="color: var(--success); display: inline-flex; align-items: center;" aria-label="Verified"><svg class="icon icon-16" style="color: var(--success);" aria-hidden="true"><use href="#icon-check"></use></svg></span>
           </div>
 
           <div class="product-card-footer">
@@ -295,6 +320,36 @@ window.HomeViewComponent = {
         </div>
       </div>
     `;
+  },
+
+  onSearchInput(e) {
+    const val = e.target.value;
+    window.AppState.searchQuery = val;
+    const clearBtn = document.getElementById('heroProductClearBtn');
+    if (clearBtn) {
+      clearBtn.style.display = val.trim() ? 'inline-flex' : 'none';
+    }
+  },
+
+  clearSearch(e) {
+    if (e) e.stopPropagation();
+    const input = document.getElementById('heroProductQuery');
+    if (input) {
+      input.value = '';
+      window.AppState.searchQuery = '';
+      const clearBtn = document.getElementById('heroProductClearBtn');
+      if (clearBtn) clearBtn.style.display = 'none';
+      input.focus();
+    }
+  },
+
+  onSearchKeydown(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      this.clearSearch(e);
+    } else if (e.key === 'Enter') {
+      this.handleSearch(e);
+    }
   },
 
   handleSearch(e) {

@@ -8,17 +8,17 @@
 window.ProductImage = {
   // Product type icon mappings for neutral fallback tiles
   productIcons: {
-    'PS5': '🎮',
-    'Gaming': '🎮',
-    'Speakers': '🔊',
-    'Laptops': '💻',
-    'iPhones': '📱',
-    'MacBooks': '💻',
-    'DSLR cameras': '📷',
-    'DSLR lenses': '🔭',
-    'Cameras': '📷',
-    'Computers': '💻',
-    'Phones': '📱'
+    'PS5': 'gamepad',
+    'Gaming': 'gamepad',
+    'Speakers': 'speaker',
+    'Laptops': 'laptop',
+    'iPhones': 'smartphone',
+    'MacBooks': 'laptop',
+    'DSLR cameras': 'camera',
+    'DSLR lenses': 'lens',
+    'Cameras': 'camera',
+    'Computers': 'laptop',
+    'Phones': 'smartphone'
   },
 
   /**
@@ -121,7 +121,7 @@ window.ProductImage = {
   handleError(imgEl, productType = 'Tech Gear') {
     if (!imgEl) return;
     const wrap = imgEl.closest('.onrent-img-wrap');
-    const icon = this.productIcons[productType] || '⚡';
+    const iconId = this.productIcons[productType] || 'bolt';
 
     if (wrap) {
       const skeleton = wrap.querySelector('.onrent-skeleton');
@@ -134,7 +134,9 @@ window.ProductImage = {
         fallbackEl = document.createElement('div');
         fallbackEl.className = 'onrent-img-fallback';
         fallbackEl.innerHTML = `
-          <div class="fallback-icon">${icon}</div>
+          <div class="fallback-icon">
+            <svg class="icon icon-28" aria-hidden="true"><use href="#icon-${iconId}"></use></svg>
+          </div>
           <span class="fallback-label">${productType}</span>
           <span class="fallback-badge">ONRENT Verified Gear</span>
         `;
@@ -162,7 +164,7 @@ window.ProductImage = {
             style="position: absolute; top: -44px; right: 0; background: rgba(255,255,255,0.2); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
             aria-label="Close zoom preview"
           >
-            ✕
+            <svg class="icon icon-20" style="color: white;" aria-hidden="true"><use href="#icon-close"></use></svg>
           </button>
           <img 
             src="${imgUrl}" 
@@ -172,8 +174,8 @@ window.ProductImage = {
           <div style="color: white; font-size: 13px; font-weight: 600; margin-top: 12px; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">
             ${altText}
           </div>
-          <div style="color: var(--brand-100); font-size: 11px; margin-top: 4px;">
-            Pinch to zoom on mobile • Click outside or ✕ to close
+          <div style="color: var(--brand-100); font-size: 11px; margin-top: 4px; display: flex; align-items: center; gap: 4px; justify-content: center;">
+            <span>Pinch to zoom on mobile • Click outside or</span> <svg class="icon icon-16" style="color: var(--brand-100); width: 12px; height: 12px;" aria-hidden="true"><use href="#icon-close"></use></svg> <span>to close</span>
           </div>
         </div>
       </div>
