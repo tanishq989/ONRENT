@@ -345,7 +345,7 @@ window.RentalsViewComponent = {
           })}
 
           <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-top: 14px; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
-            <span style="display: inline-flex; align-items: center; color: var(--brand-700);"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg></span>
+            <span class="refundable-deposit-icon"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg></span>
             <span><strong>100% Refundable Deposit:</strong> Released immediately upon return inspection.</span>
           </div>
 

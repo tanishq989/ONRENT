@@ -9,7 +9,7 @@ class OnRentState {
   constructor() {
     this.config = window.ONRENT_CONFIG;
     this.seeds = window.ONRENT_SEEDS;
-    
+
     // Core Navigation & Active Screen
     this.currentScreen = 'home'; // 'home' | 'browse' | 'product' | 'checkout' | 'tracker' | 'handover' | 'return' | 'rentals' | 'list-item' | 'profile'
     this.selectedProductId = null;
@@ -239,8 +239,8 @@ class OnRentState {
     const netRent = baseRent - discountAmount;
     const taxAmount = Math.round(netRent * pricingConfig.taxRate);
     const protectionFee = hasProtection ? pricingConfig.defaultProtectionFee : 0;
-    const deliveryFee = fulfillmentMethod === 'delivery' 
-      ? pricingConfig.fulfillment.delivery.fee 
+    const deliveryFee = fulfillmentMethod === 'delivery'
+      ? pricingConfig.fulfillment.delivery.fee
       : pricingConfig.fulfillment.pickup.fee;
 
     // Scaled Security Deposit (uses item-specific scaled deposit if available, else formula)
@@ -331,7 +331,7 @@ class OnRentState {
             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}"
           >
             <span class="breakdown-toggle-label">
-              <svg class="breakdown-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#5b2a86" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg class="breakdown-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 6l4 4 4-4"/>
               </svg>
               <span>Net Rental Charge</span>
@@ -520,7 +520,7 @@ class OnRentState {
   saveReturnRecord(bookingId, returnData) {
     const rental = this.getRentalById(bookingId);
     if (!rental) return;
-    
+
     const damageFee = Math.min(returnData.damageFee || 0, rental.deposit);
     const depositRefunded = Math.max(rental.deposit - damageFee, 0);
 
@@ -617,7 +617,7 @@ class OnRentState {
     this.products = this.products.filter(p => !ownerCustomIds.has(p.id));
 
     // Re-insert approved custom items at the top of this.products
-    const approvedCustomItems = this.ownerListings.filter(item => 
+    const approvedCustomItems = this.ownerListings.filter(item =>
       (item.isCustomType || item.isCustomBrand) && this.isListingApproved(item)
     );
     this.products.unshift(...approvedCustomItems);
@@ -693,8 +693,8 @@ class OnRentState {
     };
     const fallbackImgs = typeDefaults[productType] || typeDefaults['Laptops'];
 
-    const initialStatus = isCustom 
-      ? (this.isAdminAutoApproveEnabled() || this.approvedCustomIds.includes(newId) ? 'Approved' : 'Pending review') 
+    const initialStatus = isCustom
+      ? (this.isAdminAutoApproveEnabled() || this.approvedCustomIds.includes(newId) ? 'Approved' : 'Pending review')
       : 'Live';
 
     const product = {
@@ -720,8 +720,8 @@ class OnRentState {
       availableTo: listingData.availableTo || this.getFutureDateString(90),
       rating: 5.0,
       reviewsCount: 1,
-      images: listingData.photos && listingData.photos.length > 0 
-        ? listingData.photos 
+      images: listingData.photos && listingData.photos.length > 0
+        ? listingData.photos
         : fallbackImgs,
       owner: {
         name: this.userProfile.name,

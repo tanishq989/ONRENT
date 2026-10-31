@@ -100,8 +100,8 @@ window.HomeViewComponent = {
               </form>
             </div>
 
-            <div style="margin-top: 18px; font-size: 13px; color: #b8c1d4;">
-              Own useful tech gear sitting idle? <button type="button" onclick="window.AppState.navigateTo('list-item')" style="color: var(--brand-100); font-weight: 700; text-decoration: underline;">List your item</button> in Sambhajinagar and earn.
+            <div style="margin-top: 18px; font-size: 13px; color: var(--ink); opacity: 0.9;">
+              Own useful tech gear sitting idle? <button type="button" onclick="window.AppState.navigateTo('list-item')" style="color: var(--ink); font-weight: 700; text-decoration: underline;">List your item</button> in Sambhajinagar and earn.
             </div>
           </div>
         </section>
@@ -129,7 +129,7 @@ window.HomeViewComponent = {
             <div class="section-head">
               <div>
                 <span class="pill-badge pill-badge-violet" style="margin-bottom: 6px;">CURATED EXPERIENCES</span>
-                <h2 class="section-title">Rent by Moment</h2>
+                <h2 class="section-title">Rent by <span class="lemon-underline">Moment</span></h2>
                 <p class="section-subtitle">Gear bundled and ready for your projects & occasions in Sambhajinagar</p>
               </div>
               <button class="btn btn-secondary btn-sm" onclick="window.AppState.navigateTo('browse')">View All →</button>
@@ -158,7 +158,7 @@ window.HomeViewComponent = {
             <div class="section-head">
               <div>
                 <span class="pill-badge pill-badge-lime" style="margin-bottom: 6px;">VERIFIED OWNERS & SCALED DEPOSITS</span>
-                <h2 class="section-title">Ready Near You</h2>
+                <h2 class="section-title">Ready <span class="lemon-underline">Near You</span></h2>
                 <p class="section-subtitle">Available today for rapid pickup or 4-hour delivery in Sambhajinagar</p>
               </div>
               <button class="btn btn-secondary btn-sm" onclick="window.AppState.navigateTo('browse')">
@@ -185,7 +185,7 @@ window.HomeViewComponent = {
           <div class="trust-banner-section">
             <div style="text-align: center; max-width: 620px; margin: 0 auto 28px;">
               <span class="pill-badge pill-badge-violet" style="margin-bottom: 8px;">PEER TO PEER SAFETY</span>
-              <h3 style="font-size: 22px; font-weight: 900; color: var(--ink);">Renting Built on Verification & Mutual Trust</h3>
+              <h3 style="font-size: 22px; font-weight: 900; color: var(--ink);">Renting Built on <span class="lemon-underline">Verification</span> & Mutual Trust</h3>
               <p style="font-size: 14px; color: var(--muted); margin-top: 6px;">
                 Verified owners, clear deposits, photo-based handover and return.
               </p>
@@ -242,10 +242,10 @@ window.HomeViewComponent = {
 
         <!-- OWNER CTA SECTION -->
         <section class="container" style="margin-bottom: 40px;">
-          <div style="background: linear-gradient(135deg, var(--violet) 0%, var(--violet-dark) 100%); border-radius: var(--radius-xl); padding: 36px 28px; color: var(--white); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
+          <div style="background: linear-gradient(135deg, var(--purple) 0%, var(--purple-hover) 100%); border-radius: var(--radius-xl); padding: 36px 28px; color: var(--ink); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
             <span class="pill-badge pill-badge-lime">EARN PASSIVE INCOME</span>
-            <h3 style="color: #fcf7f8; font-size: 26px; font-weight: 900; max-width: 560px;">Have Cameras, Laptops, MacBooks, PS5, or Speakers Sitting Idle?</h3>
-            <p style="font-size: 14px; color: #ded5fd; max-width: 500px;">
+            <h3 style="color: var(--ink); font-size: 26px; font-weight: 900; max-width: 560px;">Have Cameras, Laptops, MacBooks, PS5, or Speakers Sitting Idle?</h3>
+            <p style="font-size: 14px; color: var(--ink); opacity: 0.9; max-width: 500px;">
               Rent them out to verified neighbours in Sambhajinagar. You set the daily price, retain 100% deposit protection, and approve handovers.
             </p>
             <button class="btn btn-lime btn-lg" onclick="window.AppState.navigateTo('list-item')">
@@ -293,7 +293,7 @@ window.HomeViewComponent = {
           <div class="product-category-row">
             <span class="product-category-name">${product.productType || product.category}</span>
             <div class="product-rating-box">
-              <span class="star"><svg class="icon icon-16" style="color: #f59e0b; fill: #f59e0b; vertical-align: -2px;" aria-hidden="true"><use href="#icon-star"></use></svg></span>
+              <span class="star"><svg class="icon icon-16" style="color: var(--lemon); fill: var(--lemon); vertical-align: -2px;" aria-hidden="true"><use href="#icon-star"></use></svg></span>
               <span>${product.rating}</span>
               <span style="color: var(--muted); font-size: 11px;">(${product.reviewsCount})</span>
             </div>

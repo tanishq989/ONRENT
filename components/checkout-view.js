@@ -101,7 +101,7 @@ window.CheckoutViewComponent = {
 
               <!-- Refund Guarantee Notice -->
               <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-top: 14px; display: flex; align-items: center; gap: 8px;">
-                <svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg>
+                <span class="refundable-deposit-icon"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg></span>
                 <span><strong>100% Refundable Deposit:</strong> Released immediately upon return inspection.</span>
               </div>
             </div>
@@ -270,16 +270,16 @@ window.CheckoutViewComponent = {
   renderStateNotice(state) {
     if (state === 'verified') {
       return `
-        <div style="background-color: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: #065f46; display: flex; align-items: flex-start; gap: 6px;">
-          <svg class="icon icon-16" style="color: #065f46; margin-top: 2px;" aria-hidden="true"><use href="#icon-check"></use></svg>
+        <div style="background-color: var(--beige-light); border: 1px solid var(--beige-line); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: var(--ink); display: flex; align-items: flex-start; gap: 6px;">
+          <svg class="icon icon-16" style="color: var(--purple-700); margin-top: 2px;" aria-hidden="true"><use href="#icon-check"></use></svg>
           <div><strong>Instant Handover Approved:</strong> Your Aadhaar identity and rental history check passed. The owner can hand over the gear immediately upon condition confirmation.</div>
         </div>
       `;
     }
     if (state === 'needs_review') {
       return `
-        <div style="background-color: var(--warning-light); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: #92400e; display: flex; align-items: flex-start; gap: 6px;">
-          <svg class="icon icon-16" style="color: #92400e; margin-top: 2px;" aria-hidden="true"><use href="#icon-alert"></use></svg>
+        <div style="background-color: var(--beige-light); border: 1px solid var(--beige-line); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: var(--ink); display: flex; align-items: flex-start; gap: 6px;">
+          <svg class="icon icon-16" style="color: var(--purple-700); margin-top: 2px;" aria-hidden="true"><use href="#icon-alert"></use></svg>
           <div><strong>Owner Review Required:</strong> Because your document was uploaded recently, the owner in Sambhajinagar will review your profile during mutual handover inspection before releasing equipment.</div>
         </div>
       `;

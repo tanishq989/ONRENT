@@ -156,7 +156,7 @@ window.ProductViewComponent = {
                 </h1>
                 <div style="display: flex; align-items: center; gap: 12px; font-size: 13px;">
                   <div style="display: flex; align-items: center; gap: 4px; font-weight: 700; color: var(--ink);">
-                    <svg class="icon icon-16" style="color: #f59e0b; fill: #f59e0b; vertical-align: -2px;" aria-hidden="true"><use href="#icon-star"></use></svg>
+                    <svg class="icon icon-16" style="color: var(--lemon); fill: var(--lemon); vertical-align: -2px;" aria-hidden="true"><use href="#icon-star"></use></svg>
                     <span>${product.rating}</span>
                     <span style="color: var(--muted); font-weight: 500;">(${product.reviewsCount} verified reviews)</span>
                   </div>
@@ -168,7 +168,7 @@ window.ProductViewComponent = {
               <!-- Owner Profile Card -->
               <div style="background-color: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; box-shadow: var(--shadow-xs);">
                 <div style="display: flex; align-items: center; gap: 14px;">
-                  <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--brand-900) 0%, var(--brand-700) 100%); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: var(--font-display); font-size: 16px;">
+                  <div style="width: 48px; height: 48px; border-radius: 50%; background-color: var(--purple); color: var(--ink); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: var(--font-display); font-size: 16px; border: 1.5px solid var(--purple-700);">
                     ${product.owner.avatar}
                   </div>
                   <div>
@@ -183,7 +183,7 @@ window.ProductViewComponent = {
                 </div>
 
                 <div style="text-align: right;">
-                  <span class="pill-badge pill-badge-success" style="display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" style="color: #047857; fill: #047857;" aria-hidden="true"><use href="#icon-star"></use></svg>${product.owner.rating} (${product.owner.reviewsCount})</span>
+                  <span class="pill-badge pill-badge-success" style="display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-16" style="color: var(--purple-700); fill: var(--purple-700);" aria-hidden="true"><use href="#icon-star"></use></svg>${product.owner.rating} (${product.owner.reviewsCount})</span>
                 </div>
               </div>
 
@@ -276,7 +276,7 @@ window.ProductViewComponent = {
                       onclick="ProductViewComponent.selectPlan('month_6', 180)"
                     >
                       <span class="plan-pill-name">6 Months</span>
-                      <span class="plan-pill-discount" style="color: #10b981;">Save 40%</span>
+                      <span class="plan-pill-discount" style="color: var(--purple-700);">Save 40%</span>
                     </button>
                   </div>
                 </div>
@@ -353,7 +353,7 @@ window.ProductViewComponent = {
 
                 <!-- Refund Guarantee Notice -->
                 <div style="background-color: var(--brand-50); border: 1px solid var(--brand-card-border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11px; color: var(--brand-900); margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">
-                  <svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg>
+                  <span class="refundable-deposit-icon"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-banknote-rupee"></use></svg></span>
                   <span><strong>100% Refundable Deposit:</strong> Released immediately upon return inspection.</span>
                 </div>
 

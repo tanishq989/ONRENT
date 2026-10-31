@@ -100,7 +100,7 @@ window.HandoverReturnComponent = {
                     <input type="checkbox" id="chk_item_${idx}" checked required style="width: 18px; height: 18px; accent-color: var(--violet); margin-top: 2px;" />
                     <div style="flex: 1;">
                       <span style="font-weight: 600;">${item.label}</span>
-                      ${item.critical ? `<span style="display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700; color: #b45309; background: var(--warning-light); padding: 1px 6px; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.4);">CRITICAL</span>` : ''}
+                      ${item.critical ? `<span style="display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700; color: var(--ink); background: var(--lemon); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--beige-line);">CRITICAL</span>` : ''}
                     </div>
                   </label>
                 `).join('')}
@@ -376,11 +376,11 @@ window.HandoverReturnComponent = {
               </div>
             </div>
 
-            <div style="background-color: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 12px 16px; font-size: 13px; color: #065f46; display: flex; align-items: center; gap: 10px;">
-              <span style="display: inline-flex; align-items: center;"><svg class="icon icon-20" aria-hidden="true"><use href="#icon-check"></use></svg></span>
+            <div style="background-color: var(--beige-light); border: 1px solid var(--beige-line); border-radius: var(--radius-md); padding: 12px 16px; font-size: 13px; color: var(--ink); display: flex; align-items: center; gap: 10px;">
+              <span style="display: inline-flex; align-items: center; color: var(--purple-700);"><svg class="icon icon-20" aria-hidden="true"><use href="#icon-check"></use></svg></span>
               <div>
                 <strong>AI Inspection Diagnostic: Clean & Functional</strong>
-                <div style="font-size: 11px; color: #047857;">Zero structural damage detected. Advisory note: Owner has final authority on deposit release.</div>
+                <div style="font-size: 11px; color: var(--purple-700);">Zero structural damage detected. Advisory note: Owner has final authority on deposit release.</div>
               </div>
             </div>
           </div>
@@ -399,10 +399,10 @@ window.HandoverReturnComponent = {
               ${typeSpecificChecklist.map(item => `
                 <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background-color: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 13px;">
                   <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
-                    <span style="color: var(--success); display: inline-flex; align-items: center;"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg></span>
+                    <span class="checklist-check-circle"><svg class="icon icon-16" aria-hidden="true"><use href="#icon-check"></use></svg></span>
                     <span style="color: var(--ink); font-weight: 600;">${item.label}</span>
                   </div>
-                  <span style="font-size: 10px; font-weight: 700; color: #047857; background: var(--success-light); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">Verified Clean</span>
+                  <span style="font-size: 10px; font-weight: 700; color: var(--ink); background: var(--lemon); border: 1px solid var(--beige-line); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">Verified Clean</span>
                 </div>
               `).join('')}
             </div>
@@ -430,7 +430,7 @@ window.HandoverReturnComponent = {
             </div>
 
             ${this.damageReported ? `
-              <div style="background-color: var(--warning-light); border: 1.5px solid rgba(245, 158, 11, 0.5); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+              <div style="background-color: var(--beige-light); border: 1.5px solid var(--beige-line); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
                 <label style="display: block; font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 4px;">
                   Damage Deduction Amount (₹):
                 </label>
@@ -441,9 +441,9 @@ window.HandoverReturnComponent = {
                   max="${heldDeposit}" 
                   min="0"
                   oninput="HandoverReturnComponent.onDamageFeeInput(event)"
-                  style="width: 100%; max-width: 260px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 16px; font-weight: 800; color: #b45309;"
+                  style="width: 100%; max-width: 260px; padding: 10px 12px; border: 1px solid var(--beige-line); border-radius: var(--radius-md); font-size: 16px; font-weight: 800; color: var(--ink); background: var(--white);"
                 />
-                <div style="font-size: 11px; color: #92400e; margin-top: 4px;">Max deductible is held deposit (${window.AppState.formatCurrency(heldDeposit)}).</div>
+                <div style="font-size: 11px; color: var(--purple-700); margin-top: 4px;">Max deductible is held deposit (${window.AppState.formatCurrency(heldDeposit)}).</div>
 
                 <label style="display: block; font-size: 12px; font-weight: 700; color: var(--ink); margin: 12px 0 4px;">
                   Damage Notes & Itemized Description:
@@ -452,7 +452,7 @@ window.HandoverReturnComponent = {
                   id="damageNotesInput" 
                   rows="2" 
                   placeholder="Detail scratched lens cap, chipped cable, missing connector, etc."
-                  style="width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 13px;"
+                  style="width: 100%; padding: 10px 12px; border: 1px solid var(--beige-line); border-radius: var(--radius-md); font-size: 13px; color: var(--ink); background: var(--white);"
                 >Scratch on protective UV lens filter; replacement cost deducted from held deposit with renter consent.</textarea>
               </div>
             ` : ''}
@@ -469,7 +469,7 @@ window.HandoverReturnComponent = {
               </div>
 
               ${damageFee > 0 ? `
-                <div style="display: flex; justify-content: space-between; color: #dc2626; font-weight: 600;">
+                <div style="display: flex; justify-content: space-between; color: var(--ink); font-weight: 700;">
                   <span>Less Damage Fee Deduction</span>
                   <span>-${window.AppState.formatCurrency(damageFee)}</span>
                 </div>

@@ -133,7 +133,7 @@ window.ListItemViewComponent = {
                     <!-- Specify Product Type (Visible only when Other is selected) -->
                     <div id="customProductTypeWrap" style="margin-top: 10px; display: ${isOtherType ? 'block' : 'none'};">
                       <label for="listCustomProductType">
-                        Specify product type <span style="color: #b91c1c;">*</span>
+                        Specify product type <span style="color: var(--purple-700);">*</span>
                       </label>
                       <input 
                         type="text" 
@@ -142,9 +142,9 @@ window.ListItemViewComponent = {
                         placeholder="e.g. Drone, Projector, Tablet" 
                         value="${this.customProductType || ''}"
                         oninput="ListItemViewComponent.onCustomTypeInput(event)"
-                        style="border: 1.5px solid ${this.errors && this.errors.customType ? '#b91c1c' : 'var(--brand-700)'};"
+                        style="border: 1.5px solid ${this.errors && this.errors.customType ? 'var(--purple-700)' : 'var(--brand-700)'};"
                       />
-                      <div id="customProductTypeError" style="color: #b91c1c; font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customType ? 'block' : 'none'};">
+                      <div id="customProductTypeError" style="color: var(--purple-700); font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customType ? 'block' : 'none'};">
                         ${this.errors && this.errors.customType ? this.errors.customType : ''}
                       </div>
                     </div>
@@ -170,7 +170,7 @@ window.ListItemViewComponent = {
                     <!-- Specify Brand (Visible when Brand is Other or Product Type is Other) -->
                     <div id="customBrandWrap" style="margin-top: 10px; display: ${isOtherBrand ? 'block' : 'none'};">
                       <label for="listCustomBrand">
-                        Specify brand <span style="color: #b91c1c;">*</span>
+                        Specify brand <span style="color: var(--purple-700);">*</span>
                       </label>
                       <input 
                         type="text" 
@@ -179,9 +179,9 @@ window.ListItemViewComponent = {
                         placeholder="e.g. Fujifilm, Marshall" 
                         value="${this.customBrand || ''}"
                         oninput="ListItemViewComponent.onCustomBrandInput(event)"
-                        style="border: 1.5px solid ${this.errors && this.errors.customBrand ? '#b91c1c' : 'var(--brand-700)'};"
+                        style="border: 1.5px solid ${this.errors && this.errors.customBrand ? 'var(--purple-700)' : 'var(--brand-700)'};"
                       />
-                      <div id="customBrandError" style="color: #b91c1c; font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customBrand ? 'block' : 'none'};">
+                      <div id="customBrandError" style="color: var(--purple-700); font-size: 12px; margin-top: 4px; font-weight: 600; display: ${this.errors && this.errors.customBrand ? 'block' : 'none'};">
                         ${this.errors && this.errors.customBrand ? this.errors.customBrand : ''}
                       </div>
                     </div>
@@ -476,7 +476,7 @@ window.ListItemViewComponent = {
                   const normItemImg = window.ProductImage ? window.ProductImage.normalize(item.images[0], item.title) : { url: (typeof item.images[0] === 'object' ? item.images[0].url : item.images[0]), alt: item.title };
                   const isPending = item.status === 'Pending review';
                   return `
-                    <div style="border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px; display: flex; gap: 12px; align-items: center; justify-content: space-between; background: ${isPending ? '#fffdf7' : 'white'};">
+                    <div style="border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px; display: flex; gap: 12px; align-items: center; justify-content: space-between; background: ${isPending ? 'var(--beige-light)' : 'var(--white)'};">
                       <div style="display: flex; gap: 12px; align-items: center; min-width: 0;">
                         <div style="width: 60px; height: 45px; border-radius: var(--radius-sm); overflow: hidden; flex-shrink: 0; position: relative;">
                           ${window.ProductImage ? window.ProductImage.render({
@@ -492,7 +492,7 @@ window.ListItemViewComponent = {
                               ${item.title}
                             </h4>
                             ${isPending ? `
-                              <span class="pill-badge" style="background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; display: inline-flex; align-items: center; gap: 3px;">
+                              <span class="pill-badge" style="background-color: var(--lemon); color: var(--ink); border: 1px solid var(--beige-line); font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; display: inline-flex; align-items: center; gap: 3px;">
                                 <svg class="icon icon-16" aria-hidden="true"><use href="#icon-hourglass"></use></svg> Pending review
                               </span>
                             ` : `

@@ -1232,7 +1232,7 @@ const SEED_MOMENTS = [
     tag: 'Creator Kit',
     icon: '<svg class="moment-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
     categorySlug: 'cameras',
-    accentColor: '#6f4bf6'
+    accentColor: 'var(--purple)'
   },
   {
     id: 'moment-work',
@@ -1242,7 +1242,7 @@ const SEED_MOMENTS = [
     tag: 'Popular',
     icon: '<svg class="moment-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>',
     categorySlug: 'computers',
-    accentColor: '#5131ca'
+    accentColor: 'var(--purple)'
   },
   {
     id: 'moment-party',
@@ -1252,7 +1252,7 @@ const SEED_MOMENTS = [
     tag: 'Party ₹349/d',
     icon: '<svg class="moment-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="8 6 4 9 1 9 1 15 4 15 8 18 8 6"/><path d="M11 9a4 4 0 0 1 0 6"/><rect x="11" y="8" width="12" height="9" rx="4"/><path d="M14 12.5h2m-1-1v2"/><circle cx="19.5" cy="11.5" r=".5" fill="currentColor"/><circle cx="18.5" cy="13.5" r=".5" fill="currentColor"/></svg>',
     categorySlug: 'gaming',
-    accentColor: '#ff8b5e'
+    accentColor: 'var(--purple)'
   },
   {
     id: 'moment-phone',
@@ -1262,7 +1262,7 @@ const SEED_MOMENTS = [
     tag: 'Flagship',
     icon: '<svg class="moment-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',
     categorySlug: 'phones',
-    accentColor: '#14213d'
+    accentColor: 'var(--purple)'
   }
 ];
 

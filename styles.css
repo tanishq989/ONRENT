@@ -2,16 +2,17 @@
    ONRENT — DESIGN SYSTEM & STYLESHEET
    Brand: ONRENT
    Colours:
-     - #360568 (deep purple): header text, headings, hero & footer backgrounds (start), primary text
-     - #5b2a86 (purple): buttons, active nav pill, links, icons, selected states, hero gradient end
-     - #7785ac (muted blue): borders, dividers, secondary icons, inactive chips, subtle backgrounds
-     - Allowed neutrals / tints: #ffffff, #c3cadf, #eef0f6, #f4f2f8
+     - Porcelain Beige (--beige)
+     - Heather Purple (--purple)
+     - Electric Lemon (--lemon)
+     - Ink (--ink)
+     - Purple-700 (--purple-700)
    Typography:
      - Display: Redaction 10 (Regular 400, Bold 700, Italic 400), Georgia, "Times New Roman", serif
      - Body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
    Geometry:
      - 16px card radius, 12px button/input radius, full pills for chips/badges
-     - 1px solid in #7785ac tint (#cdd3e3) for card borders, 1 uniform shadow style
+     - 1px solid var(--beige-line) for card borders, 1 uniform shadow style
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -50,62 +51,53 @@
   font-synthesis: none;
   -webkit-font-synthesis: none;
 
-  /* The 3 Core Brand Colours */
-  --brand-900: #360568; /* deep purple: header text, headings, hero & footer background start, primary text */
-  --brand-700: #5b2a86; /* purple: buttons, active nav pill, links, icons, selected states, hero gradient end */
-  --brand-400: #7785ac; /* muted blue: borders, dividers, secondary icons, inactive chips, subtle backgrounds */
+  /* 1. The 3 Core Brand Colours */
+  --beige: #F3E6D7;        /* major colour (~55%): page bg, card/section backgrounds, header, panels */
+  --purple: #9B7ED6;       /* major colour (~40%): hero bg, footer bg, primary buttons, active nav, selected states */
+  --lemon: #E4FF3B;        /* highlight colour (<5%): badges, tags, marker highlight, ratings, lemon dot/underlines */
 
-  /* Allowed Neutrals & Light Tints */
-  --white: #ffffff;
-  --brand-100: #c3cadf; /* light tint of #7785ac: highlighted 'Rent It', footer column headings */
-  --brand-50:  #eef0f6; /* very light tint: subtle backgrounds, dividers, inactive chips */
-  --brand-25:  #f4f2f8; /* very light tint: page and card backgrounds */
-  --brand-card-border: #cdd3e3; /* 1px solid in the #7785ac tint for all cards & inputs */
-  --brand-700-hover: #48206d;
+  /* 2. Derived Helper Shades */
+  --ink: #2A1A47;          /* very dark purple, for all text and for text on purple or lemon */
+  --purple-700: #6A4CB0;   /* darker purple, for icons, links, small purple text and active borders on beige */
+  --purple-hover: #8466C4; /* button hover */
+  --beige-light: #FAF3EA;  /* card background */
+  --beige-line: #DCCBB6;   /* borders and dividers */
+  --white: #FFFFFF;        /* allowed for input fields only */
 
-  /* Backward Compatibility & Component Mappings */
-  --ink: var(--brand-900);
-  --ink-900: var(--brand-900);
-  --ink-800: var(--brand-900);
-  --ink-700: var(--brand-900);
-  --ink-600: var(--brand-700);
-  --ink-500: var(--brand-700);
-  --ink-400: var(--brand-400);
-  --ink-300: var(--brand-100);
-  --ink-200: var(--brand-card-border);
-  --ink-100: var(--brand-50);
-  --ink-50:  var(--brand-25);
+  /* Accessible Placeholder & Focus Ring */
+  --placeholder: #61527E;  /* contrast 6.99:1 on white, WCAG AA pass */
+  --focus-ring: 0 0 0 2px var(--purple-700), 0 0 0 5px var(--lemon);
 
-  --violet: var(--brand-700);
-  --violet-hover: var(--brand-700-hover);
-  --violet-dark: var(--brand-900);
-  --violet-darker: var(--brand-900);
-  --violet-light: var(--brand-50);
-  --violet-tint: var(--brand-card-border);
-  --violet-ring: rgba(91, 42, 134, 0.25);
+  /* Component & Backward-Compatibility Mappings */
+  --brand-900: var(--ink);
+  --brand-700: var(--purple-700);
+  --brand-400: var(--beige-line);
+  --brand-100: var(--beige);
+  --brand-50:  var(--beige-light);
+  --brand-25:  var(--beige);
+  --brand-card-border: var(--beige-line);
+  --brand-700-hover: var(--purple-hover);
 
-  /* The ONE EXCEPTION: Lime kept only on the "+ List an Item" button in the header */
-  --lime: #ddf75b;
-  --lime-hover: #d2f13f;
-  --lime-dark: #8b9f1e;
-  --lime-light: var(--brand-50);
+  --paper: var(--beige);
+  --line: var(--beige-line);
+  --muted: var(--purple-700);
 
-  /* Orange mapped to brand colors */
-  --orange: var(--brand-700);
-  --orange-hover: var(--brand-700-hover);
-  --orange-light: var(--brand-50);
+  --violet: var(--purple-700);
+  --violet-hover: var(--purple-hover);
+  --violet-dark: var(--ink);
+  --violet-darker: var(--ink);
+  --violet-light: var(--beige-light);
+  --violet-tint: var(--beige-line);
 
-  --paper: var(--brand-25);
-  --line: var(--brand-card-border);
-  --muted: var(--brand-700); /* WCAG AAA compliant (7.6:1 on white) */
+  --lime: var(--lemon);
+  --lime-hover: var(--lemon);
 
-  /* Status Colors */
-  --success: var(--brand-700);
-  --success-light: var(--brand-50);
-  --warning: var(--brand-700);
-  --warning-light: var(--brand-50);
-  --danger: #b91c1c;
-  --danger-light: #fef2f2;
+  --success: var(--purple-700);
+  --success-light: var(--beige-light);
+  --warning: var(--purple-700);
+  --warning-light: var(--beige-light);
+  --danger: var(--purple-700);
+  --danger-light: var(--beige-light);
 
   /* Typography Families */
   --font-display: 'Redaction 10', Georgia, 'Times New Roman', serif;
@@ -120,10 +112,7 @@
   --space-5: 40px;
   --space-6: 48px;
 
-  /* Unified Corner Radii System:
-     - 16px for all cards
-     - 12px for all inputs and buttons
-     - full pills (9999px) for chips and badges */
+  /* Unified Corner Radii System */
   --radius-xs: 8px;
   --radius-sm: 12px;     /* inputs and buttons */
   --radius-md: 16px;     /* cards */
@@ -132,13 +121,13 @@
   --radius-xl: 16px;     /* cards */
   --radius-full: 9999px; /* chips, badges, pills */
 
-  /* Unified Shadow System: One shadow style for cards */
-  --shadow-xs: 0 1px 3px rgba(54, 5, 104, 0.04);
-  --shadow-sm: 0 4px 16px rgba(54, 5, 104, 0.06), 0 1px 3px rgba(54, 5, 104, 0.04);
-  --shadow-md: 0 4px 16px rgba(54, 5, 104, 0.06), 0 1px 3px rgba(54, 5, 104, 0.04);
-  --shadow-lg: 0 10px 28px rgba(54, 5, 104, 0.1), 0 2px 8px rgba(54, 5, 104, 0.04);
-  --shadow-violet: 0 4px 14px rgba(91, 42, 134, 0.25);
-  --shadow-lime: 0 4px 12px rgba(221, 247, 91, 0.35);
+  /* Unified Shadow System */
+  --shadow-xs: 0 1px 3px rgba(42, 26, 71, 0.04);
+  --shadow-sm: 0 4px 16px rgba(42, 26, 71, 0.06), 0 1px 3px rgba(42, 26, 71, 0.04);
+  --shadow-md: 0 4px 16px rgba(42, 26, 71, 0.06), 0 1px 3px rgba(42, 26, 71, 0.04);
+  --shadow-lg: 0 10px 28px rgba(42, 26, 71, 0.1), 0 2px 8px rgba(42, 26, 71, 0.04);
+  --shadow-violet: 0 4px 14px rgba(106, 76, 176, 0.25);
+  --shadow-lime: 0 4px 12px rgba(228, 255, 59, 0.35);
 
   /* Transitions */
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -290,7 +279,7 @@ p {
    BUTTONS & CALL-TO-ACTION SYSTEM
    Corner Radius: 12px (--radius-sm)
    Typography: Redaction 10 Bold (--font-display, 700)
-   Default Colour: #5b2a86 (--brand-700)
+   Default Colour: Heather Purple (--purple) with Ink text (--ink)
    Exception: .header-actions .btn-lime stays lime
    ========================================================================== */
 .btn {
@@ -329,69 +318,72 @@ p {
 /* Purple Primary Buttons */
 .btn-violet,
 .btn-primary {
-  background-color: var(--brand-700);
-  color: var(--white);
+  background-color: var(--purple);
+  color: var(--ink);
+  font-weight: 700;
   box-shadow: var(--shadow-sm);
 }
 
 .btn-violet:hover,
 .btn-primary:hover {
-  background-color: var(--brand-700-hover);
-  color: var(--white);
+  background-color: var(--purple-hover);
+  color: var(--ink);
 }
 
-/* btn-lime by default adopts brand purple */
+/* btn-lime by default adopts brand purple with --ink text */
 .btn-lime {
-  background-color: var(--brand-700);
-  color: var(--white);
+  background-color: var(--purple);
+  color: var(--ink);
+  font-weight: 700;
   box-shadow: var(--shadow-sm);
 }
 
 .btn-lime:hover {
-  background-color: var(--brand-700-hover);
-  color: var(--white);
+  background-color: var(--purple-hover);
+  color: var(--ink);
 }
 
-/* THE ONE EXCEPTION: keep the lime on the "+ List an Item" button in the header, unchanged */
+/* THE ONE EXCEPTION: keep the lemon on the "+ List an Item" button in the header */
 .header-actions .btn-lime {
-  background-color: var(--lime);
-  color: #14213d;
+  background-color: var(--lemon);
+  color: var(--ink);
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(221, 247, 91, 0.4);
+  box-shadow: 0 4px 12px rgba(228, 255, 59, 0.4);
 }
 
 .header-actions .btn-lime:hover {
-  background-color: var(--lime-hover);
-  color: #14213d;
+  background-color: var(--lemon);
+  opacity: 0.92;
+  color: var(--ink);
 }
 
 /* Secondary Button */
 .btn-secondary {
-  background-color: var(--white);
-  color: var(--brand-900);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--beige-light);
+  color: var(--ink);
+  border: 1px solid var(--beige-line);
   box-shadow: var(--shadow-xs);
 }
 
 .btn-secondary:hover {
-  background-color: var(--brand-50);
-  border-color: var(--brand-700);
-  color: var(--brand-700);
+  background-color: var(--purple);
+  border-color: var(--purple);
+  color: var(--ink);
 }
 
 /* Outline Button */
 .btn-outline,
 .btn-outline-violet {
   background-color: transparent;
-  color: var(--brand-700);
-  border: 1.5px solid var(--brand-card-border);
+  color: var(--ink);
+  border: 1.5px solid var(--beige-line);
 }
 
 .btn-outline:hover,
 .btn-outline-violet:hover {
-  background-color: var(--brand-50);
-  border-color: var(--brand-700);
-  color: var(--brand-700);
+  background-color: var(--purple);
+  border-color: var(--purple);
+  color: var(--ink);
 }
 
 .btn-full {
@@ -411,39 +403,39 @@ p {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   white-space: nowrap;
-  background-color: var(--brand-50);
-  color: var(--brand-700);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--beige-light);
+  color: var(--ink);
+  border: 1px solid var(--beige-line);
 }
 
 .pill-badge-violet {
-  background-color: var(--brand-50);
-  color: var(--brand-700);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--purple);
+  color: var(--ink);
+  border: 1px solid var(--purple-hover);
 }
 
-.pill-badge-lime {
-  background-color: var(--brand-50);
-  color: var(--brand-700);
-  border: 1px solid var(--brand-card-border);
-}
-
-.pill-badge-orange {
-  background-color: var(--brand-50);
-  color: var(--brand-700);
-  border: 1px solid var(--brand-card-border);
-}
-
+.pill-badge-lime,
+.pill-badge-orange,
 .pill-badge-success {
-  background-color: var(--brand-50);
-  color: var(--brand-700);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--lemon);
+  color: var(--ink);
+  border: 1px solid var(--beige-line);
+  font-weight: 700;
 }
 
 .pill-badge-muted {
-  background-color: var(--brand-50);
-  color: var(--brand-700);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--beige-light);
+  color: var(--ink);
+  border: 1px solid var(--beige-line);
+}
+
+/* Section Headings Key Word Underline */
+.underline-lemon,
+.section-title span.key-word,
+.section-title strong.key-word {
+  border-bottom: 4px solid var(--lemon);
+  padding-bottom: 2px;
+  display: inline-block;
 }
 
 /* ==========================================================================
@@ -454,9 +446,9 @@ p {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.98);
+  background-color: var(--beige);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--brand-card-border);
+  border-bottom: 1px solid var(--beige-line);
   transition: box-shadow var(--transition-fast);
 }
 
@@ -502,15 +494,19 @@ p {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-sm); /* 12px */
-  background: linear-gradient(135deg, var(--brand-900) 0%, var(--brand-700) 100%);
+  background: var(--purple);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
+  color: var(--ink);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 18px;
   box-shadow: var(--shadow-sm);
+}
+
+.brand-symbol .icon {
+  stroke: var(--ink);
 }
 
 .brand-text-wrap {
@@ -523,7 +519,7 @@ p {
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--brand-900);
+  color: var(--ink);
   line-height: 1;
 }
 
@@ -532,7 +528,7 @@ p {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--brand-900);
+  color: var(--ink);
   margin-top: 3px;
   text-transform: uppercase;
   white-space: nowrap;
@@ -544,14 +540,14 @@ p {
   align-items: center;
   gap: 6px;
   height: 40px;
-  background-color: var(--brand-50);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--beige-light);
+  border: 1px solid var(--beige-line);
   padding: 0 14px;
   border-radius: var(--radius-full);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   white-space: nowrap;
   flex-shrink: 0;
   box-sizing: border-box;
@@ -559,9 +555,9 @@ p {
 }
 
 .location-selector-chip:hover {
-  background-color: var(--white);
-  border-color: var(--brand-700);
-  color: var(--brand-700);
+  background-color: var(--purple);
+  border-color: var(--purple);
+  color: var(--ink);
   box-shadow: var(--shadow-xs);
 }
 
@@ -570,7 +566,7 @@ p {
 }
 
 .location-dot {
-  color: var(--brand-700);
+  color: var(--purple-700);
   font-size: 14px;
 }
 
@@ -597,21 +593,32 @@ p {
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   white-space: nowrap;
   box-sizing: border-box;
   transition: all var(--transition-fast);
 }
 
 .nav-item-btn:hover {
-  color: var(--brand-700);
-  background-color: var(--brand-50);
+  color: var(--purple-700);
+  background-color: var(--beige-light);
 }
 
 .nav-item-btn.active {
-  color: var(--white);
-  background-color: var(--brand-700);
-  box-shadow: 0 2px 8px rgba(91, 42, 134, 0.25);
+  color: var(--ink);
+  background-color: var(--purple);
+  box-shadow: 0 2px 8px rgba(106, 76, 176, 0.25);
+}
+
+.nav-item-btn.active::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--lemon);
+  margin-left: 6px;
+  vertical-align: middle;
 }
 
 .header-actions {
@@ -646,23 +653,23 @@ p {
   font-size: 13px;
   border-radius: var(--radius-sm); /* 12px */
   padding: 0 16px;
-  background-color: var(--white);
-  border: 1px solid var(--brand-card-border);
-  color: var(--brand-900);
+  background-color: var(--beige-light);
+  border: 1px solid var(--beige-line);
+  color: var(--ink);
   box-sizing: border-box;
   transition: all var(--transition-fast);
 }
 
 .account-dropdown-btn:hover {
-  background-color: var(--brand-50);
-  border-color: var(--brand-700);
-  color: var(--brand-700);
+  background-color: var(--purple);
+  border-color: var(--purple);
+  color: var(--ink);
 }
 
 .account-dropdown-btn.active {
-  background-color: var(--brand-700);
-  color: var(--white);
-  border-color: var(--brand-700);
+  background-color: var(--purple);
+  color: var(--ink);
+  border-color: var(--purple);
 }
 
 .account-dropdown-btn .dropdown-chevron-icon {
@@ -679,8 +686,8 @@ p {
   top: calc(100% + 8px);
   right: 0;
   min-width: 190px;
-  background: var(--white);
-  border: 1px solid var(--brand-card-border);
+  background: var(--beige-light);
+  border: 1px solid var(--beige-line);
   border-radius: var(--radius-card); /* 16px */
   box-shadow: var(--shadow-lg);
   padding: 6px;
@@ -707,7 +714,7 @@ p {
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   text-align: left;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -715,14 +722,14 @@ p {
 
 .account-menu-item:hover,
 .account-menu-item:focus {
-  background-color: var(--brand-50);
-  color: var(--brand-700);
+  background-color: var(--purple);
+  color: var(--ink);
   outline: none;
 }
 
 .account-menu-item.active {
-  color: var(--brand-700);
-  background-color: var(--brand-50);
+  color: var(--ink);
+  background-color: var(--purple);
 }
 
 .account-menu-item .menu-item-icon {
@@ -762,8 +769,8 @@ p {
   bottom: calc(100% + 12px);
   right: 12px;
   min-width: 180px;
-  background: var(--white);
-  border: 1px solid var(--brand-card-border);
+  background: var(--beige-light);
+  border: 1px solid var(--beige-line);
   border-radius: var(--radius-card); /* 16px */
   box-shadow: var(--shadow-lg);
   padding: 6px;
@@ -790,7 +797,7 @@ p {
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   text-align: left;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -798,14 +805,14 @@ p {
 
 .mobile-account-menu-item:hover,
 .mobile-account-menu-item:focus {
-  background-color: var(--brand-50);
-  color: var(--brand-700);
+  background-color: var(--purple);
+  color: var(--ink);
   outline: none;
 }
 
 .mobile-account-menu-item.active {
-  color: var(--brand-700);
-  background-color: var(--brand-50);
+  color: var(--ink);
+  background-color: var(--purple);
 }
 
 .mobile-account-menu-item .tab-icon {
@@ -819,14 +826,14 @@ p {
   left: 0;
   right: 0;
   height: 68px;
-  background-color: rgba(255, 255, 255, 0.98);
+  background-color: var(--beige);
   backdrop-filter: blur(16px);
-  border-top: 1px solid var(--brand-card-border);
+  border-top: 1px solid var(--beige-line);
   display: flex;
   align-items: center;
   justify-content: space-around;
   z-index: 99;
-  box-shadow: 0 -4px 18px rgba(54, 5, 104, 0.05);
+  box-shadow: 0 -4px 18px rgba(42, 26, 71, 0.05);
 }
 
 @media (min-width: 992px) {
@@ -843,7 +850,7 @@ p {
   gap: 3px;
   flex: 1;
   height: 100%;
-  color: var(--brand-700);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
@@ -852,28 +859,33 @@ p {
 }
 
 .mobile-nav-tab.active {
-  color: var(--brand-900);
+  color: var(--ink);
   font-weight: 700;
 }
 
-.mobile-nav-tab .tab-icon {
-  font-size: 20px;
-  transition: transform var(--transition-fast);
+.mobile-nav-tab.active .tab-icon {
+  color: var(--purple-700);
 }
 
-.mobile-nav-tab.active .tab-icon {
-  transform: translateY(-2px);
+.mobile-nav-tab.active::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--lemon);
+  position: absolute;
+  bottom: 4px;
 }
 
 /* ==========================================================================
    HERO BANNER & SEARCH BAR
-   Gradient: #360568 to #5b2a86
-   Highlighted text: #c3cadf (light tint of #7785ac)
+   Gradient: var(--purple) to var(--purple-hover)
    ========================================================================== */
 .hero-section {
   position: relative;
-  background: linear-gradient(135deg, var(--brand-900) 0%, var(--brand-700) 100%);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-hover) 100%);
+  color: var(--ink);
   padding: 44px 0 60px;
   border-radius: 0 0 24px 24px;
   overflow: hidden;
@@ -904,7 +916,7 @@ p {
   width: 320px;
   height: 320px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(91, 42, 134, 0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(106, 76, 176, 0.25) 0%, transparent 70%);
 }
 
 .hero-shape-2 {
@@ -914,7 +926,7 @@ p {
   width: 260px;
   height: 260px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(119, 133, 172, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(243, 230, 215, 0.3) 0%, transparent 70%);
 }
 
 .hero-content {
@@ -932,7 +944,7 @@ p {
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  color: var(--white);
+  color: var(--ink);
   margin-top: 0;
   margin-bottom: 14px;
 }
@@ -944,14 +956,19 @@ p {
 }
 
 .hero-title .highlight-lime {
-  color: var(--lime);
-  position: relative;
+  background-color: var(--lemon);
+  color: var(--ink);
+  padding: 2px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  font-weight: 700;
 }
 
 .hero-subtitle {
   font-family: var(--font-body);
   font-size: 15px;
-  color: #e4e7f1;
+  color: var(--ink);
+  opacity: 0.9;
   max-width: 720px;
   margin: 0 auto 28px;
   line-height: 1.6;
@@ -965,9 +982,9 @@ p {
 
 /* Multi-Attribute Search Bar (Equal Heights: 56px, Radius: 12px) */
 .hero-search-box {
-  background-color: var(--white);
+  background-color: var(--beige-light);
   border-radius: var(--radius-card); /* 16px */
-  border: 1px solid var(--brand-card-border);
+  border: 1px solid var(--beige-line);
   padding: 16px 20px;
   box-shadow: var(--shadow-lg);
   max-width: 1100px;
@@ -997,8 +1014,8 @@ p {
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: var(--brand-50);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--white);
+  border: 1px solid var(--beige-line);
   padding: 0 16px;
   border-radius: var(--radius-sm); /* 12px */
   text-align: left;
@@ -1010,8 +1027,8 @@ p {
 }
 
 .search-field-unit:focus-within {
-  border-color: #5b2a86;
-  box-shadow: 0 0 0 2px #5b2a86, 0 4px 14px rgba(91, 42, 134, 0.2);
+  border-color: var(--purple-700);
+  box-shadow: 0 0 0 2px var(--purple-700), 0 0 0 5px var(--lemon);
 }
 
 .search-field-unit.duration-field {
@@ -1025,8 +1042,8 @@ p {
   font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
-  color: #360568;
-  caret-color: #5b2a86;
+  color: var(--ink);
+  caret-color: var(--purple-700);
   outline: none;
   letter-spacing: normal;
   text-transform: none;
@@ -1043,7 +1060,7 @@ p {
 }
 
 .search-field-unit input::placeholder {
-  color: #59556e;
+  color: var(--placeholder);
   font-weight: 500;
   opacity: 1;
 }
@@ -1056,7 +1073,7 @@ p {
   height: 22px;
   flex-shrink: 0;
   line-height: 0;
-  color: var(--brand-700);
+  color: var(--purple-700);
   pointer-events: none;
 }
 
@@ -1065,7 +1082,7 @@ p {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
-  stroke: var(--brand-700);
+  stroke: var(--purple-700);
 }
 
 /* Clear button inside search bars */
@@ -1076,9 +1093,9 @@ p {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: rgba(119, 133, 172, 0.18);
+  background: var(--beige);
   border: none;
-  color: #360568;
+  color: var(--ink);
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
@@ -1086,12 +1103,12 @@ p {
 }
 
 .search-clear-btn:hover {
-  background: #5b2a86;
-  color: var(--white);
+  background: var(--purple);
+  color: var(--ink);
 }
 
 .search-clear-btn:focus-visible {
-  outline: 2px solid #5b2a86;
+  outline: 2px solid var(--purple-700);
   outline-offset: 1px;
 }
 
@@ -1102,8 +1119,8 @@ p {
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: var(--brand-50);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--white);
+  border: 1px solid var(--beige-line);
   border-radius: var(--radius-sm);
   padding: 0 16px;
   height: 54px;
@@ -1114,8 +1131,8 @@ p {
 }
 
 .browse-search-unit:focus-within {
-  border-color: #5b2a86;
-  box-shadow: 0 0 0 2px #5b2a86, 0 4px 14px rgba(91, 42, 134, 0.2);
+  border-color: var(--purple-700);
+  box-shadow: 0 0 0 2px var(--purple-700), 0 0 0 5px var(--lemon);
 }
 
 .browse-search-unit input {
@@ -1125,8 +1142,8 @@ p {
   font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
-  color: #360568;
-  caret-color: #5b2a86;
+  color: var(--ink);
+  caret-color: var(--purple-700);
   outline: none;
   letter-spacing: normal;
   text-transform: none;
@@ -1141,7 +1158,7 @@ p {
 }
 
 .browse-search-unit input::placeholder {
-  color: #59556e;
+  color: var(--placeholder);
   font-weight: 500;
   opacity: 1;
 }
@@ -1156,14 +1173,14 @@ p {
   white-space: nowrap;
   letter-spacing: -0.01em;
   border-radius: var(--radius-sm); /* 12px */
-  background-color: var(--brand-700);
-  color: var(--white);
+  background-color: var(--ink);
+  color: var(--beige);
   box-shadow: var(--shadow-sm);
 }
 
 #heroSearchSubmitBtn:hover {
-  background-color: var(--brand-700-hover);
-  color: var(--white);
+  background-color: var(--purple-700);
+  color: var(--beige);
 }
 
 @media (max-width: 899px) {
@@ -1197,9 +1214,9 @@ p {
   gap: 8px;
   padding: 10px 18px;
   border-radius: var(--radius-full);
-  background-color: var(--white);
-  border: 1px solid var(--brand-card-border);
-  color: var(--brand-900);
+  background-color: var(--beige-light);
+  border: 1px solid var(--beige-line);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
@@ -1209,27 +1226,27 @@ p {
 }
 
 .category-chip:hover {
-  border-color: var(--brand-700);
-  background-color: var(--brand-50);
-  color: var(--brand-700);
+  border-color: var(--purple);
+  background-color: var(--beige);
+  color: var(--ink);
 }
 
 .category-chip.active {
-  background-color: var(--brand-700);
-  color: var(--white);
-  border-color: var(--brand-700);
-  box-shadow: 0 4px 14px rgba(91, 42, 134, 0.25);
+  background-color: var(--purple);
+  color: var(--ink);
+  border-color: var(--purple);
+  box-shadow: 0 4px 14px rgba(106, 76, 176, 0.25);
 }
 
 .category-chip .chip-icon svg {
   width: 16px;
   height: 16px;
-  stroke: var(--brand-700);
+  stroke: var(--purple-700);
   transition: stroke var(--transition-fast);
 }
 
 .category-chip.active .chip-icon svg {
-  stroke: var(--white);
+  stroke: var(--ink);
 }
 
 /* ==========================================================================
@@ -1253,7 +1270,7 @@ p {
   font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--brand-900);
+  color: var(--ink);
   line-height: 1.2;
 }
 
@@ -1263,10 +1280,43 @@ p {
   }
 }
 
+.lemon-underline {
+  display: inline-block;
+  border-bottom: 4px solid var(--lemon);
+  padding-bottom: 2px;
+  line-height: 1.05;
+}
+
+.refundable-deposit-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background-color: var(--lemon);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--beige-line);
+}
+
+.checklist-check-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background-color: var(--lemon);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--beige-line);
+}
+
 .section-subtitle {
   font-family: var(--font-body);
   font-size: 14px;
-  color: var(--brand-700);
+  color: var(--purple-700);
   margin-top: 4px;
 }
 
@@ -1290,8 +1340,8 @@ p {
 }
 
 .moment-card {
-  background: var(--white);
-  border: 1px solid var(--brand-card-border);
+  background: var(--beige-light);
+  border: 1px solid var(--beige-line);
   border-radius: var(--radius-card); /* 16px */
   padding: 16px;
   cursor: pointer;
@@ -1307,7 +1357,7 @@ p {
 .moment-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  border-color: var(--brand-700);
+  border-color: var(--purple);
 }
 
 .moment-card-header {
@@ -1322,18 +1372,19 @@ p {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-sm); /* 12px */
-  background-color: var(--brand-50);
+  background-color: var(--purple);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  color: var(--ink);
 }
 
 .moment-icon-badge svg,
 .moment-svg-icon {
   width: 22px;
   height: 22px;
-  stroke: var(--brand-700);
+  stroke: var(--ink);
   transition: transform var(--transition-fast);
 }
 
@@ -1348,9 +1399,9 @@ p {
   font-weight: 700;
   padding: 4px 10px;
   border-radius: var(--radius-full);
-  background: var(--brand-50);
-  color: var(--brand-700);
-  border: 1px solid var(--brand-card-border);
+  background: var(--lemon);
+  color: var(--ink);
+  border: 1px solid var(--beige-line);
   white-space: nowrap;
 }
 
@@ -1364,7 +1415,7 @@ p {
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   line-height: 1.3;
   margin-bottom: 6px;
 }
@@ -1372,7 +1423,8 @@ p {
 .moment-card-desc {
   font-family: var(--font-body);
   font-size: 13px;
-  color: var(--brand-700);
+  color: var(--ink);
+  opacity: 0.85;
   line-height: 1.4;
 }
 
@@ -1407,8 +1459,8 @@ p {
 }
 
 .product-card {
-  background-color: var(--white);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--beige-light);
+  border: 1px solid var(--beige-line);
   border-radius: var(--radius-card); /* 16px */
   overflow: hidden;
   box-shadow: var(--shadow-sm);
@@ -1423,14 +1475,14 @@ p {
 .product-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  border-color: var(--brand-700);
+  border-color: var(--purple);
 }
 
 .product-card-img-wrap {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
-  background-color: var(--brand-50);
+  background-color: var(--beige);
   overflow: hidden;
 }
 
@@ -1454,8 +1506,7 @@ p {
   font-weight: 700;
   padding: 4px 10px;
   border-radius: var(--radius-full);
-  background-color: rgba(54, 5, 104, 0.85);
-  backdrop-filter: blur(6px);
+  background-color: var(--purple-700);
   color: var(--white);
 }
 
@@ -1468,10 +1519,9 @@ p {
   font-weight: 700;
   padding: 3px 10px;
   border-radius: var(--radius-full);
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(6px);
-  color: var(--brand-900);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--lemon);
+  color: var(--ink);
+  border: 1px solid var(--beige-line);
   box-shadow: var(--shadow-xs);
 }
 
@@ -1495,7 +1545,7 @@ p {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--brand-700);
+  color: var(--purple-700);
 }
 
 .product-rating-box {
@@ -1505,18 +1555,19 @@ p {
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
 }
 
 .product-rating-box .star {
-  color: var(--brand-700);
+  color: var(--lemon);
+  fill: var(--lemon);
 }
 
 .product-card-title {
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   line-height: 1.35;
   margin-bottom: 6px;
   display: -webkit-box;
@@ -1531,7 +1582,7 @@ p {
   gap: 6px;
   font-family: var(--font-body);
   font-size: 12px;
-  color: var(--brand-700);
+  color: var(--purple-700);
   margin-bottom: 12px;
 }
 
@@ -1539,8 +1590,8 @@ p {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: var(--brand-50);
-  color: var(--brand-700);
+  background-color: var(--purple);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 10px;
   font-weight: 700;
@@ -1552,7 +1603,7 @@ p {
 .product-card-footer {
   margin-top: auto; /* Pinned to bottom */
   padding-top: 12px;
-  border-top: 1px solid var(--brand-card-border);
+  border-top: 1px solid var(--beige-line);
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -1567,7 +1618,7 @@ p {
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   letter-spacing: -0.01em;
 }
 
@@ -1575,29 +1626,30 @@ p {
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 500;
-  color: var(--brand-700);
+  color: var(--purple-700);
 }
 
 .product-deposit-pill {
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
-  color: var(--brand-700);
+  color: var(--purple-700);
 }
 
 /* ==========================================================================
    TRUST & SAFETY BANNER
    ========================================================================== */
 .trust-banner-section {
-  background: linear-gradient(135deg, var(--white) 0%, var(--brand-50) 100%);
-  border: 1px solid var(--brand-card-border);
+  background: var(--beige-light);
+  border: 1px solid var(--beige-line);
   border-radius: var(--radius-card); /* 16px */
   padding: 32px 24px;
   margin: 36px 0;
   box-shadow: var(--shadow-sm);
 }
 
-.trust-pillars-grid {
+.trust-pillars-grid,
+.trust-banner-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
@@ -1605,43 +1657,49 @@ p {
 }
 
 @media (min-width: 768px) {
-  .trust-pillars-grid {
+  .trust-pillars-grid,
+  .trust-banner-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.trust-pillar-card {
+.trust-pillar-card,
+.trust-feature-item {
   display: flex;
   gap: 16px;
   align-items: flex-start;
 }
 
-.trust-pillar-icon {
+.trust-pillar-icon,
+.trust-feature-icon {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-sm); /* 12px */
-  background-color: var(--brand-50);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--beige);
+  border: 1px solid var(--beige-line);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  color: var(--brand-700);
+  color: var(--purple-700);
   flex-shrink: 0;
 }
 
-.trust-pillar-title {
+.trust-pillar-title,
+.trust-feature-content h4 {
   font-family: var(--font-display);
   font-size: 16px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   margin-bottom: 4px;
 }
 
-.trust-pillar-desc {
+.trust-pillar-desc,
+.trust-feature-content p {
   font-family: var(--font-body);
   font-size: 13px;
-  color: var(--brand-700);
+  color: var(--ink);
+  opacity: 0.85;
   line-height: 1.5;
 }
 
@@ -1654,7 +1712,7 @@ p {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(54, 5, 104, 0.6);
+  background-color: rgba(42, 26, 71, 0.6);
   backdrop-filter: blur(6px);
   z-index: 1050;
   display: flex;
@@ -1672,9 +1730,9 @@ p {
 }
 
 .modal-box {
-  background-color: var(--white);
+  background-color: var(--beige-light);
   border-radius: var(--radius-card); /* 16px */
-  border: 1px solid var(--brand-card-border);
+  border: 1px solid var(--beige-line);
   width: 100%;
   max-width: 600px;
   max-height: 90vh;
@@ -1684,6 +1742,7 @@ p {
   box-shadow: var(--shadow-lg);
   transform: translateY(20px) scale(0.97);
   transition: transform var(--transition-normal);
+  color: var(--ink);
 }
 
 @media (min-width: 768px) {
@@ -1703,20 +1762,20 @@ p {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: var(--brand-50);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--beige);
+  border: 1px solid var(--beige-line);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  color: var(--brand-900);
+  color: var(--ink);
   transition: all var(--transition-fast);
 }
 
 .modal-close-btn:hover {
-  background-color: var(--white);
-  border-color: var(--brand-700);
-  color: var(--brand-700);
+  background-color: var(--purple);
+  border-color: var(--purple);
+  color: var(--ink);
   transform: rotate(90deg);
 }
 
@@ -1724,8 +1783,8 @@ p {
    PRICE CALCULATOR & PLAN PICKER COMPONENT
    ========================================================================== */
 .calc-card-container {
-  background-color: var(--brand-50);
-  border: 1px solid var(--brand-card-border);
+  background-color: var(--beige-light);
+  border: 1px solid var(--beige-line);
   border-radius: var(--radius-card); /* 16px */
   padding: 20px;
   margin: 18px 0;
@@ -1746,7 +1805,7 @@ p {
 
 .plan-pill-btn {
   background-color: var(--white);
-  border: 1.5px solid var(--brand-card-border);
+  border: 1.5px solid var(--beige-line);
   border-radius: var(--radius-sm); /* 12px */
   padding: 10px 8px;
   text-align: center;
@@ -1755,30 +1814,35 @@ p {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  color: var(--ink);
 }
 
 .plan-pill-btn:hover {
-  border-color: var(--brand-700);
+  border-color: var(--purple);
 }
 
 .plan-pill-btn.active {
-  border-color: var(--brand-700);
-  background-color: var(--brand-50);
-  box-shadow: 0 0 0 1px var(--brand-700);
+  border-color: var(--purple);
+  background-color: var(--purple);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--purple);
 }
 
 .plan-pill-name {
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
 }
 
 .plan-pill-discount {
   font-family: var(--font-body);
   font-size: 10px;
   font-weight: 700;
-  color: var(--brand-700);
+  background: var(--lemon);
+  color: var(--ink);
+  padding: 1px 6px;
+  border-radius: 4px;
 }
 
 .calc-dates-row {
@@ -1794,7 +1858,7 @@ p {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--brand-700);
+  color: var(--purple-700);
   margin-bottom: 4px;
 }
 
@@ -1803,18 +1867,18 @@ p {
   height: 48px;
   padding: 8px 12px;
   border-radius: var(--radius-sm); /* 12px */
-  border: 1px solid var(--brand-card-border);
+  border: 1px solid var(--beige-line);
   background-color: var(--white);
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
-  color: var(--brand-900);
+  color: var(--ink);
   box-sizing: border-box;
 }
 
 .calc-toggle-row {
   background-color: var(--white);
-  border: 1px solid var(--brand-card-border);
+  border: 1px solid var(--beige-line);
   border-radius: var(--radius-card); /* 16px */
   padding: 12px 14px;
   display: flex;
@@ -1822,12 +1886,13 @@ p {
   justify-content: space-between;
   margin-bottom: 14px;
   cursor: pointer;
+  color: var(--ink);
 }
 
 .calc-toggle-row input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: var(--brand-700);
+  accent-color: var(--purple);
 }
 
 /* Itemized Price Breakdown Table */
@@ -1837,8 +1902,8 @@ p {
   gap: 8px;
   font-size: 13px;
   padding: 14px 0;
-  border-top: 1px solid var(--brand-card-border);
-  border-bottom: 1px solid var(--brand-card-border);
+  border-top: 1px solid var(--beige-line);
+  border-bottom: 1px solid var(--beige-line);
   margin-bottom: 14px;
 }
 
@@ -1846,26 +1911,28 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--brand-700);
+  color: var(--ink);
 }
 
 .calc-breakdown-row.highlight-net {
-  color: var(--brand-900);
+  color: var(--ink);
   font-weight: 700;
 }
 
 .calc-breakdown-row.highlight-total {
   font-size: 16px;
   font-weight: 700;
-  color: var(--brand-900);
-  padding-top: 6px;
-  border-top: 1px dashed var(--brand-card-border);
+  background-color: var(--purple);
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border-top: none;
 }
 
 .calc-breakdown-row.highlight-total .total-val {
   font-family: var(--font-display);
-  font-weight: 700;
-  color: var(--brand-700);
+  font-weight: 800;
+  color: var(--ink);
 }
 
 /* Collapsible Tax & Fee Breakdown Group under Net Rental Charge */
@@ -1881,7 +1948,7 @@ button.calc-breakdown-row.breakdown-toggle-btn {
   font-family: inherit;
   font-size: 13px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   text-align: left;
   cursor: pointer;
   padding: 3px 0;
@@ -1894,11 +1961,11 @@ button.calc-breakdown-row.breakdown-toggle-btn {
 }
 
 button.calc-breakdown-row.breakdown-toggle-btn:hover {
-  color: var(--brand-700);
+  color: var(--purple-700);
 }
 
 button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
-  outline: 2px solid var(--brand-700);
+  outline: 2px solid var(--purple-700);
   outline-offset: 3px;
 }
 
@@ -1912,7 +1979,7 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
-  stroke: #5b2a86;
+  stroke: var(--purple-700);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1952,7 +2019,8 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
 
 .calc-breakdown-row.breakdown-subrow {
   font-size: 12.5px;
-  color: var(--brand-700);
+  color: var(--ink);
+  opacity: 0.9;
   font-weight: 500;
 }
 
@@ -1975,7 +2043,7 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   bottom: 12px;
   left: 11px;
   width: 2px;
-  background-color: var(--brand-card-border);
+  background-color: var(--beige-line);
 }
 
 .timeline-step {
@@ -1993,41 +2061,41 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   height: 24px;
   border-radius: 50%;
   background-color: var(--white);
-  border: 2px solid var(--brand-card-border);
+  border: 2px solid var(--beige-line);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
-  color: var(--brand-700);
+  color: var(--purple-700);
   z-index: 2;
 }
 
 .timeline-step.completed .step-marker {
-  background-color: var(--brand-700);
-  border-color: var(--brand-700);
-  color: var(--white);
+  background-color: var(--purple);
+  border-color: var(--purple);
+  color: var(--ink);
 }
 
 .timeline-step.active .step-marker {
-  background-color: var(--brand-700);
-  border-color: var(--brand-900);
-  color: var(--white);
-  box-shadow: 0 0 0 4px var(--brand-50);
+  background-color: var(--lemon);
+  border-color: var(--purple-700);
+  color: var(--ink);
+  box-shadow: 0 0 0 4px var(--beige-light);
 }
 
 .step-title {
   font-family: var(--font-display);
   font-size: 15px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
 }
 
 .step-desc {
   font-family: var(--font-body);
   font-size: 12px;
-  color: var(--brand-700);
+  color: var(--purple-700);
 }
 
 /* ==========================================================================
@@ -2058,7 +2126,7 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
   margin-bottom: 6px;
   line-height: 1.3;
 }
@@ -2070,13 +2138,13 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   height: 54px;
   min-height: 54px;
   padding: 0 16px;
-  border: 1px solid var(--brand-card-border);
+  border: 1px solid var(--beige-line);
   border-radius: var(--radius-sm); /* 12px */
   font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
-  color: #360568;
-  caret-color: #5b2a86;
+  color: var(--ink);
+  caret-color: var(--purple-700);
   background: var(--white);
   box-sizing: border-box;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
@@ -2084,7 +2152,7 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
 
 .form-field-unit input::placeholder,
 .form-field-unit textarea::placeholder {
-  color: #59556e;
+  color: var(--placeholder);
   font-weight: 500;
   opacity: 1;
 }
@@ -2098,9 +2166,9 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
 .form-field-unit input:focus,
 .form-field-unit select:focus,
 .form-field-unit textarea:focus {
-  border-color: #5b2a86;
+  border-color: var(--purple-700);
   outline: none;
-  box-shadow: 0 0 0 2px #5b2a86, 0 4px 14px rgba(91, 42, 134, 0.2);
+  box-shadow: 0 0 0 2px var(--purple-700), 0 0 0 5px var(--lemon);
 }
 
 /* ==========================================================================
@@ -2130,8 +2198,8 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
 }
 
 .toast-pill {
-  background-color: var(--brand-900);
-  color: var(--white);
+  background-color: var(--ink);
+  color: var(--beige);
   padding: 12px 18px;
   border-radius: var(--radius-full);
   font-family: var(--font-display);
@@ -2143,17 +2211,17 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   gap: 10px;
   animation: slideToastUp 0.3s var(--ease-spring);
   pointer-events: auto;
-  border: 1px solid var(--brand-card-border);
+  border: 1px solid var(--purple-700);
 }
 
 .toast-pill.success {
-  background-color: var(--brand-900);
-  border: 1px solid var(--brand-700);
+  background-color: var(--ink);
+  border: 1px solid var(--lemon);
 }
 
 .toast-pill.warning {
-  background-color: var(--brand-900);
-  border: 1px solid var(--brand-700);
+  background-color: var(--ink);
+  border: 1px solid var(--lemon);
 }
 
 @keyframes slideToastUp {
@@ -2169,12 +2237,13 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
 
 /* ==========================================================================
    FOOTER
-   Background: #360568 (--brand-900)
-   Headings: #c3cadf (--brand-100)
+   Background: Heather Purple (--purple to --purple-hover)
+   Text & Headings: Ink (--ink)
+   Accents: Electric Lemon (--lemon)
    ========================================================================== */
 .site-footer {
-  background-color: var(--brand-900);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-hover) 100%);
+  color: var(--ink);
   padding: 48px 0 32px;
   margin-top: 48px;
 }
@@ -2197,17 +2266,18 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--white);
+  color: var(--ink);
   margin-bottom: 8px;
 }
 
 .footer-brand p {
   font-family: var(--font-body);
   font-size: 14px;
-  color: #c9d4eb;
+  color: var(--ink);
   line-height: 1.6;
   max-width: 380px;
   margin-bottom: 16px;
+  opacity: 0.9;
 }
 
 .footer-col h5 {
@@ -2216,8 +2286,11 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--brand-100); /* light tint of #7785ac (~#c3cadf), NOT lime */
+  color: var(--ink);
   margin-bottom: 14px;
+  display: inline-block;
+  border-bottom: 3px solid var(--lemon);
+  padding-bottom: 4px;
 }
 
 .footer-links-list {
@@ -2230,24 +2303,28 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
 .footer-links-list button {
   font-family: var(--font-body);
   font-size: 13px;
-  color: #c9d4eb;
+  color: var(--ink);
   text-align: left;
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  opacity: 0.88;
 }
 
 .footer-links-list button:hover {
-  color: var(--white);
+  color: var(--ink);
+  opacity: 1;
+  text-decoration: underline;
 }
 
 .footer-bottom-row {
   padding-top: 24px;
-  border-top: 1px solid rgba(195, 202, 223, 0.2);
+  border-top: 1px solid rgba(42, 26, 71, 0.2);
   display: flex;
   flex-direction: column;
   gap: 12px;
   font-family: var(--font-body);
   font-size: 12px;
-  color: var(--brand-100);
+  color: var(--ink);
+  opacity: 0.85;
 }
 
 @media (min-width: 768px) {
@@ -2265,7 +2342,7 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background-color: var(--brand-50);
+  background-color: var(--beige-light);
   display: block;
   border-radius: inherit;
 }
@@ -2273,7 +2350,7 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
 .onrent-skeleton {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #f0f2f7 25%, #e4e7f1 50%, #f0f2f7 75%);
+  background: linear-gradient(90deg, var(--beige) 25%, var(--beige-light) 50%, var(--beige) 75%);
   background-size: 200% 100%;
   animation: onrentShimmer 1.5s infinite;
   z-index: 0;
@@ -2333,8 +2410,8 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--white) 0%, var(--brand-50) 100%);
-  color: var(--brand-700);
+  background: linear-gradient(135deg, var(--white) 0%, var(--beige-light) 100%);
+  color: var(--purple-700);
   padding: 16px;
   text-align: center;
   gap: 6px;
@@ -2344,23 +2421,23 @@ button.calc-breakdown-row.breakdown-toggle-btn:focus-visible {
 
 .onrent-img-fallback .fallback-icon {
   font-size: 36px;
-  filter: drop-shadow(0 2px 4px rgba(54, 5, 104, 0.1));
+  filter: drop-shadow(0 2px 4px rgba(42, 26, 71, 0.1));
 }
 
 .onrent-img-fallback .fallback-label {
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
-  color: var(--brand-900);
+  color: var(--ink);
 }
 
 .onrent-img-fallback .fallback-badge {
   font-family: var(--font-display);
   font-size: 10px;
   font-weight: 700;
-  color: var(--brand-700);
-  background: var(--brand-50);
-  border: 1px solid var(--brand-card-border);
+  color: var(--ink);
+  background: var(--lemon);
+  border: 1px solid var(--beige-line);
   padding: 2px 8px;
   border-radius: var(--radius-full);
 }
